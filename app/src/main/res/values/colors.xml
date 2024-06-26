@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="appYellow">#F8901F</color>
+    <color name="appBlack">#242021</color>
+    <color name="gray">#989898</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#F20BCA03</color>
+    <color name="green2">#F200CD52</color>
+    <color name="color1">#f21a7cc2</color>
+    <color name="blue">#1589FF</color>
+    <color name="textcolor">#FE979797</color>
+    <color name="orange">#a97806</color>
+    <color name="green1">#06a49f</color>
+    <color name="dcolor">#363535</color>
+    <color name="color8">#085A96</color>
+    <color name="color7">#8f8f8f</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="text_color">#686868</color>
+    <color name="menutextcolor">#419aec</color>
+    <color name="ul">#DE2852</color>
+    <color name="barcolor">#868789</color>
+    <color name="current">#010360</color>
+
+
+    <color name="colorPrimaryDark">#8639F2</color>
+    <color name="colorAccent">#8639F2</color>
+
+    <color name="backcolor">#587D2F</color>
+    <color name="designcolor">#060606</color>
+
+    <color name="designcolor1">#075994</color>
+    <color name="maincolor">#075994</color>
+    <color name="bar1">#dadbdc</color>
+
+    <color name="darkblue">#023254</color>
+
+    <color name="textcolor1">#006CFF</color>
+    <color name="whitsih">#a8ab68</color>
+  >
+    <color name="color2">#cc0512</color>
+    <color name="color3">#ef02c0</color>
+    <color name="color4">#989997</color>
+    <color name="color5">#ECECEC</color>
+    <color name="color6">#30B3A3</color>
+
+    <color name="grey">#D9DCDB</color>
+    <color name="light_purple">#673AB7</color>
+    <color name="btnColor">#015b7b</color>
+    <color name="yellow">#D1D803</color>
+    <color name="purple">#5745E9</color>
+    <color name="t">#04A170</color>
+    <color name="misscolor">#F2FA0209</color>
+    <color name="nessecarycolor">#FFED45</color>
+    <color name="contactcolor">#673AB7</color>
+    <!--<color name="contactcolor">#F2DD7C03</color>-->
+
+    <color name="halfday">#FFCA61</color>
+    <color name="missedpunch">#AC4782</color>
+
+</resources>

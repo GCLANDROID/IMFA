@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/boxbg"
+                android:orientation="vertical"
+                android:layout_marginLeft="50dp"
+                android:paddingLeft="60dp">
+                <TextView
+                    android:textStyle="bold"
+                    android:id="@+id/tvPurpose"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#989898"
+                    android:fontFamily="sans-serif"
+                    android:textSize="14sp"
+                    android:layout_marginEnd="10dp"
+                    android:text="Saraswati Puja"></TextView>
+                <TextView
+                    android:id="@+id/tvDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#d18832"
+                    android:fontFamily="sans-serif"
+                    android:textSize="12sp"
+                    android:text="Monday"></TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:orientation="vertical"
+                >
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:orientation="vertical"
+                        android:id="@+id/llRestricted"
+                        android:background="@drawable/lldesign"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/orange"></LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:id="@+id/llFixed"
+                        android:background="@drawable/background_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        ></LinearLayout>
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:paddingRight="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/tvDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:text="12 feb 2021"></TextView>
+                    </LinearLayout>
+                </FrameLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

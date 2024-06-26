@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@drawable/phone_gradient_2">
+
+
+
+
+
+    <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+
+
+
+       <LinearLayout
+           android:id="@+id/llProfile"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="20dp"
+           android:gravity="center_vertical"
+           android:paddingTop="5dp"
+           android:paddingBottom="5dp">
+
+           <ImageView
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:src="@drawable/profile_payhr"
+               app:tint="@color/appBlack"
+               android:layout_marginStart="10dp"/>
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Profile"
+               android:textSize="14sp"
+               android:textColor="@color/appBlack"
+               android:layout_marginStart="10dp"/>
+
+       </LinearLayout>
+
+       <LinearLayout
+           android:id="@+id/llPayroll"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="10dp"
+           android:gravity="center_vertical"
+           android:paddingTop="5dp"
+           android:paddingBottom="5dp">
+
+           <ImageView
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:src="@drawable/payroll_payhr"
+               app:tint="@color/appBlack"
+               android:layout_marginStart="10dp"/>
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Payroll"
+               android:textSize="14sp"
+               android:textColor="@color/appBlack"
+               android:layout_marginStart="10dp"/>
+
+       </LinearLayout>
+
+       <LinearLayout
+           android:id="@+id/llLeaveApplication"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="10dp"
+           android:gravity="center_vertical"
+           android:paddingTop="5dp"
+           android:paddingBottom="5dp">
+
+           <ImageView
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:src="@drawable/leaveapplication_payhr"
+               app:tint="@color/appBlack"
+               android:layout_marginStart="10dp"/>
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Leave Management"
+               android:textSize="14sp"
+               android:textColor="@color/appBlack"
+               android:layout_marginStart="10dp"/>
+
+       </LinearLayout>
+
+
+       <LinearLayout
+           android:id="@+id/llHolidayList"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="10dp"
+           android:gravity="center_vertical"
+           android:paddingTop="5dp"
+           android:paddingBottom="5dp">
+
+           <ImageView
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:layout_marginStart="10dp"
+               android:src="@drawable/holidaylist_payhr"
+               app:tint="@color/appBlack" />
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Holiday List"
+               android:textSize="14sp"
+               android:textColor="@color/appBlack"
+               android:layout_marginStart="10dp"/>
+
+       </LinearLayout>
+
+
+
+       <LinearLayout
+           android:id="@+id/llChangePassword"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="10dp"
+           android:gravity="center_vertical"
+           android:paddingTop="5dp"
+           android:paddingBottom="5dp">
+
+           <ImageView
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:src="@drawable/changepassword_payhr"
+               app:tint="@color/appBlack"
+               android:layout_marginStart="10dp"/>
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Change Password"
+               android:textSize="14sp"
+               android:textColor="@color/appBlack"
+               android:layout_marginStart="10dp"/>
+
+       </LinearLayout>
+
+
+   </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtAppVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        tools:text="Version: 1.0"
+        android:textColor="@color/appBlack"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

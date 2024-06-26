@@ -1,0 +1,997 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Leave.fragment.ApplicationFragment">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/background_1"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tvDetail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Leave Application Details"
+                            android:textColor="@color/appBlack"
+                            android:textSize="12sp"></TextView>
+
+                        <LinearLayout
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/llShow">
+                            <FrameLayout
+                                android:layout_marginLeft="2dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center">
+                                <ImageView
+                                    android:id="@+id/imgAllApplication"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/planet"></ImageView>
+                                <LinearLayout
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@drawable/lldesign1"
+                                    android:gravity="center"
+                                    android:layout_gravity="right">
+                                    <TextView
+                                        android:id="@+id/tvAllApplication"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textStyle="bold"
+                                        android:textSize="5sp"
+                                        android:textColor="@color/white"
+                                        android:text="12"></TextView>
+                                </LinearLayout>
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_marginLeft="2dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center">
+                                <ImageView
+                                    android:id="@+id/imgCancel"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/planet"></ImageView>
+                                <LinearLayout
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@drawable/lldesignovalyellow"
+                                    android:gravity="center"
+                                    android:layout_gravity="right">
+                                    <TextView
+                                        android:id="@+id/tvCancel"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textStyle="bold"
+                                        android:textSize="5sp"
+                                        android:textColor="@android:color/white"
+                                        android:text="12"></TextView>
+                                </LinearLayout>
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_marginLeft="2dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center">
+                                <ImageView
+                                    android:id="@+id/imgApproval"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/planet"></ImageView>
+                                <LinearLayout
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@drawable/lldesignovalgreen"
+                                    android:gravity="center"
+                                    android:layout_gravity="right">
+                                    <TextView
+                                        android:id="@+id/tvApproval"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textStyle="bold"
+                                        android:textSize="5sp"
+                                        android:textColor="@android:color/white"
+                                        android:text="12"/>
+                                </LinearLayout>
+                            </FrameLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+                                <LinearLayout
+
+                                    android:backgroundTint="@color/appYellow"
+                                    android:id="@+id/llRequested"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/lldesign7"
+                                    android:gravity="center">
+                                    <TextView
+                                        android:id="@+id/tvRequested"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="12sp"
+                                        android:textColor="@android:color/white"
+                                        android:text=""/>
+
+                                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/tvRequestedName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/appBlack"
+                                    android:text="Applied"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+                                    <LinearLayout
+                                        android:backgroundTint="#4CAF50"
+                                        android:id="@+id/llApproved"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:background="@drawable/lldesign7"
+                                        android:gravity="center">
+                                        <TextView
+                                            android:id="@+id/tvApporved"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="12sp"
+                                            android:textColor="@android:color/white"
+                                            android:text=""></TextView>
+
+                                    </LinearLayout>
+                                    <TextView
+                                        android:id="@+id/tvApprovedName"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/appBlack"
+                                        android:text="Approved"></TextView>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+                                <LinearLayout
+                                    android:backgroundTint="#F44336"
+                                    android:id="@+id/llRejected"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/lldesign7"
+                                    android:gravity="center">
+                                    <TextView
+                                        android:id="@+id/tvRejected"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="12sp"
+                                        android:textColor="@android:color/white"
+                                        android:text=""></TextView>
+
+                                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/tvRejectedName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/appBlack"
+                                    android:text="Rejected"></TextView>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+                                    <LinearLayout
+                                        android:backgroundTint="#CDDC39"
+                                        android:id="@+id/llPending"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:background="@drawable/lldesign7"
+                                        android:gravity="center">
+                                        <TextView
+                                            android:id="@+id/tvPending"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="12sp"
+                                            android:textColor="@android:color/white"
+                                            android:text=""/>
+
+                                    </LinearLayout>
+                                    <TextView
+                                        android:id="@+id/tvPendingName"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/appBlack"
+                                        android:text="Pending"></TextView>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/holo_orange_dark"></LinearLayout>
+                <LinearLayout
+
+                    android:id="@+id/lnBalance"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/background_2"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tvBalance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="@color/appBlack"
+                            android:text="Leave balance details"></TextView>
+
+                    </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_margin="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/rvItem"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp">
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rbLeaveApplication"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Leave Application"
+                                android:textSize="13sp"/>
+
+                            <RadioButton
+                                android:id="@+id/rbLeaveEncashment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="Leave Encashment"
+                                android:textSize="13sp" />
+                        </RadioGroup>
+
+                        <LinearLayout
+                            android:id="@+id/llLeaveApplication"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/tvEmpName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:textColor="@color/appBlack"/>
+                            <TextView
+                                android:layout_marginTop="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:id="@+id/tvApproverName"
+                                android:textColor="@color/appBlack"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginTop="10dp">
+                                <TextView
+                                    android:id="@+id/tvLeaveTypeName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="Leave Type*"></TextView>
+                                <LinearLayout
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/lldesign4">
+                                    <Spinner
+                                        android:id="@+id/spLeaveType"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"></Spinner>
+                                </LinearLayout>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginTop="10dp">
+                                <TextView
+                                    android:id="@+id/tvLeaveModeName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="Leave Mode:*"></TextView>
+                                <LinearLayout
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/lldesign4">
+                                    <Spinner
+                                        android:id="@+id/spLeaveMode"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"></Spinner>
+                                </LinearLayout>
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginTop="10dp">
+                                <TextView
+                                    android:id="@+id/tvContactName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="Emergency Contact:*"
+                                    android:visibility="gone"/>
+                                <LinearLayout
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:visibility="gone"
+                                    android:background="@drawable/lldesign4">
+                                    <EditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:textSize="12sp"
+                                        android:paddingLeft="5dp"
+                                        android:background="@null"
+                                        android:inputType="number"
+                                        android:maxLength="10"/>
+                                </LinearLayout>
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginTop="10dp">
+                                <TextView
+                                    android:id="@+id/tvStartDateName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="Leave Start Date:*"></TextView>
+                                <LinearLayout
+                                    android:id="@+id/llStrtDate"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/lldesign4">
+                                    <ImageView
+                                        android:id="@+id/imgStrtDay"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:src="@drawable/calendericon"/>
+                                    <TextView
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_gravity="center"
+                                        android:id="@+id/tvStrtDate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="12sp"
+                                        android:paddingLeft="5dp"
+                                        android:textColor="@android:color/black"/>
+                                </LinearLayout>
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:id="@+id/tvEndDateName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="Leave End Date:*"></TextView>
+                                <LinearLayout
+                                    android:id="@+id/llEndDate"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/lldesign4">
+                                    <ImageView
+                                        android:id="@+id/imgEndDay"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:src="@drawable/calendericon"></ImageView>
+                                    <TextView
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_gravity="center"
+                                        android:id="@+id/tvEndDate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="12sp"
+                                        android:paddingLeft="5dp"
+                                        android:textColor="@android:color/black"></TextView>
+                                </LinearLayout>
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:visibility="gone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginTop="10dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/color1"
+                                    android:text="Reference Name"/>
+                                <LinearLayout
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/lldesign4">
+                                    <Spinner
+                                        android:id="@+id/spRefName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"></Spinner>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginTop="10dp">
+                                <TextView
+                                    android:id="@+id/tvReasonName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="Reason:*"></TextView>
+                                <LinearLayout
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="70dp"
+                                    android:background="@drawable/lldesign4">
+                                    <EditText
+                                        android:id="@+id/etReason"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:textSize="12sp"
+                                        android:paddingLeft="5dp"
+                                        android:background="@null"
+                                        ></EditText>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/lnDocument"
+                                android:layout_marginBottom="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginTop="10dp">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tvDocName"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Supporting document:*"
+                                        android:textColor="@color/appYellow"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:text="(.jpg|.jpeg|.pdf|.png only)"
+                                        android:textColor="@color/red"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="5dp">
+                                    <LinearLayout
+                                        android:id="@+id/llChoose"
+                                        android:layout_width="100dp"
+                                        android:layout_height="30dp"
+                                        android:background="@drawable/lldesign4"
+                                        android:gravity="center">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="12sp"
+                                            android:textColor="@android:color/black"
+                                            android:text="Choose file"></TextView>
+                                    </LinearLayout>
+                                    <ImageView
+                                        android:id="@+id/imgPic"
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:visibility="gone"/>
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/txtPdfUrl"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="File name"
+                                    android:textColor="@color/red"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:visibility="gone"
+                                android:id="@+id/llPreview"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="20dp"
+                                android:gravity="center"
+                                android:background="@drawable/lldesigngreen">
+                                <TextView
+                                    android:id="@+id/tvPreviewName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="13sp"
+                                    android:textColor="@android:color/white"
+                                    android:text="PREVIEW"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llLeaveEncashment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txtEcashmentDuringYear"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"/>
+
+                            <TextView
+                                android:id="@+id/txtEncashApproverName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Approver Name: "
+                                android:textColor="#F44336"
+                                android:textStyle="bold"
+                                android:textSize="12sp"
+                                android:layout_marginTop="10dp"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".8"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="Leave Type*"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.2"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="No. of Leave*"/>
+                                
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llPLA"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:visibility="gone"
+                                android:layout_marginTop="5dp">
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:layout_weight=".8"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:focusable="false"
+                                    android:text="PRIVILEGE LEAVE ACCRUAL"
+                                    android:paddingStart="5dp"
+                                    android:textColor="@color/barcolor"
+                                    android:layout_marginEnd="5dp"
+                                    android:background="@drawable/lldesign4"/>
+
+                                <EditText
+                                    android:id="@+id/etPlaNumber"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1.2"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:inputType="number"
+                                    android:textColor="@color/black"
+                                    android:hint="No. of Leave"
+                                    android:paddingStart="5dp"
+                                    android:background="@drawable/lldesign4"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:visibility="gone"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".8"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="Leave Type*"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.2"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="No. of Leave*"/>
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:id="@+id/llPLC"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:visibility="gone"
+                                android:layout_marginTop="5dp">
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:layout_weight=".8"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:focusable="false"
+                                    android:text="PRIVILEGE LEAVE COMPULSORY"
+                                    android:paddingStart="5dp"
+                                    android:textColor="@color/barcolor"
+                                    android:layout_marginEnd="5dp"
+                                    android:background="@drawable/lldesign4"/>
+
+                                <EditText
+                                    android:id="@+id/etPlcNumber"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1.2"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
+                                    android:hint="No. of Leave"
+                                    android:inputType="number"
+                                    android:paddingStart="5dp"
+                                    android:background="@drawable/lldesign4"/>
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:visibility="gone"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".8"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="Leave Type*"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.2"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="No. of Leave*"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="5dp">
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:layout_weight=".8"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:text="TOTAL LEAVE ENCASHMENT"
+                                    android:focusable="false"
+                                    android:paddingStart="5dp"
+                                    android:textColor="@color/barcolor"
+                                    android:layout_marginEnd="5dp"
+                                    android:background="@drawable/lldesign4"/>
+
+                                <EditText
+                                    android:id="@+id/etTotalNumberOfEncasement"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1.2"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
+                                    android:hint="No. of Leave"
+                                    android:focusable="false"
+                                    android:paddingStart="5dp"
+                                    android:background="@drawable/lldesign4"/>
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:visibility="gone"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".8"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="Payable Year"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.2"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/appYellow"
+                                    android:text="Payable Month"/>
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:visibility="gone"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:layout_weight=".8"
+                                    android:layout_marginEnd="5dp"
+                                    android:background="@drawable/lldesign4">
+                                    <Spinner
+                                        android:id="@+id/spPayableYear"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        ></Spinner>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1.2"
+                                    android:background="@drawable/lldesign4">
+                                    <Spinner
+                                        android:id="@+id/spPayableMonth"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        ></Spinner>
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:id="@+id/llEncasmentSubmit"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="30dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="20dp"
+                                android:background="@drawable/app_color_button_background"
+                                android:gravity="center"
+                                android:visibility="visible">
+
+                                <TextView
+                                    android:id="@+id/tvEncasmentName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="SUBMIT"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="13sp"></TextView>
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvImportantPoint"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="* Important Point"
+                                android:textStyle="bold"
+                                android:paddingEnd="5dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:textColor="#0027FF"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/llLoader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#9FD5D2D2"
+            android:gravity="center">
+            <ProgressBar
+                android:layout_width="50dp"
+                android:layout_height="50dp"></ProgressBar>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

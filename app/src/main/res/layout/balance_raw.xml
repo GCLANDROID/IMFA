@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/boxbg"
+                android:orientation="vertical"
+                android:layout_marginLeft="50dp"
+                android:paddingLeft="60dp">
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp">
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/tvOpeningTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/appYellow"
+                        android:fontFamily="sans-serif"
+                        android:textSize="14sp"
+                        android:text="Opening Balance:"/>
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:textStyle="bold"
+                        android:id="@+id/tvOpening"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/appBlack"
+                        android:fontFamily="sans-serif"
+                        android:textSize="14sp"
+                        android:text="Saraswati Puja"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp">
+                    <TextView
+                        android:id="@+id/tvTakenTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#d18832"
+                        android:fontFamily="sans-serif"
+                        android:textSize="12sp"
+                        android:layout_marginTop="5dp"
+                        android:text="Leave Taken:"/>
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/tvTaken"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#d18832"
+                        android:fontFamily="sans-serif"
+                        android:layout_marginTop="5dp"
+                        android:textSize="12sp"
+                        android:text="Monday"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp">
+                    <TextView
+                        android:id="@+id/tvAvailableTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#d18832"
+                        android:fontFamily="sans-serif"
+                        android:textSize="12sp"
+                        android:layout_marginTop="5dp"
+                        android:text="Available Balance:"/>
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/tvAvailable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#d18832"
+                        android:fontFamily="sans-serif"
+                        android:layout_marginTop="5dp"
+                        android:textSize="12sp"
+                        android:text="Monday"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:orientation="vertical">
+                <FrameLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:id="@+id/llFut"
+                        android:background="@drawable/background_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:paddingRight="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/tvDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:text="12 feb 2021"/>
+                    </LinearLayout>
+                </FrameLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>
