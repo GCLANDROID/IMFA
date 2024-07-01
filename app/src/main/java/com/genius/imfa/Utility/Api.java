@@ -63,4 +63,7 @@ public class Api {
     public static String sGetLeaveApplicationAllDetailsEncash = BASE_URL+"IMFALeave/GetLeaveApplicationAllDetailsEncash";
     public static String sSaveEncashmentDetails = BASE_URL+"IMFALeave/SaveEncashmentDetails";
     //public static String sGetAdjustmentDetailsForGrid = "http://171.16.2.67/GHRMSApi_v2/api/IMFALeave/GetAdjustmentDetailsforGrid";
+
+    public static String sGetwfhApplicationDetailsDetails = BASE_URL_SUBHAM_DA+"IMFALeave/GetwfhApplicationDetails";
+    public static String sSavewfhDetails = BASE_URL_SUBHAM_DA+"IMFALeave/SavewfhDetails";
 }

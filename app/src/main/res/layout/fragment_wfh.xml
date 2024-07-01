@@ -33,6 +33,7 @@
                             android:padding="10dp"
                             android:backgroundTint="@color/appYellow">
                             <TextView
+                                android:layout_gravity="center"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.5"
@@ -51,7 +52,7 @@
                                     android:layout_gravity="center"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="12sp"
+                                    android:textSize="16sp"
                                     android:textColor="@color/black"></TextView>
                                 <View
                                     android:padding="5dp"
@@ -64,7 +65,7 @@
                                     android:layout_gravity="center"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="12sp"
+                                    android:textSize="16sp"
                                     android:textColor="@color/black"></TextView>
                             </LinearLayout>
                         </LinearLayout>
