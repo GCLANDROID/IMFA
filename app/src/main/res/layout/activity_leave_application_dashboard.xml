@@ -174,26 +174,28 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llWFH"
                 android:layout_width="160dp"
                 android:layout_height="130dp"
                 android:layout_weight="1"
                 android:background="@drawable/layoutstrokebottom"
                 android:gravity="center"
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:padding="10dp"
-                    android:src="@drawable/leave_balance_dash"
+                    android:src="@drawable/wfh"
                     app:tint="@color/appYellow"></ImageView>
 
                 <TextView
+                    android:textAlignment="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Leave Balance"
+                    android:text="Work From Home\n Application"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>

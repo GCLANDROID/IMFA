@@ -23,6 +23,7 @@ import com.genius.imfa.Payroll.PayrollActivity;
 import com.genius.imfa.Utility.Api;
 import com.genius.imfa.Utility.Pref;
 import com.genius.imfa.databinding.ActivityLeaveApplicationDashboardBinding;
+import com.genius.imfa.wfh.WFHActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,6 +80,15 @@ public class LeaveApplicationDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LeaveApplicationDashboardActivity.this, LeaveApplicationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        binding.llWFH.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LeaveApplicationDashboardActivity.this, WFHActivity.class);
                 startActivity(intent);
             }
         });
