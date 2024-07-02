@@ -71,4 +71,6 @@ public class Api {
     public static String sDeletewfhAdjustmentApplication = BASE_URL_SUBHAM_DA+"IMFALeave/DeletewfhAdjustmentApplication";
     public static String sSavewfhAdjustmentApprovalRejected = BASE_URL_SUBHAM_DA+"IMFALeave/SavewfhAdjustmentApprovalRejected";
     public static String sDeletewfhAdjutmentByApprover = BASE_URL_SUBHAM_DA+"IMFALeave/DeletewfhAdjutmentByApprover";
+    public static String sGetWFHmenu = BASE_URL_SUBHAM_DA+"IMFALeave/GetWFHmenu";
+
 }

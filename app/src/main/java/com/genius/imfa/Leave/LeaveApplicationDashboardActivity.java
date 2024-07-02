@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 
@@ -52,6 +53,15 @@ public class LeaveApplicationDashboardActivity extends AppCompatActivity {
             object.put("MenuItemName","Leave");
             object.put("SecurityCode",pref.getSecurityCode());
             accessCheckingLeave(object);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject jsonObject=new JSONObject();
+        try {
+            jsonObject.put("SecurityCode",pref.getSecurityCode());
+            jsonObject.put("EmployeeId",pref.getEmpId());
+            getWFHMenu(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -214,6 +224,47 @@ public class LeaveApplicationDashboardActivity extends AppCompatActivity {
                     @Override
                     public void onError(ANError error) {
                         pd.dismiss();
+                    }
+                });
+    }
+
+
+    public void getWFHMenu(JSONObject jsonObject) {
+        Log.e(TAG, "getLeaveAllDetails: called: "+jsonObject);
+        ProgressDialog progressDialog=new ProgressDialog(LeaveApplicationDashboardActivity.this);
+        progressDialog.setMessage("Loading");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+
+        AndroidNetworking.post(Api.sGetWFHmenu)
+                .addJSONObjectBody(jsonObject)
+                .addHeaders("Authorization", "Bearer "+pref.getAccessToken())
+                .setTag("uploadTest")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        JSONObject job1 = response;
+                        Log.e(TAG, "getLeaveAllDetails: " + job1);
+
+                        progressDialog.dismiss();
+                        int Response_Code = job1.optInt("Response_Code");
+                        JSONObject Response_Data=job1.optJSONObject("Response_Data");
+                        boolean MenuStatus=Response_Data.optBoolean("MenuStatus");
+                        if (MenuStatus){
+                            binding.llWFH.setVisibility(View.VISIBLE);
+                        }else {
+                            binding.llWFH.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        progressDialog.dismiss();
+
                     }
                 });
     }
