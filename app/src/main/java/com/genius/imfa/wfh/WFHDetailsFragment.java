@@ -230,7 +230,7 @@ public class WFHDetailsFragment extends Fragment {
         dialogBuilder.setView(dialogView);
         TextView tvInvalidDate = (TextView) dialogView.findViewById(R.id.tvSuccess);
 
-        tvInvalidDate.setText("Leave has been deleted successfully");
+        tvInvalidDate.setText("WFH has been deleted successfully");
 
 
 

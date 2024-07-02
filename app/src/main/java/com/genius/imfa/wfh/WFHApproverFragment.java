@@ -122,7 +122,7 @@ public class WFHApproverFragment extends Fragment {
                 JSONObject jsonObject=new JSONObject();
                 try {
                     jsonObject.put("CompanyId",pref.getEmpClintId());
-                    jsonObject.put("AppAID",mId);
+                    jsonObject.put("StrAID",mId);
                     jsonObject.put("ApprovalStatus","1");  // Todo: Required
                     jsonObject.put("ApprovalStatusDetails","Approved"); // Todo: Required
                     jsonObject.put("ApprovedBY",pref.getEmpId()); // Todo: Required
@@ -145,7 +145,7 @@ public class WFHApproverFragment extends Fragment {
                                 JSONObject jsonObject=new JSONObject();
                                 try {
                                     jsonObject.put("CompanyId",pref.getEmpClintId());
-                                    jsonObject.put("AppAID",mId);
+                                    jsonObject.put("StrAID",mId);
                                     jsonObject.put("ApprovalStatus","-1");  // Todo: Required
                                     jsonObject.put("ApprovalStatusDetails","Rejected"); // Todo: Required
                                     jsonObject.put("ApprovedBY",pref.getEmpId()); // Todo: Required
@@ -182,7 +182,7 @@ public class WFHApproverFragment extends Fragment {
         pd.setCancelable(false);
         pd.show();
 
-        AndroidNetworking.post(Api.sSaveAdjustmentApprovalRejected)
+        AndroidNetworking.post(Api.sSavewfhAdjustmentApprovalRejected)
                 .addJSONObjectBody(jsonObject)
                 .addHeaders("Authorization", "Bearer "+pref.getAccessToken())
                 .setTag("uploadTest")
@@ -227,7 +227,7 @@ public class WFHApproverFragment extends Fragment {
         if (pref.getLanguage().equals("hi")) {
             tvInvalidDate.setText("");
         } else {
-            tvInvalidDate.setText("Leave has been rejected successfully");
+            tvInvalidDate.setText("WFH has been rejected successfully");
         }
 
 
@@ -264,7 +264,7 @@ public class WFHApproverFragment extends Fragment {
         pd.setCancelable(false);
         pd.show();
 
-        AndroidNetworking.post(Api.sSaveAdjustmentApprovalRejected)
+        AndroidNetworking.post(Api.sSavewfhAdjustmentApprovalRejected)
                 .addJSONObjectBody(jsonObject)
                 .addHeaders("Authorization", "Bearer "+pref.getAccessToken())
                 .setTag("uploadTest")
@@ -410,7 +410,7 @@ public class WFHApproverFragment extends Fragment {
         dialogBuilder.setView(dialogView);
         TextView tvInvalidDate = (TextView) dialogView.findViewById(R.id.tvSuccess);
 
-        tvInvalidDate.setText("Leave has been approved successfully");
+        tvInvalidDate.setText("WFH has been approved successfully");
 
         Button btnOk = (Button) dialogView.findViewById(R.id.btnOk);
         btnOk.setOnClickListener(new View.OnClickListener() {
@@ -446,14 +446,15 @@ public class WFHApproverFragment extends Fragment {
         JSONObject jsonObject=new JSONObject();
         try {
             jsonObject.put("CompanyId",pref.getEmpClintId());
-            jsonObject.put("EmployeeId",aid);
+            jsonObject.put("StrAID",aid);
             jsonObject.put("SecurityCode",pref.getSecurityCode());
+            jsonObject.put("ApprovedBY",pref.getEmpId());
             //rejectFunction(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        AndroidNetworking.post(Api.sDeleteAdjutmentApplication)
+        AndroidNetworking.post(Api.sDeletewfhAdjutmentByApprover)
                 .addJSONObjectBody(jsonObject)
                 .addHeaders("Authorization", "Bearer "+pref.getAccessToken())
                 .setTag("uploadTest")
@@ -492,7 +493,7 @@ public class WFHApproverFragment extends Fragment {
         dialogBuilder.setView(dialogView);
         TextView tvInvalidDate = (TextView) dialogView.findViewById(R.id.tvSuccess);
 
-        tvInvalidDate.setText("Leave has been deleted successfully");
+        tvInvalidDate.setText("WFH has been deleted successfully");
 
 
 
