@@ -40,4 +40,21 @@ public class TimeDateConverter {
         }
         return outputTimeString;
     }
+
+
+    public static String convert_Date_DD_MM_YYYY_To_dd_MMM_yyyy(String inputDateString){
+        String outputTimeString="";
+        DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+
+        try {
+            Date date = inputFormat.parse(inputDateString);
+            String outputDate = outputFormat.format(date);
+            outputTimeString = outputDate;
+            //System.out.println(outputDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return outputTimeString;
+    }
 }

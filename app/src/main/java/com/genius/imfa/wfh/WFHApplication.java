@@ -299,8 +299,8 @@ public class WFHApplication extends Fragment {
                                           int monthOfYear, int dayOfMonth) {
                         strtDate = dayOfMonth + monthOfYear + year;
                         int month = (monthOfYear + 1);
-                        startDate = month + "/" + dayOfMonth + "/" + year;
-                        binding.tvStrtDate.setText(TimeDateConverter.convert_Date_MM_DD_YYYY_To_dd_MMM_yyyy(startDate));
+                        startDate = dayOfMonth + "-" + month + "-" + year;
+                        binding.tvStrtDate.setText(TimeDateConverter.convert_Date_DD_MM_YYYY_To_dd_MMM_yyyy(startDate));
 
                     }
                 }, mYear, mMonth, mDay);
@@ -323,8 +323,8 @@ public class WFHApplication extends Fragment {
                                           int monthOfYear, int dayOfMonth) {
                         int enddate = dayOfMonth + monthOfYear + year;
                         int month = (monthOfYear + 1);
-                        endDate = month + "/" + dayOfMonth + "/" + year;
-                        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                        endDate = dayOfMonth + "-" + month + "-" + year;
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                         Date strDate = null;
                         try {
                             strDate = sdf.parse(startDate);
@@ -332,7 +332,7 @@ public class WFHApplication extends Fragment {
                             e.printStackTrace();
                         }
 
-                        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                         Date striDate = null;
                         try {
                             striDate = df.parse(endDate);
@@ -340,7 +340,7 @@ public class WFHApplication extends Fragment {
                             e.printStackTrace();
                         }
                         if (striDate.getTime() > strDate.getTime() ||striDate.getTime() == strDate.getTime()) {
-                            binding.tvEndDate.setText(TimeDateConverter.convert_Date_MM_DD_YYYY_To_dd_MMM_yyyy(endDate));
+                            binding.tvEndDate.setText(TimeDateConverter.convert_Date_DD_MM_YYYY_To_dd_MMM_yyyy(endDate));
                         }else {
                             showErrorDialog("End date should not before than Start date");
                         }
@@ -421,7 +421,7 @@ public class WFHApplication extends Fragment {
         dialogBuilder.setView(dialogView);
         TextView tvInvalidDate = (TextView) dialogView.findViewById(R.id.tvSuccess);
 
-        tvInvalidDate.setText("WFH has been successfully applied from "+TimeDateConverter.convert_Date_MM_DD_YYYY_To_dd_MMM_yyyy(startDate)+" to "+TimeDateConverter.convert_Date_MM_DD_YYYY_To_dd_MMM_yyyy(endDate));
+        tvInvalidDate.setText("WFH has been successfully applied from "+TimeDateConverter.convert_Date_DD_MM_YYYY_To_dd_MMM_yyyy(startDate)+" to "+TimeDateConverter.convert_Date_DD_MM_YYYY_To_dd_MMM_yyyy(endDate));
 
 
 
