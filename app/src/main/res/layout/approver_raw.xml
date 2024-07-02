@@ -522,7 +522,7 @@
                     android:id="@+id/lnDelete"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@color/appBlack"
+                    android:background="@color/appYellow"
                     android:gravity="right">
                     <ImageView
                         android:layout_width="30dp"

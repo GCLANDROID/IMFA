@@ -79,7 +79,7 @@ public class WFHActivity extends AppCompatActivity {
     public void loadApproverFragment() {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        WFHDetailsFragment efr=new WFHDetailsFragment();
+        WFHApproverFragment efr=new WFHApproverFragment();
         transaction.replace(R.id.frameLayout, efr);
         transaction.commit();
     }
