@@ -430,7 +430,7 @@ public class WFHApplication extends Fragment {
             @Override
             public void onClick(View view) {
                 alerDialog1.dismiss();
-
+                ((WFHActivity) getContext()).loadDetailsFragment();
             }
         });
 

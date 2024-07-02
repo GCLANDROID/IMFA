@@ -79,7 +79,7 @@ public class WFHActivity extends AppCompatActivity {
     public void loadApproverFragment() {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        ApproverFragment efr=new ApproverFragment();
+        WFHDetailsFragment efr=new WFHDetailsFragment();
         transaction.replace(R.id.frameLayout, efr);
         transaction.commit();
     }
@@ -87,7 +87,7 @@ public class WFHActivity extends AppCompatActivity {
     public void loadDetailsFragment() {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        DetailsFragment htfragment=new DetailsFragment();
+        WFHDetailsFragment htfragment=new WFHDetailsFragment();
         transaction.replace(R.id.frameLayout, htfragment);
         transaction.commit();
     }

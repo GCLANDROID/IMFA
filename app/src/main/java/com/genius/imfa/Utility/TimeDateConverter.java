@@ -57,4 +57,21 @@ public class TimeDateConverter {
         }
         return outputTimeString;
     }
+
+
+    public static String convert_Date_YYYY_MM_DD_To_dd_MMM_yyyy(String inputDateString){
+        String outputTimeString="";
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+
+        try {
+            Date date = inputFormat.parse(inputDateString);
+            String outputDate = outputFormat.format(date);
+            outputTimeString = outputDate;
+            //System.out.println(outputDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return outputTimeString;
+    }
 }
