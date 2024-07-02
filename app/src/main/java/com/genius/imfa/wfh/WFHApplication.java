@@ -299,7 +299,7 @@ public class WFHApplication extends Fragment {
                                           int monthOfYear, int dayOfMonth) {
                         strtDate = dayOfMonth + monthOfYear + year;
                         int month = (monthOfYear + 1);
-                        startDate = dayOfMonth + "-" + month + "-" + year;
+                        startDate = month + "-" + dayOfMonth + "-" + year;
                         binding.tvStrtDate.setText(TimeDateConverter.convert_Date_DD_MM_YYYY_To_dd_MMM_yyyy(startDate));
 
                     }
@@ -323,8 +323,8 @@ public class WFHApplication extends Fragment {
                                           int monthOfYear, int dayOfMonth) {
                         int enddate = dayOfMonth + monthOfYear + year;
                         int month = (monthOfYear + 1);
-                        endDate = dayOfMonth + "-" + month + "-" + year;
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                        endDate = month + "-" + dayOfMonth + "-" + year;
+                        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
                         Date strDate = null;
                         try {
                             strDate = sdf.parse(startDate);
@@ -332,7 +332,7 @@ public class WFHApplication extends Fragment {
                             e.printStackTrace();
                         }
 
-                        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                        SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy");
                         Date striDate = null;
                         try {
                             striDate = df.parse(endDate);

@@ -68,4 +68,5 @@ public class Api {
     public static String sSavewfhDetails = BASE_URL_SUBHAM_DA+"IMFALeave/SavewfhDetails";
     public static String sGetwfhAdjustmentDetailsforGrid = BASE_URL_SUBHAM_DA+"IMFALeave/GetwfhAdjustmentDetailsforGrid";
     public static String sGetwfhAdjustmentApplicationDeailsForApprover = BASE_URL_SUBHAM_DA+"IMFALeave/GetwfhAdjustmentApplicationDeailsForApprover";
+    public static String sDeletewfhAdjustmentApplication = BASE_URL_SUBHAM_DA+"IMFALeave/DeletewfhAdjustmentApplication";
 }

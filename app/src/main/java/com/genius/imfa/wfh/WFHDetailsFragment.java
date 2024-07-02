@@ -178,13 +178,13 @@ public class WFHDetailsFragment extends Fragment {
         JSONObject object=new JSONObject();
         try {
             object.put("CompanyID",pref.getEmpClintId());
-            object.put("EmployeeID",AID);
+            object.put("StrAID",AID);
             object.put("SecurityCode",pref.getSecurityCode());
         } catch (JSONException e) {
             e.printStackTrace();
         }
         Log.e(TAG, "deleteAdjustments: "+object);
-        AndroidNetworking.post(Api.sDeleteAdjutmentApplication)
+        AndroidNetworking.post(Api.sDeletewfhAdjustmentApplication)
                 .addJSONObjectBody(object)
                 .addHeaders("Authorization", "Bearer "+pref.getAccessToken())
                 .setTag("uploadTest")

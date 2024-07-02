@@ -44,7 +44,7 @@ public class TimeDateConverter {
 
     public static String convert_Date_DD_MM_YYYY_To_dd_MMM_yyyy(String inputDateString){
         String outputTimeString="";
-        DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy");
         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
 
         try {
