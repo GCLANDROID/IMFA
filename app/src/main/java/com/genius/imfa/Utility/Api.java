@@ -64,13 +64,13 @@ public class Api {
     public static String sSaveEncashmentDetails = BASE_URL+"IMFALeave/SaveEncashmentDetails";
     //public static String sGetAdjustmentDetailsForGrid = "http://171.16.2.67/GHRMSApi_v2/api/IMFALeave/GetAdjustmentDetailsforGrid";
 
-    public static String sGetwfhApplicationDetailsDetails = BASE_URL_SUBHAM_DA+"IMFALeave/GetwfhApplicationDetails";
-    public static String sSavewfhDetails = BASE_URL_SUBHAM_DA+"IMFALeave/SavewfhDetails";
-    public static String sGetwfhAdjustmentDetailsforGrid = BASE_URL_SUBHAM_DA+"IMFALeave/GetwfhAdjustmentDetailsforGrid";
-    public static String sGetwfhAdjustmentApplicationDeailsForApprover = BASE_URL_SUBHAM_DA+"IMFALeave/GetwfhAdjustmentApplicationDeailsForApprover";
-    public static String sDeletewfhAdjustmentApplication = BASE_URL_SUBHAM_DA+"IMFALeave/DeletewfhAdjustmentApplication";
-    public static String sSavewfhAdjustmentApprovalRejected = BASE_URL_SUBHAM_DA+"IMFALeave/SavewfhAdjustmentApprovalRejected";
-    public static String sDeletewfhAdjutmentByApprover = BASE_URL_SUBHAM_DA+"IMFALeave/DeletewfhAdjutmentByApprover";
-    public static String sGetWFHmenu = BASE_URL_SUBHAM_DA+"IMFALeave/GetWFHmenu";
+    public static String sGetwfhApplicationDetailsDetails = BASE_URL+"IMFALeave/GetwfhApplicationDetails";
+    public static String sSavewfhDetails = BASE_URL+"IMFALeave/SavewfhDetails";
+    public static String sGetwfhAdjustmentDetailsforGrid = BASE_URL+"IMFALeave/GetwfhAdjustmentDetailsforGrid";
+    public static String sGetwfhAdjustmentApplicationDeailsForApprover = BASE_URL+"IMFALeave/GetwfhAdjustmentApplicationDeailsForApprover";
+    public static String sDeletewfhAdjustmentApplication = BASE_URL+"IMFALeave/DeletewfhAdjustmentApplication";
+    public static String sSavewfhAdjustmentApprovalRejected = BASE_URL+"IMFALeave/SavewfhAdjustmentApprovalRejected";
+    public static String sDeletewfhAdjutmentByApprover = BASE_URL+"IMFALeave/DeletewfhAdjutmentByApprover";
+    public static String sGetWFHmenu = BASE_URL+"IMFALeave/GetWFHmenu";
 
 }
