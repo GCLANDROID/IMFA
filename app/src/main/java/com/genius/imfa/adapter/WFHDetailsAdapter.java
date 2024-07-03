@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,8 @@ public class WFHDetailsAdapter extends RecyclerView.Adapter<WFHDetailsAdapter.My
         holder.tvAppliedDate.setText(TimeDateConverter.convert_Date_YYYY_MM_DD_To_dd_MMM_yyyy(firstSubString));
 
         holder.tvStrtDate.setText(adjustmentList.get(position).StartDate);
+        holder.llNoOfDays.setVisibility(View.VISIBLE);
+        holder.tvNoOfDays.setText(adjustmentList.get(position).NoOfDays);
 
         holder.tvEndDate.setText(adjustmentList.get(position).EndDate);
         holder.tvReason.setText(adjustmentList.get(position).Reason);
@@ -83,8 +86,9 @@ public class WFHDetailsAdapter extends RecyclerView.Adapter<WFHDetailsAdapter.My
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView tvAdjustmentType,tvAppliedDate,tvStrtDate,tvEndDate,tvLeaveStrtDate,tvLeaveEndDate,tvReason,tvStatus,tvApprovedBy,tvApprover;
+        TextView tvAdjustmentType,tvAppliedDate,tvStrtDate,tvEndDate,tvLeaveStrtDate,tvLeaveEndDate,tvReason,tvStatus,tvApprovedBy,tvApprover,tvNoOfDays;
         ImageView imgDelete;
+        LinearLayout llNoOfDays;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvAdjustmentType = itemView.findViewById(R.id.tvAdjustmentType);
@@ -98,6 +102,9 @@ public class WFHDetailsAdapter extends RecyclerView.Adapter<WFHDetailsAdapter.My
             tvLeaveEndDate = itemView.findViewById(R.id.tvLeaveEndDate);
             tvApprover = itemView.findViewById(R.id.tvApprover);
             imgDelete = itemView.findViewById(R.id.imgDelete);
+
+            llNoOfDays=(LinearLayout) itemView.findViewById(R.id.llNoOfDays);
+            tvNoOfDays=(TextView) itemView.findViewById(R.id.tvNoOfDays);
         }
     }
 }
