@@ -1,4 +1,4 @@
-package com.genius.imfa.Activity;
+package com.genius.imfa.common;
 
 import static com.genius.imfa.Utility.Util.SECRET_KEY;
 import static com.genius.imfa.Utility.Util.encrypt;
@@ -6,10 +6,6 @@ import static com.genius.imfa.Utility.Util.encrypt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.pm.ShortcutInfoCompat;
-import androidx.core.content.pm.ShortcutManagerCompat;
-import androidx.core.graphics.drawable.IconCompat;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,7 +15,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,11 +36,11 @@ import com.genius.imfa.Model.AttendanceCalenderModel;
 import com.genius.imfa.Payroll.PayrollActivity;
 import com.genius.imfa.R;
 import com.genius.imfa.Utility.Api;
-import com.genius.imfa.Utility.FindDocumentInformation;
 import com.genius.imfa.Utility.GreetingGenerator;
 import com.genius.imfa.Utility.Pref;
 import com.genius.imfa.Utility.TimeDateConverter;
 import com.genius.imfa.Utility.Util;
+import com.genius.imfa.attendance.AttendanceMarkActivity;
 import com.genius.imfa.databinding.ActivityUserDashboardBinding;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
@@ -68,7 +63,6 @@ import org.naishadhparmar.zcustomcalendar.Property;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +118,15 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             binding.tvGreeting.setText(GreetingGenerator.getGreeting());
+        }
+
+        JSONObject jsonObject=new JSONObject();
+        try {
+            jsonObject.put("SecurityCode",pref.getSecurityCode());
+            jsonObject.put("EmployeeId",pref.getEmpId());
+            getAttendanceMenu(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         mAppUpdateManager= AppUpdateManagerFactory.create(this);
@@ -475,6 +478,14 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UserDashboardActivity.this, HolidayActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.llDrawerPane.llAttendance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserDashboardActivity.this, AttendanceMarkActivity.class);
                 startActivity(intent);
             }
         });
@@ -1287,6 +1298,47 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                         pd.dismiss();
 
 
+
+                    }
+                });
+    }
+
+
+    public void getAttendanceMenu(JSONObject jsonObject) {
+        Log.e(TAG, "getLeaveAllDetails: called: "+jsonObject);
+        ProgressDialog progressDialog=new ProgressDialog(UserDashboardActivity.this);
+        progressDialog.setMessage("Loading");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+
+        AndroidNetworking.post(Api.sGetAttendanceMenu)
+                .addJSONObjectBody(jsonObject)
+                .addHeaders("Authorization", "Bearer "+pref.getAccessToken())
+                .setTag("uploadTest")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        JSONObject job1 = response;
+                        Log.e(TAG, "getLeaveAllDetails: " + job1);
+
+                        progressDialog.dismiss();
+                        int Response_Code = job1.optInt("Response_Code");
+                        JSONObject Response_Data=job1.optJSONObject("Response_Data");
+                        boolean MenuStatus=Response_Data.optBoolean("MenuStatus");
+                        if (MenuStatus){
+                            binding.llDrawerPane.llAttendance.setVisibility(View.VISIBLE);
+                        }else {
+                            binding.llDrawerPane.llAttendance.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        progressDialog.dismiss();
 
                     }
                 });

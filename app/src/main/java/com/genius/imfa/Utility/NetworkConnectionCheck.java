@@ -9,7 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
 
-import com.genius.imfa.Activity.LoginActivity;
+import com.genius.imfa.common.LoginActivity;
 
 
 public class NetworkConnectionCheck {

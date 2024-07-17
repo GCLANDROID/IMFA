@@ -1,0 +1,812 @@
+package com.genius.imfa.attendance;
+
+
+
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.UploadProgressListener;
+import com.developers.imagezipper.ImageZipper;
+import com.genius.imfa.Model.SpinnerModel;
+import com.genius.imfa.R;
+import com.genius.imfa.Utility.Api;
+import com.genius.imfa.Utility.GPSTracker;
+import com.genius.imfa.Utility.Pref;
+import com.genius.imfa.common.LoginActivity;
+import com.genius.imfa.common.UserDashboardActivity;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+
+public class AttendanceMarkActivity extends AppCompatActivity {
+    private static final String TAG = "AttendanceMarkActivity";
+    TextView tvAddress, tvTime;
+    LinearLayout llRefresh;
+    ImageView imgCamera, imgImage;
+    GPSTracker gps;
+    ;
+    double latitude = 0.0, longitude = 0.0;
+    String address = "--",getAttendanceFromReport = "";
+
+    Pref pref;
+    String currentDateTimeString;
+    private String encodedImage;
+    private Uri imageUri, uri;
+    private static final int CAMERA_REQUEST = 1;
+    int flag;
+    File compressedImageFile, file;
+    Button btnSubmit;
+    String currentlat, currentlong;
+
+    ;
+
+    TextView tvName;
+    EditText etRemarks;
+    AlertDialog alerDialog1;
+    ImageView imgBack, imgHome;
+    TextView tvClick, tvClickHere;
+
+    private static final int REQUEST_GALLERY_CODE = 200;
+    Bitmap bitmap;
+    LinearLayout llImage, llNote;
+    TextView tvCapture;
+    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    //  private MapView mapView;
+    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 0;
+    LatLng latLng;
+    AlertDialog al2;
+    TextView tvCustom;
+    ImageView imgUser;
+    private static String SERVER_PATH = "";
+
+    LinearLayout lnMain,lnLoader;
+
+
+    public static final int NAME_SYNCED_WITH_SERVER = 1;
+    public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
+    public static String DATA_SAVED_BROADCAST = "";
+    private BroadcastReceiver broadcastReceiver;
+    ArrayList<SpinnerModel>punchTypeList=new ArrayList<>();
+    ArrayList<String>punchtypeList=new ArrayList<>();
+    Spinner spshift;
+    String Punchtype;
+    LinearLayout llShift;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_mark_in_dailylog);
+        Log.e(TAG, "onCreate: called");
+        initview();
+        setUpMapIfNeeded();
+        onClick();
+    }
+
+    @SuppressLint("RestrictedApi")
+    private void initview() {
+        spshift=(Spinner)findViewById(R.id.spshift);
+        pref = new Pref(AttendanceMarkActivity.this);
+        lnMain=(LinearLayout) findViewById(R.id.lnMain);
+        lnLoader=(LinearLayout) findViewById(R.id.lnLoader);
+        getAttendanceFromReport = getIntent().getStringExtra("address");
+        llShift=(LinearLayout)findViewById(R.id.llShift);
+        Log.e(TAG, "initview: address: "+getAttendanceFromReport );
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                lnLoader.setVisibility(View.GONE);
+                lnMain.setVisibility(View.VISIBLE);
+
+
+            }
+        }, 3000);
+        imgUser = (ImageView) findViewById(R.id.imgUser);
+        tvAddress = (TextView) findViewById(R.id.tvAddress);
+        tvTime = (TextView) findViewById(R.id.tvTime);
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
+                .setFastestInterval(1 * 1000);
+
+        final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .readTimeout(360, TimeUnit.SECONDS)
+                .connectTimeout(360, TimeUnit.SECONDS)
+                .build();
+
+        // Change base URL to your upload server URL.
+        /*uploadService = (AttendanceService) new Retrofit.Builder()
+                .baseUrl(SERVER_PATH)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(AttendanceService.class);*/
+
+
+        llRefresh = (LinearLayout) findViewById(R.id.llRefresh);
+
+        imgCamera = (ImageView) findViewById(R.id.imgCamera);
+        imgImage = (ImageView) findViewById(R.id.imgImage);
+
+        gps = new GPSTracker(AttendanceMarkActivity.this);
+
+
+
+        if (gps.canGetLocation()) {
+            latitude = gps.getLatitude();
+            Log.d("saikatdas", String.valueOf(latitude));
+             longitude = gps.getLongitude();
+        } else {
+// can't get location
+// GPS or Network is not enabled
+// Ask user to enable GPS/network in settings
+
+        }
+
+
+        // tvAddress.setText("YOU ARE AT: " + address);
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+        currentDateTimeString = sdf.format(d);
+        tvTime.setText("Current time is : " + currentDateTimeString);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        currentlat = String.valueOf(latitude);
+        currentlong = String.valueOf(longitude);
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        //OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+
+        // Change base URL to your upload server URL.
+
+        tvName = (TextView) findViewById(R.id.tvName);
+        tvName.setText("Hi! " + pref.getEmpName());
+        etRemarks = (EditText) findViewById(R.id.etRemarks);
+        imgBack = (ImageView) findViewById(R.id.imgBack);
+        imgHome = (ImageView) findViewById(R.id.imgHome);
+        tvClick = (TextView) findViewById(R.id.tvClick);
+        tvClickHere = (TextView) findViewById(R.id.tvClickHere);
+        tvCapture = (TextView) findViewById(R.id.tvCapture);
+        llImage = (LinearLayout) findViewById(R.id.llImage);
+        tvCustom = (TextView) findViewById(R.id.tvCustom);
+
+
+
+
+        getAPIKey();
+    }
+
+
+    private void onClick() {
+
+        spshift.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Punchtype=punchTypeList.get(i).getItemId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        imgCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                cameraIntent();
+
+
+            }
+        });
+
+        imgUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pref.getEmpId().equalsIgnoreCase("2070002087")) {
+                    galleryIntent();
+                }
+            }
+        });
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    if (!tvAddress.getText().toString().equals("YOU ARE AT: null") || tvAddress.getText().toString().equals("YOU ARE AT: ")) {
+                        shiftFlagFilter();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Sorry! Your address not found.Please click on Refresh button", Toast.LENGTH_LONG).show();
+                    }
+            }
+
+
+        });
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+
+
+        imgHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AttendanceMarkActivity.this, UserDashboardActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        tvClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+
+            }
+        });
+
+
+    }
+
+    private void cameraIntent() {
+        flag = 1;
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "Picture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+        imageUri = getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+        cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+
+    }
+
+
+
+
+    private void successAlert() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AttendanceMarkActivity.this, R.style.CustomDialogNew);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.dialog_success, null);
+        dialogBuilder.setView(dialogView);
+        AppCompatButton  llOk = (AppCompatButton) dialogView.findViewById(R.id.btnOk);
+        llOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alerDialog1.dismiss();
+                onBackPressed();
+
+            }
+        });
+        TextView tvSuccess = (TextView) dialogView.findViewById(R.id.tvSuccess);
+        tvSuccess.setText("Your Attendance saved successfully");
+
+
+        alerDialog1 = dialogBuilder.create();
+        alerDialog1.setCancelable(false);
+        Window window = alerDialog1.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setGravity(Gravity.CENTER);
+        alerDialog1.show();
+    }
+
+
+
+    private void galleryIntent() {
+        Intent openGalleryIntent = new Intent(Intent.ACTION_PICK);
+        openGalleryIntent.setType("image/*");
+        startActivityForResult(openGalleryIntent, REQUEST_GALLERY_CODE);
+    }
+
+    private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
+        Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            return contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
+    }
+
+
+    private void getAPIKey() {
+        String surl = "https://cloud.geniusconsultant.com/GeniusESS/API/Utility/GetLocationKey";
+        Log.d("residancelist", surl);
+        final ProgressDialog progressDialog=new ProgressDialog(AttendanceMarkActivity.this);
+        progressDialog.setMessage("Loading..");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Log.d("clint", "1");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, surl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("responseLogin", response);
+                        progressDialog.dismiss();
+
+
+                        try {
+                            JSONObject job1 = new JSONObject(response);
+                            Log.e("response12", "@@@@@@" + job1);
+                            String responseText = job1.optString("responseText");
+
+                            getaddressFromAPI(responseText);
+
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            //Toast.makeText(SalaryActivity.this, "Volly Error", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                address = getCompleteAddressString(latitude, longitude);
+                tvAddress.setText(address);
+
+                // Toast.makeText(SalaryActivity.this, "volly 2" + error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("ert", error.toString());
+
+            }
+        }) {
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(AttendanceMarkActivity.this);
+        requestQueue.add(stringRequest);
+
+
+    }
+
+    private void getaddressFromAPI(String apikey) {
+        String testUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=28.5530871,77.201581&key=" + apikey;
+        String surl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=" + apikey;
+        Log.d("residancelist", surl);
+        final ProgressDialog pd = new ProgressDialog(AttendanceMarkActivity.this);
+        pd.setMessage("Loading");
+        pd.setCancelable(false);
+        pd.show();
+        Log.d("clint", "1");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, surl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("responseLogin", response);
+                        pd.dismiss();
+                        try {
+                            JSONObject job1 = new JSONObject(response);
+                            Log.e("response12", "@@@@@@" + job1);
+                            String status = job1.optString("status");
+                            boolean responseStatus = job1.optBoolean("responseStatus");
+                            if (status.equalsIgnoreCase("OK")) {
+                                JSONArray results = job1.optJSONArray("results");
+                                JSONObject plus_code=job1.optJSONObject("plus_code");
+                                //address =plus_code.optString("compound_code");
+                                JSONObject object = results.optJSONObject(0);
+                                address = object.optString("formatted_address");
+                                tvAddress.setText("You are at:- " + address);
+
+
+                            } else {
+                                address = getCompleteAddressString(latitude, longitude);
+                                tvAddress.setText(address);
+                            }
+
+                            if (latitude==0.0){
+                                address=getAttendanceFromReport;
+                                tvAddress.setText(address);
+                            }else {
+
+                            }
+
+
+
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            //Toast.makeText(SalaryActivity.this, "Volly Error", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pd.dismiss();
+
+                address = getCompleteAddressString(latitude, longitude);
+                tvAddress.setText(address);
+
+                // Toast.makeText(SalaryActivity.this, "volly 2" + error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("ert", error.toString());
+
+            }
+        }) {
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(AttendanceMarkActivity.this);
+        requestQueue.add(stringRequest);
+
+
+    }
+
+
+    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
+        String strAdd = "";
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("");
+
+                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                }
+                strAdd = strReturnedAddress.toString();
+                Log.w("My Current ", strReturnedAddress.toString());
+            } else {
+                Log.w("My Current", "No Address returned!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.w("My Current", "Canont get Address!");
+        }
+        return strAdd;
+    }
+
+
+
+    private void setUpMapIfNeeded() {
+
+
+        //mapView.getMapAsync(this);
+
+    }
+
+
+
+
+
+
+    private void handleNewLocation(Location location) {
+
+
+        latitude = location.getLatitude();
+        currentlat = String.valueOf(latitude);
+        longitude = location.getLongitude();
+        currentlong = String.valueOf(longitude);
+
+
+        // tvAddress.setText(address);
+        // latLng = new LatLng(latitude, longitude);
+
+        latLng = new LatLng(latitude, longitude);
+        String addressP = getCompleteAddressString(latitude, longitude);
+        address=addressP;
+        tvAddress.setText(addressP);
+
+
+        MarkerOptions options = new MarkerOptions()
+                .position(latLng)
+                .title(addressP)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.gps));
+
+
+
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(latLng)      // Sets the center of the map to location user
+                .zoom(16)                   // Sets the zoom
+                .bearing(90)                // Sets the orientation of the camera to east
+                .tilt(0)                   // Sets the tilt of the camera to 30 degrees
+                .build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+        mMap.addMarker(options);
+        getAPIKey();
+
+    }
+
+
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(AttendanceMarkActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(AttendanceMarkActivity.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                new AlertDialog.Builder(AttendanceMarkActivity.this)
+                        .setTitle("Location Permission Needed")
+                        .setMessage("This app needs the Location permission, please accept to use location functionality")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //Prompt the user once explanation has been shown
+                                ActivityCompat.requestPermissions(AttendanceMarkActivity.this,
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        MY_PERMISSIONS_REQUEST_LOCATION);
+                            }
+                        })
+                        .create()
+                        .show();
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(AttendanceMarkActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+        }
+    }
+
+
+
+
+
+    private void showAlert() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Unable to Upload Image Due to Network Issue.Your Attendace has been saved successfully without Image.");
+        alertDialogBuilder.setPositiveButton("ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        arg0.dismiss();
+                        Intent intent=new Intent(AttendanceMarkActivity.this,UserDashboardActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+        alertDialogBuilder.show();
+    }
+
+
+
+    private void selfAttendance(JSONObject jsonObject) {
+
+        final ProgressDialog pd=new ProgressDialog(AttendanceMarkActivity.this);
+        pd.setMessage("Loading");
+        pd.setCancelable(false);
+        pd.show();
+        AndroidNetworking.post(Api.sselfattendanceapi)
+                .addJSONObjectBody(jsonObject)
+                .addHeaders("Authorization", "Bearer "+pref.getAccessToken())
+                .setTag("uploadTest")
+                .setPriority(Priority.HIGH)
+                .build()
+
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        pd.dismiss();
+                        JSONObject job1 = response;
+                        Log.e("response12", "@@@@@@" + job1);
+
+                        int Response_Code = job1.optInt("Response_Code");
+                        String Response_Message=job1.optString("Response_Message");
+                        if (Response_Code == 101) {
+                            // Toast.makeText(getApplicationContext(),responseText,Toast.LENGTH_LONG).show();
+
+                            successAlert();
+                            // boolean _status = job1.getBoolean("status");
+                            // do anything with response
+                        }else {
+
+                            Toast.makeText(getApplicationContext(),Response_Message,Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+
+                        if (error.getErrorCode()==401){
+                            Intent intent=new Intent(AttendanceMarkActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
+
+                    }
+                });
+    }
+
+    public void selfAttendance() {
+        final ProgressDialog pg=new ProgressDialog(AttendanceMarkActivity.this);
+        pg.setMessage("Loading..");
+        pg.setCancelable(false);
+        pg.show();
+        //Log.e(TAG, "selfAttendance: ", );
+        Log.e(TAG, "SELF_ATTENDANCE_WITH_IMAGE: \nAEMEmployeeID:"+pref.getEmpId()
+                +"\nAddress:"+address+"\nLongitude:"+longitude+"\nLatitude:"+latitude+"\nSecurityCode:"+pref.getSecurityCode()+"\nImage:");
+
+        AndroidNetworking.upload(Api.sselfattendanceimageapi)
+                .addMultipartParameter("AEMEmployeeID", pref.getEmpId())
+                .addMultipartParameter("Address", address)
+                .addMultipartParameter("Longitude", String.valueOf(longitude))
+                .addMultipartParameter("Latitude",  String.valueOf(latitude))
+                .addMultipartParameter("SecurityCode",pref.getSecurityCode())
+                .addMultipartFile("Image",compressedImageFile)
+                .addHeaders("Authorization", "Bearer "+pref.getAccessToken())
+                .setTag("uploadTest")
+                .setPriority(Priority.HIGH)
+                .build()
+                .setUploadProgressListener(new UploadProgressListener() {
+                    @Override
+                    public void onProgress(long bytesUploaded, long totalBytes) {
+                        pg.show();
+                    }
+                })
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        pg.dismiss();
+                        JSONObject job = response;
+                        int Response_Code = job.optInt("Response_Code");
+                        String Response_Message=job.optString("Response_Message");
+                        if (Response_Code == 101) {
+                            // Toast.makeText(getApplicationContext(),responseText,Toast.LENGTH_LONG).show();
+                            successAlert();
+                            // boolean _status = job1.getBoolean("status");
+                            // do anything with response
+                        }else {
+                            Toast.makeText(getApplicationContext(),Response_Message,Toast.LENGTH_LONG).show();
+                        }
+
+                        // boolean _status = job1.getBoolean("status");
+                        // do anything with response
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        Log.e("error",error.toString());
+                        pg.dismiss();
+                        if (error.getErrorCode()==401){
+                            Intent intent=new Intent(AttendanceMarkActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
+                    }
+                });
+    }
+
+
+
+
+
+
+
+
+    private void shiftFlagFilter(){
+
+            if (flag==1){
+                // attendance();
+                selfAttendance();
+            }else {
+                //attendancefunction();
+                JSONObject object=new JSONObject();
+                try {
+                    object.put("AEMEmployeeID",pref.getEmpId());
+                    object.put("Address",address);
+                    object.put("Longitude",longitude);
+                    object.put("Latitude",latitude);
+                    object.put("SecurityCode",pref.getSecurityCode());
+                    Log.e(TAG, "SELF_ATTENDANCE_WITH_OUT_IMAGE: "+object);
+                    selfAttendance(object);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+    }
+
+}

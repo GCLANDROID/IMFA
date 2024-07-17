@@ -72,5 +72,8 @@ public class Api {
     public static String sSavewfhAdjustmentApprovalRejected = BASE_URL+"IMFALeave/SavewfhAdjustmentApprovalRejected";
     public static String sDeletewfhAdjutmentByApprover = BASE_URL+"IMFALeave/DeletewfhAdjutmentByApprover";
     public static String sGetWFHmenu = BASE_URL+"IMFALeave/GetWFHmenu";
+    public static String sselfattendanceimageapi = BASE_URL + "FileUpload/PostSelfAttendanceWithImage";
+    public static String sselfattendanceapi = BASE_URL + "Attendance/PostSelfAttendance";
+    public static String sGetAttendanceMenu = BASE_URL+"IMFALeave/GetAttendanceMenu";
 
 }

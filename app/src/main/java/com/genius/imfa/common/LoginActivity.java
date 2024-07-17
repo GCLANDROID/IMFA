@@ -1,4 +1,4 @@
-package com.genius.imfa.Activity;
+package com.genius.imfa.common;
 
 import static com.genius.imfa.Utility.Util.SECRET_KEY;
 import static com.genius.imfa.Utility.Util.encrypt;

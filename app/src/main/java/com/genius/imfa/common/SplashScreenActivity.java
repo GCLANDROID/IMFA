@@ -1,18 +1,15 @@
-package com.genius.imfa.Activity;
+package com.genius.imfa.common;
 
 import static com.genius.imfa.Utility.Util.SECRET_KEY;
 import static com.genius.imfa.Utility.Util.encrypt;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;

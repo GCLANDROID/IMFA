@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 
@@ -19,8 +18,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.genius.imfa.Activity.UserDashboardActivity;
-import com.genius.imfa.Payroll.PayrollActivity;
+import com.genius.imfa.common.UserDashboardActivity;
 import com.genius.imfa.Utility.Api;
 import com.genius.imfa.Utility.Pref;
 import com.genius.imfa.databinding.ActivityLeaveApplicationDashboardBinding;

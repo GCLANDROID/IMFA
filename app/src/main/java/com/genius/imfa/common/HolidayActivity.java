@@ -1,9 +1,8 @@
-package com.genius.imfa.Activity;
+package com.genius.imfa.common;
 
 import static com.genius.imfa.Utility.Util.SECRET_KEY;
 import static com.genius.imfa.Utility.Util.encrypt;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.androidnetworking.AndroidNetworking;
@@ -23,7 +18,6 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.genius.imfa.Model.HoliDayModel;
-import com.genius.imfa.R;
 import com.genius.imfa.Utility.Api;
 import com.genius.imfa.Utility.Pref;
 import com.genius.imfa.adapter.HolidayAdapter;
