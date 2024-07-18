@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,17 +21,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.genius.imfa.R;
 import com.genius.imfa.Utility.Api;
+import com.genius.imfa.Utility.GPSTracker;
 import com.genius.imfa.Utility.NetworkConnectionCheck;
 import com.genius.imfa.Utility.Pref;
 import com.genius.imfa.adapter.AttendanceAdapter;
@@ -41,7 +52,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 
 public class AttendanceReportActivity extends AppCompatActivity {
@@ -76,6 +91,14 @@ public class AttendanceReportActivity extends AppCompatActivity {
     int flag;
     ImageView imgSearch;
     TextView tvToolBar;
+    GPSTracker gps;
+    double latitude = 0.0, longitude = 0.0;
+    String currentDateTimeString;
+    String currentlat,currentlong;
+    String address;
+    LinearLayout llMarkAttendance;
+    AlertDialog addressPopUp;
+    AlertDialog alerDialog1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +138,24 @@ public class AttendanceReportActivity extends AppCompatActivity {
 
     private void initialize() {
         pref = new Pref(AttendanceReportActivity.this);
+        llMarkAttendance=(LinearLayout)findViewById(R.id.llMarkAttendance);
+        gps = new GPSTracker(AttendanceReportActivity.this);
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+        currentDateTimeString = sdf.format(d);
+        currentlat = String.valueOf(latitude);
+        currentlong = String.valueOf(longitude);
+
+        if (gps.canGetLocation()) {
+            latitude = gps.getLatitude();
+            Log.d("saikatdas", String.valueOf(latitude));
+            longitude = gps.getLongitude();
+        } else {
+// can't get location
+// GPS or Network is not enabled
+// Ask user to enable GPS/network in settings
+
+        }
         connectionCheck = new NetworkConnectionCheck(AttendanceReportActivity.this);
         rvAttendanceReport = (RecyclerView) findViewById(R.id.rvAttendanceReport);
         layoutManager
@@ -209,6 +250,8 @@ public class AttendanceReportActivity extends AppCompatActivity {
             }
         });
 
+        getAPIKey();
+
 
 
     }
@@ -297,6 +340,12 @@ public class AttendanceReportActivity extends AppCompatActivity {
 
 
     private void onClick() {
+        llMarkAttendance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAttendanceMarkDialog();
+            }
+        });
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -634,6 +683,55 @@ public class AttendanceReportActivity extends AppCompatActivity {
 
     }
 
+
+    private void showAttendanceMarkDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AttendanceReportActivity.this, R.style.CustomDialogNew);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.dialog_mark_attendance, null);
+        dialogBuilder.setView(dialogView);
+        TextView tvAddress=(TextView)dialogView.findViewById(R.id.tvAddress);
+        tvAddress.setText(address);
+        TextView tvTime=(TextView)dialogView.findViewById(R.id.tvTime);
+        tvTime.setText(currentDateTimeString);
+
+        ImageView imgCancel = (ImageView) dialogView.findViewById(R.id.imgCancel);
+        imgCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addressPopUp.dismiss();
+            }
+        });
+
+        LinearLayout llAttendance=(LinearLayout)dialogView.findViewById(R.id.llAttendance);
+        llAttendance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addressPopUp.dismiss();
+                JSONObject object=new JSONObject();
+                try {
+                    object.put("AEMEmployeeID",pref.getEmpId());
+                    object.put("Address",address);
+                    object.put("Longitude",longitude);
+                    object.put("Latitude",latitude);
+                    object.put("SecurityCode",pref.getSecurityCode());
+                    Log.e(TAG, "SELF_ATTENDANCE_WITH_OUT_IMAGE: "+object);
+                    selfAttendance(object);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+        addressPopUp = dialogBuilder.create();
+        addressPopUp.setCancelable(true);
+        Window window = addressPopUp.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setGravity(Gravity.CENTER);
+        addressPopUp.show();
+
+    }
+
     public void openBrowser() {
         Uri uri = Uri.parse(imgUrl); // missing 'http://' will cause crashed
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -642,5 +740,250 @@ public class AttendanceReportActivity extends AppCompatActivity {
         } else {
 
         }
+    }
+
+
+    private void getAPIKey() {
+        String surl = "https://cloud.geniusconsultant.com/GeniusESS/API/Utility/GetLocationKey";
+        Log.d("residancelist", surl);
+        final ProgressDialog progressDialog=new ProgressDialog(AttendanceReportActivity.this);
+        progressDialog.setMessage("Loading..");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Log.d("clint", "1");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, surl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("responseLogin", response);
+                        progressDialog.dismiss();
+
+
+                        try {
+                            JSONObject job1 = new JSONObject(response);
+                            Log.e("response12", "@@@@@@" + job1);
+                            String responseText = job1.optString("responseText");
+
+                            getaddressFromAPI(responseText);
+
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            //Toast.makeText(SalaryActivity.this, "Volly Error", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                address = getCompleteAddressString(latitude, longitude);
+
+
+                // Toast.makeText(SalaryActivity.this, "volly 2" + error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("ert", error.toString());
+
+            }
+        }) {
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(AttendanceReportActivity.this);
+        requestQueue.add(stringRequest);
+
+
+    }
+
+    private void getaddressFromAPI(String apikey) {
+        String testUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=28.5530871,77.201581&key=" + apikey;
+        String surl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=" + apikey;
+        Log.d("residancelist", surl);
+        final ProgressDialog pd = new ProgressDialog(AttendanceReportActivity.this);
+        pd.setMessage("Loading");
+        pd.setCancelable(false);
+        pd.show();
+        Log.d("clint", "1");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, surl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("responseLogin", response);
+                        pd.dismiss();
+                        try {
+                            JSONObject job1 = new JSONObject(response);
+                            Log.e("response12", "@@@@@@" + job1);
+                            String status = job1.optString("status");
+                            boolean responseStatus = job1.optBoolean("responseStatus");
+                            if (status.equalsIgnoreCase("OK")) {
+                                JSONArray results = job1.optJSONArray("results");
+                                JSONObject plus_code=job1.optJSONObject("plus_code");
+                                //address =plus_code.optString("compound_code");
+                                JSONObject object = results.optJSONObject(0);
+                                address = object.optString("formatted_address");
+
+
+
+                            } else {
+                                address = getCompleteAddressString(latitude, longitude);
+
+                            }
+
+
+
+
+
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            //Toast.makeText(SalaryActivity.this, "Volly Error", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pd.dismiss();
+
+                address = getCompleteAddressString(latitude, longitude);
+
+
+                // Toast.makeText(SalaryActivity.this, "volly 2" + error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("ert", error.toString());
+
+            }
+        }) {
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(AttendanceReportActivity.this);
+        requestQueue.add(stringRequest);
+
+
+    }
+
+
+    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
+        String strAdd = "";
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("");
+
+                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                }
+                strAdd = strReturnedAddress.toString();
+                Log.w("My Current ", strReturnedAddress.toString());
+            } else {
+                Log.w("My Current", "No Address returned!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.w("My Current", "Canont get Address!");
+        }
+        return strAdd;
+    }
+
+
+    private void selfAttendance(JSONObject jsonObject) {
+
+        final ProgressDialog pd=new ProgressDialog(AttendanceReportActivity.this);
+        pd.setMessage("Loading");
+        pd.setCancelable(false);
+        pd.show();
+        AndroidNetworking.post(Api.sselfattendanceapi)
+                .addJSONObjectBody(jsonObject)
+                .addHeaders("Authorization", "Bearer "+pref.getAccessToken())
+                .setTag("uploadTest")
+                .setPriority(Priority.HIGH)
+                .build()
+
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        pd.dismiss();
+                        JSONObject job1 = response;
+                        Log.e("response12", "@@@@@@" + job1);
+
+                        int Response_Code = job1.optInt("Response_Code");
+                        String Response_Message=job1.optString("Response_Message");
+                        if (Response_Code == 101) {
+                            // Toast.makeText(getApplicationContext(),responseText,Toast.LENGTH_LONG).show();
+
+                            successAlert();
+                            // boolean _status = job1.getBoolean("status");
+                            // do anything with response
+                        }else {
+
+                            Toast.makeText(getApplicationContext(),Response_Message,Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+
+                        if (error.getErrorCode()==401){
+                            Intent intent=new Intent(AttendanceReportActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
+
+                    }
+                });
+    }
+
+
+    private void successAlert() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AttendanceReportActivity.this, R.style.CustomDialogNew);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.dialog_success, null);
+        dialogBuilder.setView(dialogView);
+        AppCompatButton llOk = (AppCompatButton) dialogView.findViewById(R.id.btnOk);
+        llOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alerDialog1.dismiss();
+                JSONObject object=new JSONObject();
+                try {
+                    object.put("AEMConsultantID",pref.getEmpConId());
+                    object.put("AEMClientID",pref.getEmpClintId());
+                    object.put("AEMClientOfficeID",pref.getEmpClintOffId());
+                    object.put("AEMEmployeeID",pref.getEmpId());
+                    object.put("CurrentPage",0);
+                    object.put("AID",1);
+                    object.put("ApproverStatus",4);
+                    object.put("YearVal",year);
+                    object.put("MonthName",month);
+                    object.put("WorkingStatus",1);
+                    object.put("DbOperation",1);
+                    object.put("SecurityCode",pref.getSecurityCode());
+                    attendanceReport(object);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        TextView tvSuccess = (TextView) dialogView.findViewById(R.id.tvSuccess);
+        tvSuccess.setText("Your Attendance saved successfully");
+
+
+        alerDialog1 = dialogBuilder.create();
+        alerDialog1.setCancelable(false);
+        Window window = alerDialog1.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setGravity(Gravity.CENTER);
+        alerDialog1.show();
     }
 }

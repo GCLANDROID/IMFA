@@ -41,6 +41,7 @@ import com.genius.imfa.Utility.Pref;
 import com.genius.imfa.Utility.TimeDateConverter;
 import com.genius.imfa.Utility.Util;
 import com.genius.imfa.attendance.AttendanceMarkActivity;
+import com.genius.imfa.attendance.AttendanceReportActivity;
 import com.genius.imfa.databinding.ActivityUserDashboardBinding;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
@@ -485,7 +486,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
         binding.llDrawerPane.llAttendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserDashboardActivity.this, AttendanceMarkActivity.class);
+                Intent intent = new Intent(UserDashboardActivity.this, AttendanceReportActivity.class);
                 startActivity(intent);
             }
         });

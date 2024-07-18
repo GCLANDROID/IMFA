@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="320dp"
+    android:background="@drawable/lldesign9"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:backgroundTint="@color/white">
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:background="@drawable/lldesign9"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="1dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.1"
+            android:gravity="center">
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/lldesign2"
+                android:gravity="center"
+                android:layout_marginLeft="30dp">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/imfa_logo"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/cancelicon"
+                android:id="@+id/imgCancel"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/appYellow"
+                    android:text="Your Current Address :"></TextView>
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/appBlack"
+                    android:text="Your Current Address :"></TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/appYellow"
+                    android:text="Current Time :"></TextView>
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/appBlack"
+                    android:text="Your Current Address :"></TextView>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llAttendance"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:background="@color/appYellow"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/appBlack"
+                android:text="Mark Your Attendance"></TextView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</LinearLayout>
