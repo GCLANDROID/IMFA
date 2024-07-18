@@ -40,6 +40,8 @@
         android:theme="@style/Theme.IMFA"
         tools:targetApi="31"
         android:usesCleartextTraffic="true">
+        <activity android:name=".attendance.AttendanceReportActivity"
+            android:screenOrientation="userPortrait"></activity>
         <activity android:name=".attendance.AttendanceMarkActivity"
             android:screenOrientation="userPortrait"></activity>
         <activity android:name=".wfh.WFHActivity"

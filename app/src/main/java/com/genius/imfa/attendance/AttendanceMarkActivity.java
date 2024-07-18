@@ -156,6 +156,7 @@ public class AttendanceMarkActivity extends AppCompatActivity {
     Spinner spshift;
     String Punchtype;
     LinearLayout llShift;
+    TextView tvReport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +170,7 @@ public class AttendanceMarkActivity extends AppCompatActivity {
 
     @SuppressLint("RestrictedApi")
     private void initview() {
+        tvReport=(TextView)findViewById(R.id.tvReport);
         spshift=(Spinner)findViewById(R.id.spshift);
         pref = new Pref(AttendanceMarkActivity.this);
         lnMain=(LinearLayout) findViewById(R.id.lnMain);
@@ -263,6 +265,14 @@ public class AttendanceMarkActivity extends AppCompatActivity {
 
 
     private void onClick() {
+        tvReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(AttendanceMarkActivity.this,AttendanceReportActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         spshift.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -365,7 +375,9 @@ public class AttendanceMarkActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alerDialog1.dismiss();
-                onBackPressed();
+                Intent intent=new Intent(AttendanceMarkActivity.this,AttendanceReportActivity.class);
+                startActivity(intent);
+                finish();
 
             }
         });

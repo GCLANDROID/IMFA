@@ -75,5 +75,6 @@ public class Api {
     public static String sselfattendanceimageapi = BASE_URL + "FileUpload/PostSelfAttendanceWithImage";
     public static String sselfattendanceapi = BASE_URL + "Attendance/PostSelfAttendance";
     public static String sGetAttendanceMenu = BASE_URL+"IMFALeave/GetAttendanceMenu";
+    public static String sAttendanceReportapi = BASE_URL + "DailyLog/GetEmployeeAttendanceReport";
 
 }
