@@ -14,7 +14,8 @@
     <!-- Devices running Android 12L (API level 32) or lower  -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
-
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 
     <!-- Devices running Android 13 (API level 33) or higher -->
@@ -39,6 +40,10 @@
         android:theme="@style/Theme.IMFA"
         tools:targetApi="31"
         android:usesCleartextTraffic="true">
+        <activity android:name=".attendance.AttendanceReportActivity"
+            android:screenOrientation="userPortrait"></activity>
+        <activity android:name=".attendance.AttendanceMarkActivity"
+            android:screenOrientation="userPortrait"></activity>
         <activity android:name=".wfh.WFHActivity"
             android:screenOrientation="userPortrait"></activity>
         <activity
@@ -46,19 +51,19 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Activity.UpdateActivity"
+            android:name=".common.UpdateActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Activity.HolidayActivity"
+            android:name=".common.HolidayActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Activity.ForgotPasswordActivity"
+            android:name=".common.ForgotPasswordActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ChangePasswordActivity"
+            android:name=".common.ChangePasswordActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -86,20 +91,20 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ProfileActivity"
+            android:name=".common.ProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name=".common.LoginActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".Activity.AndroidXCameraActivity"
+            android:name=".common.AndroidXCameraActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Activity.SplashScreenActivity"
+            android:name=".common.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -109,7 +114,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.UserDashboardActivity"
+            android:name=".common.UserDashboardActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
 

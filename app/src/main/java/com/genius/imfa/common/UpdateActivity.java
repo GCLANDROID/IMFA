@@ -1,4 +1,4 @@
-package com.genius.imfa.Activity;
+package com.genius.imfa.common;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;

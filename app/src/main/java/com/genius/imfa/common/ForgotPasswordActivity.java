@@ -1,4 +1,4 @@
-package com.genius.imfa.Activity;
+package com.genius.imfa.common;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -15,11 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;

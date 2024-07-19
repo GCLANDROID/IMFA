@@ -13,7 +13,7 @@ import com.genius.imfa.Leave.fragment.ApplicationFragment;
 import com.genius.imfa.Leave.fragment.ApproverFragment;
 import com.genius.imfa.Leave.fragment.DetailsFragment;
 
-import com.genius.imfa.Activity.UserDashboardActivity;
+import com.genius.imfa.common.UserDashboardActivity;
 import com.genius.imfa.R;
 import com.genius.imfa.databinding.ActivityLeaveApplicationBinding;
 

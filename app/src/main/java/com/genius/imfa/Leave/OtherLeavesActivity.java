@@ -1,20 +1,14 @@
 package com.genius.imfa.Leave;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.genius.imfa.Activity.UserDashboardActivity;
-import com.genius.imfa.Leave.fragment.ApplicationFragment;
+import com.genius.imfa.common.UserDashboardActivity;
 import com.genius.imfa.Leave.fragment.OtherApplicationFragment;
 import com.genius.imfa.Leave.fragment.OtherDetailsFragment;
 import com.genius.imfa.Leave.fragment.OtherLeaveApproverFragment;

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="@drawable/background_1"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/back_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Attendance"
+                android:textColor="@color/appBlack"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="right">
+
+            <ImageView
+                android:id="@+id/imgHome"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/home" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llSearch"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="#f21a7cc2"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/search" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:text="Search"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="1"
+       android:orientation="vertical">
+
+       <LinearLayout
+           android:id="@+id/llWLLoader"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:gravity="center"
+           android:orientation="vertical"
+           android:visibility="visible">
+
+           <ProgressBar
+
+               android:id="@+id/ProgressbarWL"
+               android:layout_width="40dp"
+               android:layout_height="40dp" />
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
+               android:text="“In most cases, being a good boss means hiring talented people and then getting out of their way.”-Tina Fey"
+               android:textAlignment="center"
+               android:textColor="@android:color/darker_gray"
+               android:textSize="13sp"
+               android:textStyle="italic" />
+       </LinearLayout>
+
+       <LinearLayout
+           android:id="@+id/llMain"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:layout_marginLeft="5dp"
+           android:layout_marginTop="10dp"
+           android:layout_marginRight="5dp"
+           android:orientation="vertical"
+           android:visibility="gone">
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rvAttendanceReport"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="5dp"
+               android:layout_marginTop="10dp"
+               android:layout_marginRight="5dp"
+               android:layout_marginBottom="10dp"></androidx.recyclerview.widget.RecyclerView>
+
+           <ProgressBar
+               android:id="@+id/WLpagination_loader"
+               android:layout_width="match_parent"
+               android:layout_height="40dp"
+               android:layout_gravity="center"
+               android:paddingTop="4dp"
+               android:paddingBottom="4dp"
+               android:visibility="gone"
+
+               />
+
+
+       </LinearLayout>
+
+       <LinearLayout
+           android:id="@+id/llNodata"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_marginTop="10dp"
+           android:gravity="top|center"
+           android:orientation="vertical"
+           android:visibility="gone">
+
+           <ImageView
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:layout_marginTop="20dp"
+               android:src="@drawable/problemicon" />
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="10dp"
+               android:text="No data found"
+               android:textAppearance="?android:textAppearanceMedium"
+               android:textColor="@android:color/black"
+               android:textStyle="bold" />
+       </LinearLayout>
+
+       <LinearLayout
+           android:id="@+id/llAgain"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:gravity="center"
+           android:orientation="vertical"
+           android:visibility="gone">
+
+           <ImageView
+               android:id="@+id/imgAgain"
+               android:layout_width="60dp"
+               android:layout_height="60dp"
+               android:src="@drawable/againicon" />
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="10dp"
+               android:text="Try Again"
+               android:textColor="@android:color/black" />
+       </LinearLayout>
+   </LinearLayout>
+    <LinearLayout
+        android:id="@+id/llMarkAttendance"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:background="@color/appYellow"
+        android:gravity="center">
+        <TextView
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/appBlack"
+            android:text="Mark Attendance"></TextView>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,8 +1,6 @@
 package com.genius.imfa.Leave.fragment;
 
 
-import static android.app.Activity.RESULT_OK;
-
 import static com.genius.imfa.Leave.fragment.OtherApplicationFragment.getRealPath;
 
 import android.annotation.SuppressLint;
@@ -11,12 +9,9 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -62,8 +57,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.developers.imagezipper.ImageZipper;
-import com.genius.imfa.Activity.AndroidXCameraActivity;
+import com.genius.imfa.common.AndroidXCameraActivity;
 import com.genius.imfa.Leave.LeaveApplicationActivity;
 import com.genius.imfa.Model.CompOffDetailsModel;
 import com.genius.imfa.Model.DayBreakUpModel;
@@ -87,7 +81,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

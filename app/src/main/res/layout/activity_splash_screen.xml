@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/phone_gradient_theme_app"
-    tools:context=".Activity.SplashScreenActivity">
+    tools:context=".common.SplashScreenActivity">
 
 
     <androidx.cardview.widget.CardView
