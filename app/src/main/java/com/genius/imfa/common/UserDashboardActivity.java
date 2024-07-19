@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import com.genius.imfa.Payroll.PayrollActivity;
 import com.genius.imfa.R;
 import com.genius.imfa.Utility.Api;
 import com.genius.imfa.Utility.GreetingGenerator;
+import com.genius.imfa.Utility.NetworkConnectionCheck;
 import com.genius.imfa.Utility.Pref;
 import com.genius.imfa.Utility.TimeDateConverter;
 import com.genius.imfa.Utility.Util;
@@ -53,6 +55,11 @@ import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.OnSuccessListener;
 import com.haohaohu.autoscrolltextview.IMarqueeListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,6 +94,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
     int date;
     private static final int RC_APP_UPDATE=100;
     private AppUpdateManager mAppUpdateManager;
+    private NetworkConnectionCheck connectionCheck;
 
     String version;
     @Override
@@ -106,6 +114,8 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
 
     private void initView() {
         pref = new Pref(UserDashboardActivity.this);
+        connectionCheck = new NetworkConnectionCheck(this);
+
        // Log.e(TAG, "initView: ====================== "+ FindDocumentInformation.getFileType("data:.pdf;base64,JVBERi0xLjMKJcTl8uXrp"));
        // Log.e(TAG, "initView: base64 ====================== "+ FindDocumentInformation.getBase64Url("data:.pdf;base64,JVBERi0xLjMKJcTl8uXrp"));
         try {
@@ -486,8 +496,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
         binding.llDrawerPane.llAttendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserDashboardActivity.this, AttendanceReportActivity.class);
-                startActivity(intent);
+               checkPermissionForFile();
             }
         });
 
@@ -1343,5 +1352,36 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
 
                     }
                 });
+    }
+
+
+    private void checkPermissionForFile() {
+        Dexter.withContext(UserDashboardActivity.this)
+                .withPermissions(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+                            Log.e("onPermissionsGranted", "Called");
+                            if (connectionCheck.isGPSEnabled()) {
+                                Intent intent = new Intent(UserDashboardActivity.this, AttendanceReportActivity.class);
+                                startActivity(intent);
+                            }else {
+                                Toast.makeText(UserDashboardActivity.this, "Please turn on your GPS Connection", Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        } else {
+                            Toast.makeText(UserDashboardActivity.this, "Permissions are required to perform app functionality.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
     }
 }
