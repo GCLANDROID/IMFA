@@ -824,36 +824,19 @@ public class AttendanceReportActivity extends AppCompatActivity {
                                 //address =plus_code.optString("compound_code");
                                 JSONObject object = results.optJSONObject(0);
                                 address = object.optString("formatted_address");
-
-
-
                             } else {
                                 address = getCompleteAddressString(latitude, longitude);
-
                             }
-
-
-
-
-
-
-
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                             //Toast.makeText(SalaryActivity.this, "Volly Error", Toast.LENGTH_LONG).show();
                         }
-
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 pd.dismiss();
-
                 address = getCompleteAddressString(latitude, longitude);
-
-
                 // Toast.makeText(SalaryActivity.this, "volly 2" + error.toString(), Toast.LENGTH_LONG).show();
                 Log.e("ert", error.toString());
 
@@ -954,6 +937,7 @@ public class AttendanceReportActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alerDialog1.dismiss();
+
                 JSONObject object=new JSONObject();
                 try {
                     object.put("AEMConsultantID",pref.getEmpConId());
@@ -975,9 +959,9 @@ public class AttendanceReportActivity extends AppCompatActivity {
 
             }
         });
+
         TextView tvSuccess = (TextView) dialogView.findViewById(R.id.tvSuccess);
         tvSuccess.setText("Your Attendance saved successfully");
-
 
         alerDialog1 = dialogBuilder.create();
         alerDialog1.setCancelable(false);

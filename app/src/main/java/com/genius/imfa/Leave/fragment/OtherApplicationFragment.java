@@ -18,6 +18,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -48,6 +49,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.genius.imfa.Utility.FileUtils;
 import com.genius.imfa.common.AndroidXCameraActivity;
 import com.genius.imfa.Leave.OtherLeavesActivity;
 import com.genius.imfa.Model.AdjustmentModel;
@@ -81,6 +83,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import id.zelory.compressor.Compressor;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -548,6 +552,28 @@ public class OtherApplicationFragment extends Fragment {
                             Log.e(TAG, "onActivityResult: "+imageURl);
                             imageName = FindDocumentInformation.FileNameFromURL(imageURl);
                             Log.e(TAG, "onActivityResult: imageName: "+imageName);
+
+                            boolean isImageTooLarge = ImageUtils.isImageGreaterThan2MB(getActivity(), uri);
+                            if (isImageTooLarge) {
+                                Log.e(TAG, "isImageTooLarge: true");
+                                // Image is larger than 2 MB
+                                compressedImageFile = new Compressor.Builder(getActivity())
+                                        .setMaxWidth(1024)
+                                        .setMaxHeight(768)
+                                        .setQuality(70)
+                                        .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                                        .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+                                                Environment.DIRECTORY_PICTURES).getAbsolutePath()
+                                        ).build()
+                                        .compressToFile(file);
+                                Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
+                            } else {
+                                // Image is 2 MB or smaller
+                                Log.e(TAG, "isImageTooLarge: false");
+                                Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
+                            }
+
+
                             compressedImageFile  = new File(uri.getPath());
                             try {
                                 base64image = ImageUtils.fileToBase64(compressedImageFile).replaceAll("\n","");
@@ -605,6 +631,26 @@ public class OtherApplicationFragment extends Fragment {
                                     binding.imgPic.setImageDrawable(myDrawable);
                                 } else {
                                     compressedImageFile  = new File(realPath);
+                                    boolean isImageTooLarge = ImageUtils.isImageGreaterThan2MB(getActivity(), selectedFileUri);
+                                    if (isImageTooLarge) {
+                                        Log.e(TAG, "isImageTooLarge: true");
+                                        // Image is larger than 2 MB
+                                        compressedImageFile = new Compressor.Builder(getActivity())
+                                                .setMaxWidth(1024)
+                                                .setMaxHeight(768)
+                                                .setQuality(70)
+                                                .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                                                .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+                                                        Environment.DIRECTORY_PICTURES).getAbsolutePath()
+                                                ).build()
+                                                .compressToFile(compressedImageFile);
+                                        Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
+                                    } else {
+                                        // Image is 2 MB or smaller
+                                        Log.e(TAG, "isImageTooLarge: false");
+                                        Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
+                                    }
+
                                     try {
                                         base64image = ImageUtils.fileToBase64(compressedImageFile).replaceAll("\n","");
                                         Log.e(TAG, "base64Image: ==================="+base64image);

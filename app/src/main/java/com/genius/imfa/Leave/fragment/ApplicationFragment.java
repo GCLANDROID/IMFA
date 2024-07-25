@@ -3,6 +3,7 @@ package com.genius.imfa.Leave.fragment;
 
 import static com.genius.imfa.Leave.fragment.OtherApplicationFragment.getRealPath;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -12,10 +13,12 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -57,6 +60,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.genius.imfa.Utility.FileUtils;
 import com.genius.imfa.common.AndroidXCameraActivity;
 import com.genius.imfa.Leave.LeaveApplicationActivity;
 import com.genius.imfa.Model.CompOffDetailsModel;
@@ -75,6 +79,11 @@ import com.genius.imfa.adapter.CompOffAdapter;
 import com.genius.imfa.adapter.DayBreakUpAdapter;
 import com.genius.imfa.adapter.LeaveBalanceDetailsAdapter;
 import com.genius.imfa.adapter.PreviewAdapter;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,6 +99,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import id.zelory.compressor.Compressor;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -505,7 +517,9 @@ public class ApplicationFragment extends Fragment {
         llChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showChooseFileDialog();
+
+                checkPermissionForFile();
+                //showChooseFileDialog();
             }
         });
 
@@ -1682,6 +1696,7 @@ public class ApplicationFragment extends Fragment {
                 //Intent intent = new Intent(getContext(), AndroidXCameraActivity.class);
                 //startActivityForResult(intent,100);
                 //mSelectDocumentImages.launch(intent);
+
                 cameraIntent();
             }
         });
@@ -1723,6 +1738,29 @@ public class ApplicationFragment extends Fragment {
                 Log.e(TAG, "onActivityResult: "+imageURl);
                 String imageName = FindDocumentInformation.FileNameFromURL(imageURl);
                 Log.e(TAG, "onActivityResult: imageName: "+imageName);
+
+
+                boolean isImageTooLarge = ImageUtils.isImageGreaterThan2MB(getActivity(), uri);
+                if (isImageTooLarge) {
+                    Log.e(TAG, "isImageTooLarge: true");
+                    // Image is larger than 2 MB
+                    compressedImageFile = new Compressor.Builder(getActivity())
+                            .setMaxWidth(1024)
+                            .setMaxHeight(768)
+                            .setQuality(70)
+                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                            .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+                                    Environment.DIRECTORY_PICTURES).getAbsolutePath()
+                            ).build()
+                            .compressToFile(file);
+                    Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
+                } else {
+                    // Image is 2 MB or smaller
+                    Log.e(TAG, "isImageTooLarge: false");
+                    Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
+                }
+
+
                 compressedImageFile  = new File(uri.getPath());
                 try {
                     encodedImage = ImageUtils.fileToBase64(compressedImageFile).replaceAll("\n","");
@@ -1794,6 +1832,26 @@ public class ApplicationFragment extends Fragment {
                         imgPic.setImageDrawable(myDrawable);
                     } else {
                         compressedImageFile  = new File(realPath);
+                        boolean isImageTooLarge = ImageUtils.isImageGreaterThan2MB(getActivity(), selectedFileUri);
+                        if (isImageTooLarge) {
+                            Log.e(TAG, "isImageTooLarge: true");
+                            // Image is larger than 2 MB
+                            compressedImageFile = new Compressor.Builder(getActivity())
+                                    .setMaxWidth(1024)
+                                    .setMaxHeight(768)
+                                    .setQuality(70)
+                                    .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                                    .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+                                            Environment.DIRECTORY_PICTURES).getAbsolutePath()
+                                    ).build()
+                                    .compressToFile(compressedImageFile);
+                            Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
+                        } else {
+                            // Image is 2 MB or smaller
+                            Log.e(TAG, "isImageTooLarge: false");
+                            Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
+                        }
+
                         try {
                             encodedImage = ImageUtils.fileToBase64(compressedImageFile).replaceAll("\n","");
                             //Log.e(TAG, "base64Image: ==================="+encodedImage);
@@ -2469,5 +2527,28 @@ public class ApplicationFragment extends Fragment {
 
                     }
                 });
+    }
+
+    private void checkPermissionForFile() {
+        Dexter.withContext(getActivity())
+                .withPermissions(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+                            Log.e("onPermissionsGranted", "Called");
+                            showChooseFileDialog();
+                        } else {
+                            Toast.makeText(getActivity(), "Permissions are required to perform app functionality.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
     }
 }
