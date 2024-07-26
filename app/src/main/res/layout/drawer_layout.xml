@@ -154,6 +154,33 @@
 
        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/llWeb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/globalnetwork"
+                app:tint="@color/appBlack" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Web ESS"
+                android:textSize="14sp"
+                android:textColor="@color/appBlack"
+                android:layout_marginStart="10dp"/>
+
+        </LinearLayout>
+
 
 
        <LinearLayout

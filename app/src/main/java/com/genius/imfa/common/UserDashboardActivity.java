@@ -17,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -482,6 +483,15 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
             public void onClick(View v) {
                 Intent intent = new Intent(UserDashboardActivity.this, LeaveApplicationDashboardActivity.class);
                 startActivity(intent);
+            }
+        });
+
+
+        binding.llDrawerPane.llWeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://genpayhr.geniusconsultant.com/IMFA/hr/GHRMSLogin.aspx"));
+                startActivity(browserIntent);
             }
         });
 
