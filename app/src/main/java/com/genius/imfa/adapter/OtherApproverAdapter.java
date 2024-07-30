@@ -63,6 +63,7 @@ public class OtherApproverAdapter extends RecyclerView.Adapter<OtherApproverAdap
         holder.tvEndDate.setText(otherApproverList.get(position).EndDate);
         holder.tvReason.setText(otherApproverList.get(position).Reason);
         holder.tvStatus.setText(otherApproverList.get(position).ApprovalStatus);
+        holder.tvAppliedDate.setText(otherApproverList.get(position).AppliedDate);
         Log.e(TAG, "onBindViewHolder: "+otherApproverList.get(position).getApprovedBY());
         if (!otherApproverList.get(position).getApprovedBY().equals("null")){
             holder.tvApprovedBy.setText(otherApproverList.get(position).getApprovedBY());
@@ -135,6 +136,7 @@ public class OtherApproverAdapter extends RecyclerView.Adapter<OtherApproverAdap
         });
 
         holder.llValue.setVisibility(View.GONE);
+        holder.llAvailableValue.setVisibility(View.GONE);
 
         if (otherApproverList.get(position).Documentlink != null || !otherApproverList.get(position).Documentlink.isEmpty()){
             holder.tvDocument.setVisibility(View.VISIBLE);
@@ -164,8 +166,8 @@ public class OtherApproverAdapter extends RecyclerView.Adapter<OtherApproverAdap
 
     class MyViewHolder extends RecyclerView.ViewHolder{
         TextView tvEmpName, tvType, tvLeaveType,tvleaveStrtDate, tvStrtDate, tvLeaveEndDate, tvEndDate,
-                tvReason,tvStatus,tvApprovedBy,tvDocument,tvDocumentName;
-        LinearLayout llTick,llGreen,llYellow,lnDelete,llValue,llDocumentName;
+                tvReason,tvStatus,tvApprovedBy,tvDocument,tvDocumentName,tvAppliedDate;
+        LinearLayout llTick,llGreen,llYellow,lnDelete,llValue,llDocumentName,llAvailableValue;
         ImageView imgTick;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -175,6 +177,7 @@ public class OtherApproverAdapter extends RecyclerView.Adapter<OtherApproverAdap
             tvleaveStrtDate = itemView.findViewById(R.id.tvleaveStrtDate);
             tvStrtDate = itemView.findViewById(R.id.tvStrtDate);
             tvLeaveEndDate = itemView.findViewById(R.id.tvLeaveEndDate);
+            tvAppliedDate = itemView.findViewById(R.id.tvAppliedDate);
             tvEndDate = itemView.findViewById(R.id.tvEndDate);
             tvReason = itemView.findViewById(R.id.tvReason);
             tvStatus = itemView.findViewById(R.id.tvStatus);
@@ -189,6 +192,7 @@ public class OtherApproverAdapter extends RecyclerView.Adapter<OtherApproverAdap
             tvDocument = itemView.findViewById(R.id.tvDocument);
             tvDocumentName = itemView.findViewById(R.id.tvDocumentName);
             llDocumentName = itemView.findViewById(R.id.llDocumentName);
+            llAvailableValue = itemView.findViewById(R.id.llAvailableValue);
         }
     }
 }

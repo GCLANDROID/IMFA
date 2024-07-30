@@ -48,7 +48,6 @@ import retrofit2.Retrofit;
 public class OtherDetailsFragment extends Fragment {
     private static final String TAG = "OtherDetailsFragment";
 
-
     View v;
     Pref pref;
     RecyclerView rvItem;

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <FrameLayout
@@ -106,7 +107,7 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/leavepng"></ImageView>
+                            android:src="@drawable/leavepng"/>
 
                         <TextView
                             android:id="@+id/tvType"
@@ -116,7 +117,7 @@
                             android:paddingLeft="5dp"
                             android:text="Leave:"
                             android:textColor="@color/color7"
-                            android:textSize="12sp"></TextView>
+                            android:textSize="12sp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -130,9 +131,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:paddingLeft="5dp"
-                            android:text="Previelage Leave"
+                            tools:text="Previelage Leave"
                             android:textColor="@color/color8"
-                            android:textSize="12sp"></TextView>
+                            android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -151,7 +152,53 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/calendaricon"></ImageView>
+                            android:src="@drawable/leavepng"/>
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="5dp"
+                            android:text="Applied Date:"
+                            android:textColor="@color/color7"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tvAppliedDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="5dp"
+                            tools:text="02/12/2019"
+                            android:textColor="@color/color8"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:paddingLeft="5dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/calendaricon"/>
 
                         <TextView
                             android:id="@+id/tvleaveStrtDate"
@@ -161,7 +208,7 @@
                             android:paddingLeft="5dp"
                             android:text="Start Date:"
                             android:textColor="@color/color7"
-                            android:textSize="12sp"></TextView>
+                            android:textSize="12sp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -177,7 +224,7 @@
                             android:paddingLeft="5dp"
                             android:text="02/12/2019"
                             android:textColor="@color/color8"
-                            android:textSize="12sp"></TextView>
+                            android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -196,7 +243,7 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/calendaricon"></ImageView>
+                            android:src="@drawable/calendaricon"/>
 
                         <TextView
                             android:id="@+id/tvLeaveEndDate"
@@ -206,7 +253,7 @@
                             android:paddingLeft="5dp"
                             android:text="End Date:"
                             android:textColor="@color/color7"
-                            android:textSize="12sp"></TextView>
+                            android:textSize="12sp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -220,9 +267,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:paddingLeft="5dp"
-                            android:text="02/12/2019"
+                            tools:text="02/12/2019"
                             android:textColor="@color/color8"
-                            android:textSize="12sp"></TextView>
+                            android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -312,9 +359,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:paddingLeft="5dp"
-                            android:text="1"
+                            tools:text="1"
                             android:textColor="@color/color8"
-                            android:textSize="12sp"></TextView>
+                            android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -358,7 +405,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:paddingLeft="5dp"
-                            android:text="testt"
+                            tools:text="testt"
                             android:textColor="@color/color8"
                             android:textSize="12sp"></TextView>
                     </LinearLayout>
@@ -404,7 +451,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:paddingLeft="5dp"
-                            android:text="20/12/2019"
+                            tools:text="20/12/2019"
                             android:textColor="@color/color8"
                             android:textSize="12sp"></TextView>
                     </LinearLayout>
@@ -449,7 +496,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:paddingLeft="5dp"
-                            android:text="testt"
+                            tools:text="testt"
                             android:textColor="@color/color8"
                             android:textSize="12sp"></TextView>
                     </LinearLayout>

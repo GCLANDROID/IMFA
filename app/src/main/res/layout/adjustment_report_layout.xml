@@ -92,7 +92,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/leavepng"></ImageView>
+                        android:src="@drawable/leavepng"/>
 
                     <TextView
 
@@ -102,7 +102,7 @@
                         android:paddingLeft="5dp"
                         android:text="Applied Date:"
                         android:textColor="@color/color7"
-                        android:textSize="12sp"></TextView>
+                        android:textSize="12sp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -118,7 +118,7 @@
                         android:paddingLeft="5dp"
                         tools:text="Previelage Leave"
                         android:textColor="@color/color8"
-                        android:textSize="12sp"></TextView>
+                        android:textSize="12sp"/>
                 </LinearLayout>
             </LinearLayout>
 
