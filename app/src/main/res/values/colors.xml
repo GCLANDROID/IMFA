@@ -58,5 +58,8 @@
 
     <color name="halfday">#FFCA61</color>
     <color name="missedpunch">#AC4782</color>
+    <color name="special_leave_color">#9B63FF</color>
+    <color name="tour_color">#FF5722</color>
+
 
 </resources>

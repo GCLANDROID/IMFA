@@ -6,6 +6,7 @@ import static com.genius.imfa.Utility.Util.encrypt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -43,6 +44,7 @@ import com.genius.imfa.Utility.NetworkConnectionCheck;
 import com.genius.imfa.Utility.Pref;
 import com.genius.imfa.Utility.TimeDateConverter;
 import com.genius.imfa.Utility.Util;
+import com.genius.imfa.adapter.MessageBoardAdapter;
 import com.genius.imfa.attendance.AttendanceMarkActivity;
 import com.genius.imfa.attendance.AttendanceReportActivity;
 import com.genius.imfa.databinding.ActivityUserDashboardBinding;
@@ -228,6 +230,31 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
         descHashMap.put("PLA", leaveProperty);
         //tvPresent=(TextView)findViewById(R.id.tvPresent);
 
+        //SPL, ESIC, TRL
+        Property specialLeaveProperty = new Property();
+        specialLeaveProperty.layoutResource = R.layout.special_leave_view;
+        specialLeaveProperty.dateTextViewResource = R.id.text_view;
+        descHashMap.put("SPL", specialLeaveProperty);
+        descHashMap.put("ESIC", specialLeaveProperty);
+        descHashMap.put("TRL", specialLeaveProperty);
+
+
+
+
+        //Tour
+        Property tourProperty = new Property();
+        tourProperty.layoutResource = R.layout.tour;
+        tourProperty.dateTextViewResource = R.id.text_view;
+        descHashMap.put("T", tourProperty);
+
+        //WOW
+        Property wowProperty = new Property();
+        wowProperty.layoutResource = R.layout.present_view;
+        wowProperty.dateTextViewResource = R.id.text_view;
+        descHashMap.put("WOW", wowProperty);
+
+
+
         Property hdlProperty = new Property();
         hdlProperty.layoutResource = R.layout.hdl_view;
         hdlProperty.dateTextViewResource = R.id.text_view;
@@ -287,7 +314,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                 Log.d("position", String.valueOf(pos));
                 JSONObject object=attendanceArray.optJSONObject(pos);
                 String PunchTiming = object.optString("Punchtime");
-                String Status = object.optString("Status").toUpperCase();
+                String Status = object.optString("Status").replaceAll(" ","").toUpperCase();
 
                 if (Status.equalsIgnoreCase("")) {
                     binding.lnStatus.setVisibility(View.VISIBLE);
@@ -320,6 +347,9 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                         || Status.equalsIgnoreCase("CL")
                         || Status.equalsIgnoreCase("ML")
                         || Status.equalsIgnoreCase("PAT")
+                        || Status.equalsIgnoreCase("PHP")
+                        || Status.equalsIgnoreCase("FHA")
+                        || Status.equalsIgnoreCase("SHA")
                 ){
                     binding.lnStatus.setVisibility(View.VISIBLE);
                     binding.lnStatus.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#673AB7")));
@@ -327,6 +357,33 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                     binding.tvDetails.setText(date + " : " + Status);
                     binding.tvDetails.setTextColor(Color.parseColor("#F2FFFFFF"));
                     binding.tvOK.setTextColor(Color.parseColor("#F2FFFFFF"));
+
+                }  else if (Status.equalsIgnoreCase("SPL")
+                        || Status.equalsIgnoreCase("ESIC")
+                        || Status.equalsIgnoreCase("TRL")){
+
+                    binding.lnStatus.setVisibility(View.VISIBLE);
+                    binding.lnStatus.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#9B63FF")));
+                    binding.tvDetails.setText(date + " : " + PunchTiming+ " - "+Status);
+                    binding.tvDetails.setTextColor(Color.parseColor("#F2FFFFFF"));
+                    binding.tvOK.setTextColor(Color.parseColor("#F2FFFFFF"));
+
+                } else if (Status.equalsIgnoreCase("T")){
+
+                    binding.lnStatus.setVisibility(View.VISIBLE);
+                    binding.lnStatus.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF5722")));
+                    binding.tvDetails.setText(date + " : " + PunchTiming + " - "+Status);
+                    binding.tvDetails.setTextColor(Color.parseColor("#F2FFFFFF"));
+                    binding.tvOK.setTextColor(Color.parseColor("#F2FFFFFF"));
+
+                } else if (Status.equalsIgnoreCase("WOW")){
+
+                    binding.lnStatus.setVisibility(View.VISIBLE);
+                    binding.lnStatus.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F20BCA03")));
+                    binding.tvDetails.setText(date + " : " + PunchTiming + " - "+Status);
+                    binding.tvDetails.setTextColor(Color.parseColor("#F2FFFFFF"));
+                    binding.tvOK.setTextColor(Color.parseColor("#F2FFFFFF"));
+
                 } else if (Status.equalsIgnoreCase("HDL")){
                     binding.lnStatus.setVisibility(View.VISIBLE);
                     binding.lnStatus.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#C09A72")));
@@ -403,7 +460,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
         animation.setInterpolator(new LinearInterpolator());
         animation.setRepeatCount(Animation.INFINITE);
 
-        binding.marqueeTextView.startAnimation(animation);
+        //binding.marqueeTextView.startAnimation(animation);
 
 
         JSONObject object=new JSONObject();
@@ -567,7 +624,11 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                     @Override
                     public void onResponse(JSONObject response) {
                         JSONObject job1 = response;
-                        Log.e(TAG, "CALENDAR_DATA: "+job1);
+                        try {
+                            Log.e(TAG, "CALENDAR_DATA: "+job1.toString(4));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                         pd.dismiss();
                         itemList.clear();
                         presentDays.clear();
@@ -594,7 +655,8 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
 
                                     String PunchTiming = obj.optString("PunchTiming");
                                     String Day = obj.optString("Day");
-                                    String Status = obj.optString("Status");
+                                    String Status = obj.optString("Status").replaceAll(" ","");
+
 
                                     AttendanceCalenderModel obj2 = new AttendanceCalenderModel();
                                     obj2.setDate(Date);
@@ -618,6 +680,9 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                                             || Status.equalsIgnoreCase("CL")
                                             || Status.equalsIgnoreCase("ML")
                                             || Status.equalsIgnoreCase("PAT")
+                                            || Status.equalsIgnoreCase("PHP")
+                                            || Status.equalsIgnoreCase("FHA")
+                                            || Status.equalsIgnoreCase("SHA")
                                     ){
                                         leaveDays.add(Day);
                                         Log.e(TAG, "leaveDays: "+leaveDays.size());
@@ -719,7 +784,11 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e(TAG, "DASHBOARD_BULLETIN: "+response.toString());
+                        try {
+                            Log.e(TAG, "DASHBOARD_BULLETIN: "+response.toString(4));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                         JSONObject job1 = response;
                         pd.dismiss();
                         int Response_Code = job1.optInt("Response_Code");
@@ -732,16 +801,28 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                                 JSONArray array = new JSONArray(Table);
                                 String message="";
                                 if (array.length() > 0){
+
+                                    ArrayList<String> messageArray = new ArrayList<>();
+
                                     for (int i = 0; i < array.length(); i++) {
+
                                         Log.e(TAG, "onResponse: "+i);
                                         JSONObject obj = array.getJSONObject(i);
+                                        messageArray.add(obj.getString("MessageDesc"));
                                         if (message.isEmpty()){
-                                            message = obj.getString("MessageDesc");
+                                            message =obj.getString("MessageDesc");
                                         } else {
-                                            message += "        "+obj.getString("MessageDesc");
+                                            message +="        "+obj.getString("MessageDesc");
                                         }
+
                                     }
-                                    binding.mainAutoscrollText1.setText(message);
+
+                                    MessageBoardAdapter messageBoardAdapter = new MessageBoardAdapter(messageArray);
+                                    binding.rvMessageBoard.setLayoutManager(new LinearLayoutManager(UserDashboardActivity.this));
+                                    binding.rvMessageBoard.setAdapter(messageBoardAdapter);
+
+
+                                /*    binding.mainAutoscrollText1.setText("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"+message+"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
                                     binding.mainAutoscrollText1.setSpeed(7);
                                     //binding.mainAutoscrollText1.startAutoScroll();
                                     binding.mainAutoscrollText1.startScroll();
@@ -756,12 +837,13 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                                         public void onFinish() {
                                             binding.mainAutoscrollText1.startScroll();
                                         }
-                                    });
+                                    });*/
                                     //binding.marqueeTextView.setText(message);
-                                    binding.marqueeTextView.setSelected(true);
+                                    //binding.marqueeTextView.setSelected(true);
                                 } else {
                                     Log.e(TAG, "onResponse: called 1");
-                                    binding.mainAutoscrollText1.setText("No message");
+                                    binding.txtNoMessage.setVisibility(View.VISIBLE);
+                                    //binding.mainAutoscrollText1.setText("No message");
                                     /*nding.mainAutoscrollText1.setSpeed(7);
                                     binding.mainAutoscrollText1.startScroll();
                                     binding.mainAutoscrollText1.setMarqueeListener(new IMarqueeListener() {
@@ -776,14 +858,14 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                                             binding.mainAutoscrollText1.startScroll();
                                         }
                                     });*/
-                                    binding.marqueeTextView.setVisibility(View.VISIBLE);
+                                   /* binding.marqueeTextView.setVisibility(View.VISIBLE);
                                     binding.marqueeTextView.setText("No message");
-                                    binding.mainAutoscrollText1.setVisibility(View.GONE);
+                                    binding.mainAutoscrollText1.setVisibility(View.GONE);*/
                                     //binding.marqueeTextView.setText(message);
                                     //binding.marqueeTextView.setSelected(true);
                                 }
                             } catch (JSONException e) {
-                                throw new RuntimeException(e);
+                                Toast.makeText(UserDashboardActivity.this, "", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -1016,7 +1098,6 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
     }
 
     private void currentcalendarForNav(JSONObject jsonObject,final Calendar calendar) {
-
         presentDays=new ArrayList<>();
         halfday=new ArrayList<>();
         halfdayleave=new ArrayList<>();
@@ -1047,7 +1128,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
 
 
                         JSONObject job1 = response;
-                        Log.e("response12", "@@@@@@" + job1);
+                        Log.e(TAG, "CALENDAR_DATA_NAV" + job1);
                         pd.dismiss();
                         itemList.clear();
                         presentDays.clear();
@@ -1074,7 +1155,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
 
                                     String PunchTiming = obj.optString("PunchTiming");
                                     String Day = obj.optString("Day");
-                                    String Status = obj.optString("Status");
+                                    String Status = obj.optString("Status").replaceAll(" ","");
 
 
                                     AttendanceCalenderModel obj2 = new AttendanceCalenderModel();
@@ -1112,6 +1193,9 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                                             || Status.equalsIgnoreCase("CL")
                                             || Status.equalsIgnoreCase("ML")
                                             || Status.equalsIgnoreCase("PAT")
+                                            || Status.equalsIgnoreCase("PHP")
+                                            || Status.equalsIgnoreCase("FHA")
+                                            || Status.equalsIgnoreCase("SHA")
                                     ){
                                         leaveDays.add(Day);
                                         Log.e(TAG, "leaveDays: "+leaveDays.size());

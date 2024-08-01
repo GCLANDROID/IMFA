@@ -517,10 +517,10 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -529,7 +529,6 @@
                     android:id="@+id/linearLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -538,71 +537,123 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/massage_board_background"
                         android:gravity="center"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text="Message Dashboard"
-                        android:background="@drawable/massage_board_background"
-                        android:layout_weight="1"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:layout_weight="1"
                         android:textColor="@color/white"
                         android:textSize="13sp" />
                 </LinearLayout>
 
-                <LinearLayout
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:background="#DCDCDC"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical"
+                    android:minHeight="200dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-                    <com.haohaohu.autoscrolltextview.MarqueeTextView
-                        android:id="@+id/mainAutoscrollText1"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:textStyle="bold"
-                        />
+                        android:layout_height="0dp"
+                        android:background="#DCDCDC">
 
-            <!--        <ScrollView
-                        android:id="@+id/marqueeScrollView"
+                        <TextView
+                            android:id="@+id/txtNoMessage"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:text="No message"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:visibility="invisible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvMessageBoard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:listitem="@layout/massage_dashboard_item" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        android:fillViewport="true">
+                        android:layout_height="0dp"
+                        android:background="#DCDCDC"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvMessageBoard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            tools:listitem="@layout/massage_dashboard_item" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="200dp"/>
+
+                        <com.haohaohu.autoscrolltextview.MarqueeTextView
+                            android:id="@+id/mainAutoscrollText1"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                        &lt;!&ndash;        <ScrollView
+                            android:id="@+id/marqueeScrollView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            android:fillViewport="true">
 
 
 
-                    </ScrollView>-->
+                        </ScrollView>&ndash;&gt;
 
-                    <TextView
-                        android:id="@+id/marqueeTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="No message"
-                        android:layout_gravity="center|end"
-                        android:textStyle="bold"
-                        android:singleLine="true"
-                        android:ellipsize="marquee"
-                        android:visibility="gone"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:scrollHorizontally="true"
-                        android:padding="10dp"/>
-                </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/marqueeTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|end"
+                            android:ellipsize="marquee"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:padding="10dp"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
+                            android:text="No message"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+                    </LinearLayout>
+-->
+
+                </androidx.core.widget.NestedScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
