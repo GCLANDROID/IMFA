@@ -689,7 +689,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                                     }
 
                                     if (Status.equalsIgnoreCase("A")){
-                                        //absentDays.add(Day);
+                                        absentDays.add(Day);
                                     }
 
 
@@ -1202,7 +1202,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
                                     }
 
                                     if (Status.equalsIgnoreCase("A")){
-                                        //absentDays.add(Day);
+                                        absentDays.add(Day);
                                     }
 
                                     dateHashmap.put(date, Status);
