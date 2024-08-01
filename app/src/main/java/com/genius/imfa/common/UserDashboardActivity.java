@@ -228,6 +228,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
         descHashMap.put("ML", leaveProperty);
         descHashMap.put("PAT", leaveProperty);
         descHashMap.put("PLA", leaveProperty);
+        descHashMap.put("SHA", leaveProperty);
         //tvPresent=(TextView)findViewById(R.id.tvPresent);
 
         //SPL, ESIC, TRL
@@ -1128,7 +1129,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
 
 
                         JSONObject job1 = response;
-                        Log.e(TAG, "CALENDAR_DATA_NAV" + job1);
+                        Log.e(TAG, "CALENDAR_DATA_NAV: " + job1);
                         pd.dismiss();
                         itemList.clear();
                         presentDays.clear();
