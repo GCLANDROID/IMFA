@@ -399,7 +399,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
 
                 } else if (Status.equalsIgnoreCase("WO")){
                     binding.lnStatus.setVisibility(View.VISIBLE);
-                    binding.lnStatus.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#1589FF")));
+                    binding.lnStatus.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#001164")));
                     binding.tvDetails.setText(date + " : "+PunchTiming + " Weekly Off" );
                     binding.tvDetails.setTextColor(Color.parseColor("#F2FFFFFF"));
                     binding.tvOK.setTextColor(Color.parseColor("#F2FFFFFF"));
