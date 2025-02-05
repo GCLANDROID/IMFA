@@ -1,12 +1,19 @@
 package com.genius.imfa.Model;
 
 public class LeaveBalanceDetailsModel {
-    String leave,leaveBalance,leaveTaken;
+    String leave,leaveBalance,leaveTaken,leaveTypeName;
 
     public LeaveBalanceDetailsModel(String leave, String leaveBalance, String leaveTaken) {
         this.leave = leave;
         this.leaveBalance = leaveBalance;
         this.leaveTaken = leaveTaken;
+    }
+
+    public LeaveBalanceDetailsModel(String leave, String leaveBalance, String leaveTaken, String leaveTypeName) {
+        this.leave = leave;
+        this.leaveBalance = leaveBalance;
+        this.leaveTaken = leaveTaken;
+        this.leaveTypeName = leaveTypeName;
     }
 
     public String getLeave() {
@@ -31,5 +38,13 @@ public class LeaveBalanceDetailsModel {
 
     public void setLeaveTaken(String leaveTaken) {
         this.leaveTaken = leaveTaken;
+    }
+
+    public String getLeaveTypeName() {
+        return leaveTypeName;
+    }
+
+    public void setLeaveTypeName(String leaveTypeName) {
+        this.leaveTypeName = leaveTypeName;
     }
 }
