@@ -65,7 +65,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.developers.imagezipper.ImageZipper;
 //import com.genius.imfa.Model.EncashmentItemModel;
 import com.genius.imfa.Utility.FileUtils;
-import com.genius.imfa.adapter.LeaveEncashmentAdapter;
+//import com.genius.imfa.adapter.LeaveEncashmentAdapter;
 import com.genius.imfa.common.AndroidXCameraActivity;
 import com.genius.imfa.Leave.LeaveApplicationActivity;
 import com.genius.imfa.Model.CompOffDetailsModel;
