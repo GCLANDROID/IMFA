@@ -63,7 +63,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.developers.imagezipper.ImageZipper;
-import com.genius.imfa.Model.EncashmentItemModel;
+//import com.genius.imfa.Model.EncashmentItemModel;
 import com.genius.imfa.Utility.FileUtils;
 import com.genius.imfa.adapter.LeaveEncashmentAdapter;
 import com.genius.imfa.common.AndroidXCameraActivity;
@@ -116,7 +116,7 @@ public class ApplicationFragment extends Fragment {
     View v;
     RecyclerView rvItem;
     ArrayList<LeaveBalanceDetailsModel> itemList = new ArrayList<>();
-    ArrayList<EncashmentItemModel> encashItemList = new ArrayList<>();
+    //ArrayList<EncashmentItemModel> encashItemList = new ArrayList<>();
     TextView tvRequested, tvApporved, tvRejected, tvPending;
     LinearLayout llLoader, llPending, llRejected, llApproved, llRequested;
     Pref pref;
@@ -889,7 +889,7 @@ public class ApplicationFragment extends Fragment {
                                 String Table1=jsonArray.optString("Table1");
                                 Log.e(TAG, "onResponse: Table1: "+Table1);
                                 itemList.clear();
-                                encashItemList.clear();
+                                //encashItemList.clear();
                                 JSONArray leaveBalanceArray = new JSONArray(Table1);
                                 Log.e(TAG, "leaveBalanceArray: "+leaveBalanceArray.length());
                                 Log.e(TAG, "leaveBalanceArray: "+itemList.size());
