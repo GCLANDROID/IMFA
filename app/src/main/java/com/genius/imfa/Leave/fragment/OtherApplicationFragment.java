@@ -49,6 +49,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.developers.imagezipper.ImageZipper;
 import com.genius.imfa.Utility.FileUtils;
 import com.genius.imfa.common.AndroidXCameraActivity;
 import com.genius.imfa.Leave.OtherLeavesActivity;
@@ -84,7 +85,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import id.zelory.compressor.Compressor;
+//import id.zelory.compressor.Compressor;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -557,7 +558,7 @@ public class OtherApplicationFragment extends Fragment {
                             if (isImageTooLarge) {
                                 Log.e(TAG, "isImageTooLarge: true");
                                 // Image is larger than 2 MB
-                                compressedImageFile = new Compressor.Builder(getActivity())
+                               /* compressedImageFile = new Compressor.Builder(getActivity())
                                         .setMaxWidth(1024)
                                         .setMaxHeight(768)
                                         .setQuality(70)
@@ -565,7 +566,17 @@ public class OtherApplicationFragment extends Fragment {
                                         .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
                                                 Environment.DIRECTORY_PICTURES).getAbsolutePath()
                                         ).build()
-                                        .compressToFile(file);
+                                        .compressToFile(file);*/
+                                try {
+                                    compressedImageFile = new ImageZipper(getActivity())
+                                            .setQuality(70)
+                                            .setMaxWidth(1024)
+                                            .setMaxHeight(768)
+                                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                                            .compressToFile(file);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
                             } else {
                                 // Image is 2 MB or smaller
@@ -635,7 +646,7 @@ public class OtherApplicationFragment extends Fragment {
                                     if (isImageTooLarge) {
                                         Log.e(TAG, "isImageTooLarge: true");
                                         // Image is larger than 2 MB
-                                        compressedImageFile = new Compressor.Builder(getActivity())
+                                        /*compressedImageFile = new Compressor.Builder(getActivity())
                                                 .setMaxWidth(1024)
                                                 .setMaxHeight(768)
                                                 .setQuality(70)
@@ -643,7 +654,17 @@ public class OtherApplicationFragment extends Fragment {
                                                 .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
                                                         Environment.DIRECTORY_PICTURES).getAbsolutePath()
                                                 ).build()
-                                                .compressToFile(compressedImageFile);
+                                                .compressToFile(compressedImageFile);*/
+                                        try {
+                                            compressedImageFile = new ImageZipper(getActivity())
+                                                    .setQuality(70)
+                                                    .setMaxWidth(1024)
+                                                    .setMaxHeight(768)
+                                                    .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                                                    .compressToFile(file);
+                                        } catch (IOException e) {
+                                            throw new RuntimeException(e);
+                                        }
                                         Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
                                     } else {
                                         // Image is 2 MB or smaller
