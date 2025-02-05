@@ -2,6 +2,8 @@ package com.genius.imfa.Leave.fragment;
 
 
 import static com.genius.imfa.Leave.fragment.OtherApplicationFragment.getRealPath;
+import static com.genius.imfa.Utility.Util.SECRET_KEY;
+import static com.genius.imfa.Utility.Util.encrypt;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -60,7 +62,10 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.developers.imagezipper.ImageZipper;
+import com.genius.imfa.Model.EncashmentItemModel;
 import com.genius.imfa.Utility.FileUtils;
+import com.genius.imfa.adapter.LeaveEncashmentAdapter;
 import com.genius.imfa.common.AndroidXCameraActivity;
 import com.genius.imfa.Leave.LeaveApplicationActivity;
 import com.genius.imfa.Model.CompOffDetailsModel;
@@ -101,7 +106,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import id.zelory.compressor.Compressor;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -112,6 +116,7 @@ public class ApplicationFragment extends Fragment {
     View v;
     RecyclerView rvItem;
     ArrayList<LeaveBalanceDetailsModel> itemList = new ArrayList<>();
+    ArrayList<EncashmentItemModel> encashItemList = new ArrayList<>();
     TextView tvRequested, tvApporved, tvRejected, tvPending;
     LinearLayout llLoader, llPending, llRejected, llApproved, llRequested;
     Pref pref;
@@ -178,7 +183,7 @@ public class ApplicationFragment extends Fragment {
     String hCode;
     AlertDialog alert5;
     ArrayList<CompOffDetailsModel> compOffList = new ArrayList<>();
-    RecyclerView rvCompOffItem;
+    RecyclerView rvCompOffItem,rvEncashment;
     CompOffAdapter compOffAdapter;
     LinearLayout lnBalance,lnDocument;
 
@@ -186,17 +191,17 @@ public class ApplicationFragment extends Fragment {
     RadioButton rbLeaveApplication;
     RadioButton rbLeaveEncashment;
     LinearLayout llLeaveApplication,llLeaveEncashment;
-    EditText etPlaNumber,etPlcNumber, etTotalNumberOfEncasement;
-    int totalEncasementCount =0, totalEncasementValue;
+    EditText etPlaNumber,etPlcNumber,etPlNumber, etTotalNumberOfEncasement;
+    int totalEncasementCount =0, totalEncasementValue = 0;
     int PlaElementCount,PlcElementCount;
     int globlePlaValue=0,globlePlcValue=0;
     ArrayList<String> encasementYearList = new ArrayList<>();
     ArrayList<String> encasementMonthList = new ArrayList<>();
     LinearLayout llEncasmentSubmit;
     String LeaveTypeId_1="0",LeaveTypeId_2="0",EncashValue_1="0",EncashValue_2="0",TotalEncashValue="0";
-    String enCashPLALeaveId ="0", enCashPLCLeaveId ="0";
+    String enCashPLALeaveId ="0", enCashPLCLeaveId ="0",enCashPLLeaveId="0";
     TextView tvImportantPoint;
-    LinearLayout llPLC,llPLA;
+    LinearLayout llPLC,llPLA,llPL;
     String realPath,fileType;
     File compressedImageFile;
     @Override
@@ -231,15 +236,18 @@ public class ApplicationFragment extends Fragment {
         llLeaveEncashment = (LinearLayout) v.findViewById(R.id.llLeaveEncashment);
         llEncasmentSubmit = (LinearLayout) v.findViewById(R.id.llEncasmentSubmit);
         tvImportantPoint = (TextView) v.findViewById(R.id.tvImportantPoint);
-
+        rvEncashment = (RecyclerView) v.findViewById(R.id.rvEncashment);
+        rvEncashment.setLayoutManager(new LinearLayoutManager(getContext()));
         radioGroup = v.findViewById(R.id.radioGroup);
         rbLeaveApplication = v.findViewById(R.id.rbLeaveApplication);
         rbLeaveEncashment = v.findViewById(R.id.rbLeaveEncashment);
         etPlaNumber = v.findViewById(R.id.etPlaNumber);
         etPlcNumber = v.findViewById(R.id.etPlcNumber);
+        etPlNumber = v.findViewById(R.id.etPlNumber);
         etTotalNumberOfEncasement = v.findViewById(R.id.etTotalNumberOfEncasement);
         llPLC = v.findViewById(R.id.llPLC);
         llPLA = v.findViewById(R.id.llPLA);
+        llPL = v.findViewById(R.id.llPL);
         rbLeaveApplication.setChecked(true);
         pref = new Pref(getContext());
         if (pref.getSecurityCode().equals("1167")){
@@ -445,7 +453,6 @@ public class ApplicationFragment extends Fragment {
                 if (!typeId.equals("")) {
                     showStrtDatePicker();
                 } else {
-
                     Toast.makeText(getContext(), "Please select Leave type", Toast.LENGTH_LONG).show();
                 }
             }
@@ -479,7 +486,6 @@ public class ApplicationFragment extends Fragment {
                 } else {
                     llPreview.setVisibility(View.GONE);
                 }
-
             }
         });
 
@@ -517,7 +523,6 @@ public class ApplicationFragment extends Fragment {
         llChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 checkPermissionForFile();
                 //showChooseFileDialog();
             }
@@ -547,7 +552,6 @@ public class ApplicationFragment extends Fragment {
 
                 } else if (rbLeaveEncashment.isChecked()){
                     Log.e(TAG, "onCheckedChanged: 2");
-
 
                     clearDataForLeaveApplication();
 
@@ -623,6 +627,28 @@ public class ApplicationFragment extends Fragment {
             }
         });
 
+        etPlNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().trim().isEmpty()){
+                    etTotalNumberOfEncasement.setText("");
+                } else {
+                    totalEncasementValue = Integer.parseInt(s.toString().trim()) + 0;
+                    etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
+                }
+            }
+        });
+
         llEncasmentSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -690,6 +716,29 @@ public class ApplicationFragment extends Fragment {
                         jsonObject.put("ApprovedBy",pref.getEmpId());
                         jsonObject.put("SecurityCode",pref.getSecurityCode());
                         saveEncashment(jsonObject);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (!etPlNumber.getText().toString().trim().isEmpty()) {
+                    Log.e(TAG, "onClick: called PL");
+                    LeaveTypeId_1 = enCashPLLeaveId;
+                    LeaveTypeId_2 = "0";
+                    EncashValue_1 = etPlNumber.getText().toString().trim();
+                    EncashValue_2 = "0";
+                    TotalEncashValue = etTotalNumberOfEncasement.getText().toString().trim();
+                    JSONObject jsonObject=new JSONObject();
+                    try {
+                        jsonObject.put("CompanyID",pref.getEmpClintId());
+                        jsonObject.put("EmployeeID",pref.getEmpId());
+                        jsonObject.put("LeaveTypeId_1",LeaveTypeId_1);
+                        jsonObject.put("LeaveTypeId_2",LeaveTypeId_2);
+                        jsonObject.put("EncashValue_1",EncashValue_1);
+                        jsonObject.put("EncashValue_2",EncashValue_2);
+                        jsonObject.put("TotalEncashValue",TotalEncashValue);
+                        jsonObject.put("ApprovedBy",pref.getEmpId());
+                        jsonObject.put("SecurityCode",pref.getSecurityCode());
+                        Log.e(TAG, "onClick: "+jsonObject);
+                        //saveEncashment(jsonObject);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -840,7 +889,10 @@ public class ApplicationFragment extends Fragment {
                                 String Table1=jsonArray.optString("Table1");
                                 Log.e(TAG, "onResponse: Table1: "+Table1);
                                 itemList.clear();
+                                encashItemList.clear();
                                 JSONArray leaveBalanceArray = new JSONArray(Table1);
+                                Log.e(TAG, "leaveBalanceArray: "+leaveBalanceArray.length());
+                                Log.e(TAG, "leaveBalanceArray: "+itemList.size());
                                 for (int i = 0; i < leaveBalanceArray.length(); i++) {
                                     JSONObject balanceObject = leaveBalanceArray.optJSONObject(i);
                                     final String Code = balanceObject.optString("Code");
@@ -849,18 +901,33 @@ public class ApplicationFragment extends Fragment {
                                     final String LeaveAvailed = balanceObject.optString("LeaveAvailed");
                                     final String Avaliable = balanceObject.optString("Avaliable");
                                     String LeaveTypeID = balanceObject.optString("LeaveTypeID");
+                                    String LeaveTypeName = balanceObject.optString("LeaveTypeName");
+                                    String AppCLS = balanceObject.optString("AppCLS");
+                                    String appValue = balanceObject.optString("appValue");
+                                    String iD = balanceObject.optString("iD");
                                     typeAvaild.add(LeaveTypeID + "_" + Avaliable);
-                                    if (Code.equals("PLA")){
+                                    if (Code.equals("PLA")) {
                                         enCashPLALeaveId = LeaveTypeID;
                                         llPLA.setVisibility(View.VISIBLE);
-                                    } else if (Code.equals("PLC")){
+                                    } else if (Code.equals("PLC")) {
                                         enCashPLCLeaveId = LeaveTypeID;
                                         llPLC.setVisibility(View.VISIBLE);
+                                    } else if (Code.equals("PL")) {
+                                        enCashPLLeaveId = LeaveTypeID;
+                                        llPL.setVisibility(View.VISIBLE);
                                     }
-                                    LeaveBalanceDetailsModel model = new LeaveBalanceDetailsModel(Code, Opening, LeaveAvailed);
-                                    itemList.add(model);
-                                }
+                                    if (!LeaveTypeID.equals("0")){
+                                        LeaveBalanceDetailsModel model = new LeaveBalanceDetailsModel(Code, Opening, LeaveAvailed,LeaveTypeName);
+                                        itemList.add(model);
+                                        EncashmentItemModel encashmentItemModel = new EncashmentItemModel(LeaveTypeID,Code,LeaveTypeName,Opening,LeaveAvailed,
+                                                Avaliable,AppCLS,appValue,iD);
 
+                                        encashItemList.add(encashmentItemModel);
+                                    }
+                                }
+                                Log.e(TAG, "onResponse: itemList: "+itemList.size());
+                                //LeaveEncashmentAdapter leaveEncashmentAdapter = new LeaveEncashmentAdapter(getContext(),ApplicationFragment.this,encashItemList);
+                                //rvEncashment.setAdapter(leaveEncashmentAdapter);
 
                                 String Table=jsonArray.optString("Table");
                                 JSONArray leaveReqArray = new JSONArray(Table);
@@ -1077,7 +1144,22 @@ public class ApplicationFragment extends Fragment {
 
                     @Override
                     public void onError(ANError error) {
-
+                        if (error.getErrorCode()==401){
+                            JSONObject obj=new JSONObject();
+                            try {
+                                obj.put("MasterID",encrypt(pref.getMasterId(),SECRET_KEY));
+                                obj.put("Password",encrypt(pref.getPassword(),SECRET_KEY));
+                                obj.put("IMEI","0");
+                                obj.put("DeviceID","0");
+                                obj.put("DeviceType","A");
+                                obj.put("SecurityCode",pref.getSecurityCode());
+                                login(obj);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            llLoader.setVisibility(View.GONE);
+                        }
                     }
                 });
     }
@@ -1287,7 +1369,6 @@ public class ApplicationFragment extends Fragment {
                         int month = (monthOfYear + 1);
                         startDate = month + "/" + dayOfMonth + "/" + year;
                         tvStrtDate.setText(TimeDateConverter.convert_Date_MM_DD_YYYY_To_dd_MMM_yyyy(startDate));
-
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.getDatePicker();
@@ -1666,7 +1747,6 @@ public class ApplicationFragment extends Fragment {
             }
         });
 
-
         alert5 = dialogBuilder.create();
         alert5.setCancelable(false);
         Window window = alert5.getWindow();
@@ -1744,7 +1824,7 @@ public class ApplicationFragment extends Fragment {
                 if (isImageTooLarge) {
                     Log.e(TAG, "isImageTooLarge: true");
                     // Image is larger than 2 MB
-                    compressedImageFile = new Compressor.Builder(getActivity())
+                    /*compressedImageFile = new Compressor.Builder(getActivity())
                             .setMaxWidth(1024)
                             .setMaxHeight(768)
                             .setQuality(70)
@@ -1752,7 +1832,18 @@ public class ApplicationFragment extends Fragment {
                             .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
                                     Environment.DIRECTORY_PICTURES).getAbsolutePath()
                             ).build()
-                            .compressToFile(file);
+                            .compressToFile(file);*/
+
+                    try {
+                        compressedImageFile = new ImageZipper(getActivity())
+                                .setQuality(70)
+                                .setMaxWidth(1024)
+                                .setMaxHeight(768)
+                                .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                                .compressToFile(file);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
                 } else {
                     // Image is 2 MB or smaller
@@ -1836,7 +1927,7 @@ public class ApplicationFragment extends Fragment {
                         if (isImageTooLarge) {
                             Log.e(TAG, "isImageTooLarge: true");
                             // Image is larger than 2 MB
-                            compressedImageFile = new Compressor.Builder(getActivity())
+                            /*compressedImageFile = new Compressor.Builder(getActivity())
                                     .setMaxWidth(1024)
                                     .setMaxHeight(768)
                                     .setQuality(70)
@@ -1844,7 +1935,19 @@ public class ApplicationFragment extends Fragment {
                                     .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
                                             Environment.DIRECTORY_PICTURES).getAbsolutePath()
                                     ).build()
-                                    .compressToFile(compressedImageFile);
+                                    .compressToFile(compressedImageFile);*/
+
+                            try {
+                                compressedImageFile = new ImageZipper(getActivity())
+                                        .setQuality(70)
+                                        .setMaxWidth(1024)
+                                        .setMaxHeight(768)
+                                        .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                                        .compressToFile(file);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
                             Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
                         } else {
                             // Image is 2 MB or smaller
@@ -2550,5 +2653,104 @@ public class ApplicationFragment extends Fragment {
                         token.continuePermissionRequest();
                     }
                 }).check();
+    }
+
+    public void setEncashmentValue(int pos,String leaveNumber, String leaveCode){
+        if(pos == 0){
+            LeaveTypeId_1 = encashItemList.get(pos).getLeaveTypeID();
+
+            encashItemList.get(pos).setEncaseLeaveCount(Integer.parseInt(leaveNumber));
+            totalEncasementValue = encashItemList.get(pos).getEncaseLeaveCount();
+            etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
+
+            //totalEncasementValue = encashItemList.get(pos).getEncaseLeaveCount();
+            //etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
+           /* if (Integer.parseInt(leaveNumber) == 0){
+                encashItemList.get(pos).setEncaseLeaveCount(Integer.parseInt(leaveNumber));
+                totalEncasementValue -= encashItemList.get(pos).getEncaseLeaveCount();
+                etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
+            } else if (encashItemList.get(pos).getEncaseLeaveCount() == 0){
+                Log.e(TAG, "setEncashmentValue: 1 ");
+                encashItemList.get(pos).setEncaseLeaveCount(Integer.parseInt(leaveNumber));
+                totalEncasementValue = encashItemList.get(pos).getEncaseLeaveCount();
+                etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
+            } else if(encashItemList.get(pos).getEncaseLeaveCount() > Integer.parseInt(leaveNumber)){
+                Log.e(TAG, "setEncashmentValue: 2 ");
+                encashItemList.get(pos).setEncaseLeaveCount(Integer.parseInt(leaveNumber));
+                totalEncasementValue -= encashItemList.get(pos).getEncaseLeaveCount();
+                etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
+            } else if(encashItemList.get(pos).getEncaseLeaveCount() < Integer.parseInt(leaveNumber)) {
+                Log.e(TAG, "setEncashmentValue: 3 ");
+                encashItemList.get(pos).setEncaseLeaveCount(Integer.parseInt(leaveNumber));
+                totalEncasementValue = encashItemList.get(pos).getEncaseLeaveCount();
+                etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
+            }*/
+            /*if (s.toString().trim().isEmpty() && etPlcNumber.getText().toString().isEmpty()){
+                etTotalNumberOfEncasement.setText("");
+            } else if (s.toString().trim().isEmpty() && !etPlcNumber.getText().toString().isEmpty()){
+                totalEncasementValue =  Integer.parseInt(etPlcNumber.getText().toString());
+                etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
+            }else if (!s.toString().trim().isEmpty() && !etPlcNumber.getText().toString().isEmpty()){
+                totalEncasementValue = Integer.parseInt(s.toString().trim()) + Integer.parseInt(etPlcNumber.getText().toString());
+                etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
+            } else if (!s.toString().trim().isEmpty()){
+                totalEncasementValue = Integer.parseInt(s.toString().trim()) + 0;
+                etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
+            }*/
+        } else {
+            LeaveTypeId_2 = encashItemList.get(pos).getLeaveTypeID();
+            encashItemList.get(pos).setEncaseLeaveCount(Integer.parseInt(leaveNumber));
+            totalEncasementValue = encashItemList.get(pos).getEncaseLeaveCount();
+            etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
+        }
+    }
+
+    private void login(JSONObject jsonObject) {
+        final ProgressDialog pd = new ProgressDialog(getContext());
+        pd.setMessage("Loading..");
+        pd.setCancelable(false);
+        pd.show();
+        AndroidNetworking.post(Api.sLogin)
+                .addJSONObjectBody(jsonObject)
+                .setTag("uploadTest")
+                .setPriority(Priority.HIGH)
+                .build()
+
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        JSONObject job1 = response;
+                        Log.e("response12", "@@@@@@" + job1);
+                        pd.dismiss();
+
+                        int Response_Code = job1.optInt("Response_Code");
+                        if (Response_Code == 101) {
+                            // Toast.makeText(getApplicationContext(),responseText,Toast.LENGTH_LONG).show();
+                            JSONArray responseData = job1.optJSONArray("Response_Data");
+                            for (int i = 0; i < responseData.length(); i++) {
+                                JSONObject obj = responseData.optJSONObject(i);
+                                String Genius_Access_Token=obj.optString("Genius_Access_Token");
+                                pref.saveAccessToken(Genius_Access_Token);
+                                // boolean _status = job1.getBoolean("status");
+
+                                JSONObject jsonObject=new JSONObject();
+                                try {
+                                    jsonObject.put("CompanyID",pref.getEmpClintId());
+                                    jsonObject.put("EmployeeID",pref.getEmpId());
+                                    jsonObject.put("ApproverID",pref.getEmpId());
+                                    jsonObject.put("SecurityCode",pref.getSecurityCode());
+                                    getLeaveAllDetails(jsonObject);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        pd.dismiss();
+                    }
+                });
     }
 }
