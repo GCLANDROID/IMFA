@@ -2655,7 +2655,7 @@ public class ApplicationFragment extends Fragment {
                 }).check();
     }
 
-    public void setEncashmentValue(int pos,String leaveNumber, String leaveCode){
+    /*public void setEncashmentValue(int pos,String leaveNumber, String leaveCode){
         if(pos == 0){
             LeaveTypeId_1 = encashItemList.get(pos).getLeaveTypeID();
 
@@ -2665,7 +2665,7 @@ public class ApplicationFragment extends Fragment {
 
             //totalEncasementValue = encashItemList.get(pos).getEncaseLeaveCount();
             //etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
-           /* if (Integer.parseInt(leaveNumber) == 0){
+           *//* if (Integer.parseInt(leaveNumber) == 0){
                 encashItemList.get(pos).setEncaseLeaveCount(Integer.parseInt(leaveNumber));
                 totalEncasementValue -= encashItemList.get(pos).getEncaseLeaveCount();
                 etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
@@ -2684,8 +2684,8 @@ public class ApplicationFragment extends Fragment {
                 encashItemList.get(pos).setEncaseLeaveCount(Integer.parseInt(leaveNumber));
                 totalEncasementValue = encashItemList.get(pos).getEncaseLeaveCount();
                 etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
-            }*/
-            /*if (s.toString().trim().isEmpty() && etPlcNumber.getText().toString().isEmpty()){
+            }*//*
+            *//*if (s.toString().trim().isEmpty() && etPlcNumber.getText().toString().isEmpty()){
                 etTotalNumberOfEncasement.setText("");
             } else if (s.toString().trim().isEmpty() && !etPlcNumber.getText().toString().isEmpty()){
                 totalEncasementValue =  Integer.parseInt(etPlcNumber.getText().toString());
@@ -2696,14 +2696,14 @@ public class ApplicationFragment extends Fragment {
             } else if (!s.toString().trim().isEmpty()){
                 totalEncasementValue = Integer.parseInt(s.toString().trim()) + 0;
                 etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
-            }*/
+            }*//*
         } else {
             LeaveTypeId_2 = encashItemList.get(pos).getLeaveTypeID();
             encashItemList.get(pos).setEncaseLeaveCount(Integer.parseInt(leaveNumber));
             totalEncasementValue = encashItemList.get(pos).getEncaseLeaveCount();
             etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
         }
-    }
+    }*/
 
     private void login(JSONObject jsonObject) {
         final ProgressDialog pd = new ProgressDialog(getContext());
