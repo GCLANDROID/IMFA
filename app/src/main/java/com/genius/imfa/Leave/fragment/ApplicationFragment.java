@@ -738,7 +738,7 @@ public class ApplicationFragment extends Fragment {
                         jsonObject.put("ApprovedBy",pref.getEmpId());
                         jsonObject.put("SecurityCode",pref.getSecurityCode());
                         Log.e(TAG, "onClick: "+jsonObject);
-                        //saveEncashment(jsonObject);
+                        saveEncashment(jsonObject);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -775,6 +775,7 @@ public class ApplicationFragment extends Fragment {
     private void clearDataForEncashment() {
         etPlaNumber.setText("");
         etPlcNumber.setText("");
+        etPlNumber.setText("");
         etTotalNumberOfEncasement.setText("");
         LeaveTypeId_1="0";
         LeaveTypeId_2="0";
@@ -916,14 +917,14 @@ public class ApplicationFragment extends Fragment {
                                         enCashPLLeaveId = LeaveTypeID;
                                         llPL.setVisibility(View.VISIBLE);
                                     }
-                                    /*if (!LeaveTypeID.equals("0")){
+                                    if (!LeaveTypeID.equals("0")){
                                         LeaveBalanceDetailsModel model = new LeaveBalanceDetailsModel(Code, Opening, LeaveAvailed,LeaveTypeName);
                                         itemList.add(model);
-                                        EncashmentItemModel encashmentItemModel = new EncashmentItemModel(LeaveTypeID,Code,LeaveTypeName,Opening,LeaveAvailed,
+                                       /* EncashmentItemModel encashmentItemModel = new EncashmentItemModel(LeaveTypeID,Code,LeaveTypeName,Opening,LeaveAvailed,
                                                 Avaliable,AppCLS,appValue,iD);
 
-                                        encashItemList.add(encashmentItemModel);
-                                    }*/
+                                        encashItemList.add(encashmentItemModel);*/
+                                    }
                                 }
                                 Log.e(TAG, "onResponse: itemList: "+itemList.size());
                                 //LeaveEncashmentAdapter leaveEncashmentAdapter = new LeaveEncashmentAdapter(getContext(),ApplicationFragment.this,encashItemList);
