@@ -78,7 +78,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 } else {
                     startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
                     finish();
@@ -90,7 +89,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     Toast.makeText(SplashScreenActivity.this,"Block by administrator",Toast.LENGTH_LONG).show();
                 }*/
             }
-        }, 3000);
+        }, 2000);
 
 
     }
