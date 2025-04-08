@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -88,7 +89,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
     ArrayList<String>absentDays=new ArrayList<>();
     ArrayList<String>halfday=new ArrayList<>();
     ArrayList<String>halfdayleave=new ArrayList<>();
-
+    TextView txtUserName;
     ArrayList<String>dateList=new ArrayList<>();
 
     int y,m;
@@ -104,9 +105,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_user_dashboard);
-
         binding = ActivityUserDashboardBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
         initView();
         onClick();
@@ -160,6 +159,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
 
 
         binding.txtUserName.setText(pref.getEmpName());
+        binding.llDrawerPane.txtUserName.setText(pref.getEmpName());
         binding.txtLoginTime.setText("Your login time is "+ TimeDateConverter.loginTimeConverter(pref.getloginTime()));
         try {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);

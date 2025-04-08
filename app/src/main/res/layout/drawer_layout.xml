@@ -17,6 +17,31 @@
        android:orientation="vertical">
 
 
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/imfa_logo_preview"/>
+
+        <TextView
+            android:id="@+id/txtUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="User Name"
+            android:layout_marginHorizontal="15dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1.5dp"
+            android:background="@color/black"
+            android:layout_marginTop="15dp"/>
+
 
        <LinearLayout
            android:id="@+id/llProfile"
