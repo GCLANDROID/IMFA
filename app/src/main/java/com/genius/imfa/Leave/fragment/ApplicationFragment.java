@@ -357,7 +357,7 @@ public class ApplicationFragment extends Fragment {
             tvReasonName.setText(Html.fromHtml("Reason" + color));
             tvDocName.setText("Upload document");
             tvLeaveTypeName.setText(Html.fromHtml("Leave Type" + color));
-            tvLeaveModeName.setText(Html.fromHtml("Mode" + color));
+            tvLeaveModeName.setText(Html.fromHtml("Leave Mode" + color));
             tvBalance.setText("Leave balance details");
             tvDetail.setText("Leave application details");
             //tvDetail.setText("Leave request details");
@@ -538,6 +538,7 @@ public class ApplicationFragment extends Fragment {
                     llLeaveApplication.setVisibility(View.VISIBLE);
                     llLeaveEncashment.setVisibility(View.GONE);
                     clearDataForEncashment();
+
 
                     JSONObject jsonObject=new JSONObject();
                     try {
@@ -2366,7 +2367,7 @@ public class ApplicationFragment extends Fragment {
             tvEndDate.setText("End date");
             tvStrtDate.setText("Start date");
             tvType.setText("Type");
-            btnDiscard.setText("Discard");
+            btnDiscard.setText("Cancel");
             btnSubmit.setText("Submit");
         }
 
@@ -2524,7 +2525,7 @@ public class ApplicationFragment extends Fragment {
         if (pref.getLanguage().equals("hi")) {
             tvInvalidDate.setText("सफलतापूर्वक लागू किया गया");
         } else {
-            tvInvalidDate.setText("Leave has been successfully applied");
+            tvInvalidDate.setText("Leave application has been saved successfully.");
         }
 
 

@@ -353,7 +353,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <TextView
                                 android:id="@+id/tvEmpName"
@@ -379,8 +379,8 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="12sp"
                                     android:textStyle="bold"
-                                    android:textColor="@color/appYellow"
-                                    android:text="Leave Type*"></TextView>
+                                    android:textColor="@color/black"
+                                    android:text="Leave Type*"/>
                                 <LinearLayout
                                     android:layout_marginTop="5dp"
                                     android:layout_width="match_parent"
@@ -403,8 +403,8 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="12sp"
                                     android:textStyle="bold"
-                                    android:textColor="@color/appYellow"
-                                    android:text="Leave Mode:*"></TextView>
+                                    android:textColor="@color/black"
+                                    android:text="Leave Mode:*"/>
                                 <LinearLayout
                                     android:layout_marginTop="5dp"
                                     android:layout_width="match_parent"
@@ -459,8 +459,8 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="12sp"
                                     android:textStyle="bold"
-                                    android:textColor="@color/appYellow"
-                                    android:text="Leave Start Date:*"></TextView>
+                                    android:textColor="@color/black"
+                                    android:text="Leave Start Date:*"/>
                                 <LinearLayout
                                     android:id="@+id/llStrtDate"
                                     android:layout_marginTop="5dp"
@@ -499,8 +499,8 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="12sp"
                                     android:textStyle="bold"
-                                    android:textColor="@color/appYellow"
-                                    android:text="Leave End Date:*"></TextView>
+                                    android:textColor="@color/black"
+                                    android:text="Leave End Date:*"/>
                                 <LinearLayout
                                     android:id="@+id/llEndDate"
                                     android:layout_marginTop="5dp"
@@ -562,8 +562,8 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="12sp"
                                     android:textStyle="bold"
-                                    android:textColor="@color/appYellow"
-                                    android:text="Reason:*"></TextView>
+                                    android:textColor="@color/black"
+                                    android:text="Reason:*"/>
                                 <LinearLayout
                                     android:layout_marginTop="5dp"
                                     android:layout_width="match_parent"
@@ -596,7 +596,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Supporting document:*"
-                                        android:textColor="@color/appYellow"
+                                        android:textColor="@color/black"
                                         android:textSize="12sp"
                                         android:textStyle="bold" />
 
@@ -673,7 +673,7 @@
                             android:id="@+id/llLeaveEncashment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             android:orientation="vertical">
 
                             <TextView
