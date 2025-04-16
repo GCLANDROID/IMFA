@@ -5,11 +5,19 @@ import static com.genius.imfa.Utility.Util.encrypt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -17,6 +25,8 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
+import com.genius.imfa.Leave.LeaveApplicationActivity;
+import com.genius.imfa.R;
 import com.genius.imfa.Utility.Api;
 import com.genius.imfa.Utility.Pref;
 import com.genius.imfa.databinding.ActivityChangePasswordBinding;
@@ -29,6 +39,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private static final String TAG = "ChangePasswordActivity";
     ActivityChangePasswordBinding binding;
     Pref pref;
+    AlertDialog alerDialog1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,9 +146,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         int  Response_Code = job.optInt("Response_Code");
                         String responseText = job.optString("Response_Message");
                         if (Response_Code==101) {
-                            Intent intent=new Intent(ChangePasswordActivity.this,LoginActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
+                            successAlert();
                             //finish();
                         } else {
                             Toast.makeText(getApplicationContext(), responseText, Toast.LENGTH_LONG).show();
@@ -153,5 +162,35 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         Toast.makeText(ChangePasswordActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+
+    private void successAlert() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.CustomDialogNew);
+        LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.dialog_success, null);
+        dialogBuilder.setView(dialogView);
+        TextView tvInvalidDate = (TextView) dialogView.findViewById(R.id.tvSuccess);
+        if (pref.getLanguage().equals("hi")) {
+            tvInvalidDate.setText("पासवर्ड सफलतापूर्वक बदल दिया गया है.");
+        } else {
+            tvInvalidDate.setText("Password has been changed successfully.");
+        }
+
+        Button btnOk = (Button) dialogView.findViewById(R.id.btnOk);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(ChangePasswordActivity.this,LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
+        alerDialog1 = dialogBuilder.create();
+        alerDialog1.setCancelable(false);
+        Window window = alerDialog1.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setGravity(Gravity.CENTER);
+        alerDialog1.show();
     }
 }
