@@ -201,10 +201,11 @@ public class OtherApplicationFragment extends Fragment {
 
     private void getApproverOrNot(JSONObject object) {
         Log.e(TAG, "getApproverOrNot: called: "+object.toString());
-        final ProgressDialog pd=new ProgressDialog(getContext());
+        /*final ProgressDialog pd=new ProgressDialog(getContext());
         pd.setMessage("Loading");
         pd.setCancelable(false);
-        pd.show();
+        pd.show();*/
+        binding.llLoader.setVisibility(View.VISIBLE);
         AndroidNetworking.post(Api.sApproverCheckApi)
                 .addJSONObjectBody(object)
                 .addHeaders("Authorization", "Bearer "+pref.getAccessToken())
@@ -219,7 +220,8 @@ public class OtherApplicationFragment extends Fragment {
                         applicantList.add("Please select");
                         mApplicantList.add(new SpinnerModel("0", "0"));*/
 
-                        pd.dismiss();
+                        //pd.dismiss();
+                        binding.llLoader.setVisibility(View.GONE);
                         JSONObject job1 = response;
                         Log.e(TAG, "LEAVE_APPROVER: " + job1);
 
@@ -266,7 +268,8 @@ public class OtherApplicationFragment extends Fragment {
 
                     @Override
                     public void onError(ANError error) {
-                        pd.dismiss();
+                        //pd.dismiss();
+                        binding.llLoader.setVisibility(View.GONE);
                         JSONObject object=new JSONObject();
                         try {
                             object.put("CompanyID",pref.getEmpClintId());
