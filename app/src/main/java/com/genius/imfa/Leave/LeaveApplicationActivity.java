@@ -70,6 +70,9 @@ public class LeaveApplicationActivity extends AppCompatActivity {
     }
 
     public void loadApplicationFragment() {
+        binding.llApplication.setBackgroundResource(R.drawable.background_1);
+        binding.llDetails.setBackgroundResource(R.drawable.background_5);
+        binding.llApproval.setBackgroundResource(R.drawable.background_5);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         ApplicationFragment pfragment=new ApplicationFragment();
@@ -78,6 +81,9 @@ public class LeaveApplicationActivity extends AppCompatActivity {
     }
 
     public void loadApproverFragment() {
+        binding.llApplication.setBackgroundResource(R.drawable.background_5);
+        binding.llDetails.setBackgroundResource(R.drawable.background_5);
+        binding.llApproval.setBackgroundResource(R.drawable.background_1);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         ApproverFragment efr=new ApproverFragment();
@@ -86,6 +92,9 @@ public class LeaveApplicationActivity extends AppCompatActivity {
     }
 
     public void loadDetailsFragment() {
+        binding.llApplication.setBackgroundResource(R.drawable.background_5);
+        binding.llDetails.setBackgroundResource(R.drawable.background_1);
+        binding.llApproval.setBackgroundResource(R.drawable.background_5);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         DetailsFragment htfragment=new DetailsFragment();

@@ -130,6 +130,11 @@
                     android:textSize="14sp"></TextView>
             </LinearLayout>
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"/>
+
             <LinearLayout
                 android:id="@+id/llDetails"
                 android:layout_width="0dp"
@@ -144,8 +149,13 @@
                     android:layout_height="wrap_content"
                     android:text="Leave Details"
                     android:textColor="@android:color/white"
-                    android:textSize="14sp"></TextView>
+                    android:textSize="14sp"/>
             </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"/>
 
             <LinearLayout
                 android:id="@+id/llApproval"
