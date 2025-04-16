@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Adjustment Type:*"
-                android:textColor="@color/appYellow"
+                android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold"></TextView>
 
@@ -55,9 +55,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Start Date:*"
-                android:textColor="@color/appYellow"
+                android:textColor="@color/black"
                 android:textSize="12sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:id="@+id/llStrtDate"
@@ -99,9 +99,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="End Date:*"
-                android:textColor="@color/appYellow"
+                android:textColor="@color/black"
                 android:textSize="12sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:id="@+id/llEndDate"
@@ -140,9 +140,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Reason:*"
-                    android:textColor="@color/appYellow"
+                    android:textColor="@color/black"
                     android:textSize="12sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -177,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Supporting document:*"
-                        android:textColor="@color/appYellow"
+                        android:textColor="@color/black"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 

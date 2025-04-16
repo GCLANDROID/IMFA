@@ -65,6 +65,9 @@ public class WFHActivity extends AppCompatActivity {
     }
 
     public void loadApplicationFragment() {
+        binding.llApplication.setBackgroundResource(R.drawable.background_1);
+        binding.llDetails.setBackgroundResource(R.drawable.background_5);
+        binding.llApproval.setBackgroundResource(R.drawable.background_5);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         WFHApplication pfragment=new WFHApplication();
@@ -73,6 +76,9 @@ public class WFHActivity extends AppCompatActivity {
     }
 
     public void loadApproverFragment() {
+        binding.llApplication.setBackgroundResource(R.drawable.background_5);
+        binding.llDetails.setBackgroundResource(R.drawable.background_5);
+        binding.llApproval.setBackgroundResource(R.drawable.background_1);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         WFHApproverFragment efr=new WFHApproverFragment();
@@ -81,6 +87,9 @@ public class WFHActivity extends AppCompatActivity {
     }
 
     public void loadDetailsFragment() {
+        binding.llApplication.setBackgroundResource(R.drawable.background_5);
+        binding.llDetails.setBackgroundResource(R.drawable.background_1);
+        binding.llApproval.setBackgroundResource(R.drawable.background_5);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         WFHDetailsFragment htfragment=new WFHDetailsFragment();
