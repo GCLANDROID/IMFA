@@ -68,6 +68,7 @@ public class WFHActivity extends AppCompatActivity {
         binding.llApplication.setBackgroundResource(R.drawable.background_1);
         binding.llDetails.setBackgroundResource(R.drawable.background_5);
         binding.llApproval.setBackgroundResource(R.drawable.background_5);
+        binding.tvToolBar.setText("Work From Home");
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         WFHApplication pfragment=new WFHApplication();
@@ -79,6 +80,7 @@ public class WFHActivity extends AppCompatActivity {
         binding.llApplication.setBackgroundResource(R.drawable.background_5);
         binding.llDetails.setBackgroundResource(R.drawable.background_5);
         binding.llApproval.setBackgroundResource(R.drawable.background_1);
+        binding.tvToolBar.setText("Application Details");
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         WFHApproverFragment efr=new WFHApproverFragment();
@@ -90,6 +92,7 @@ public class WFHActivity extends AppCompatActivity {
         binding.llApplication.setBackgroundResource(R.drawable.background_5);
         binding.llDetails.setBackgroundResource(R.drawable.background_1);
         binding.llApproval.setBackgroundResource(R.drawable.background_5);
+        binding.tvToolBar.setText("Approval Details");
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         WFHDetailsFragment htfragment=new WFHDetailsFragment();

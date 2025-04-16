@@ -81,6 +81,7 @@ public class OtherLeavesActivity extends AppCompatActivity {
         binding.llApplication.setBackgroundResource(R.drawable.background_1);
         binding.llDetails.setBackgroundResource(R.drawable.background_5);
         binding.llApproval.setBackgroundResource(R.drawable.background_5);
+        binding.tvToolBar.setText("Other Leaves");
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         OtherApplicationFragment pfragment=new OtherApplicationFragment();
@@ -92,6 +93,7 @@ public class OtherLeavesActivity extends AppCompatActivity {
         binding.llApplication.setBackgroundResource(R.drawable.background_5);
         binding.llDetails.setBackgroundResource(R.drawable.background_1);
         binding.llApproval.setBackgroundResource(R.drawable.background_5);
+        binding.tvToolBar.setText("Leave Details");
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         OtherDetailsFragment pfragment=new OtherDetailsFragment();
@@ -104,6 +106,7 @@ public class OtherLeavesActivity extends AppCompatActivity {
         binding.llApplication.setBackgroundResource(R.drawable.background_5);
         binding.llDetails.setBackgroundResource(R.drawable.background_5);
         binding.llApproval.setBackgroundResource(R.drawable.background_1);
+        binding.tvToolBar.setText("Leave Approval");
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         OtherLeaveApproverFragment pfragment=new OtherLeaveApproverFragment();

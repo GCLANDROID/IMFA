@@ -225,15 +225,19 @@
             android:layout_height="wrap_content"></androidx.core.widget.NestedScrollView>
 
 
-        <org.naishadhparmar.zcustomcalendar.CustomCalendar
+       <!-- <org.naishadhparmar.zcustomcalendar.CustomCalendar
             android:id="@+id/custom_calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white">
 
 
-        </org.naishadhparmar.zcustomcalendar.CustomCalendar>
-
+        </org.naishadhparmar.zcustomcalendar.CustomCalendar>-->
+        <com.genius.imfa.customcalender.CustomCalendar
+            android:id="@+id/custom_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
 
         <LinearLayout
             android:layout_width="match_parent"
