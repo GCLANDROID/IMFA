@@ -155,7 +155,6 @@ public class OtherApplicationFragment extends Fragment {
     String COMPENSATORY_OFF_ID = "13_2_1";
     AlertDialog alerDialog1;
     String imageName;
-
     File compressFile;
     File pdffile;
 
@@ -187,6 +186,8 @@ public class OtherApplicationFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        binding.tvEmpName.setText("Other leave application of "+pref.getEmpName());
 
         /*JSONObject object=new JSONObject();
         try {
@@ -486,8 +487,14 @@ public class OtherApplicationFragment extends Fragment {
                             try {
                                 JSONObject responseData = new JSONObject(Response_Data);
                                 Log.e(TAG, "onResponse: "+responseData.optString("Table3") );
+                                JSONArray jsonTable1 = new JSONArray(responseData.optString("Table1"));
                                 JSONArray jsonArray = new JSONArray(responseData.optString("Table3"));
-                                Log.e(TAG, "onResponse: jsonArray: "+jsonArray.length());
+                                Log.e(TAG, "onResponse: jsonArray: "+jsonTable1.length());
+
+                                for (int i = 0; i < jsonTable1.length(); i++) {
+                                    JSONObject object = jsonTable1.optJSONObject(i);
+                                    binding.tvApproverName.setText("Approver Name: "+object.optString("ApproverName"));
+                                }
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.optJSONObject(i);

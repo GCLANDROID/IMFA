@@ -75,6 +75,7 @@ public class WFHApplication extends Fragment {
 
     private void initView(){
         pref=new Pref(getContext());
+        binding.tvEmpName.setText("Work From Home application of "+pref.getEmpName());
         JSONObject jsonObject=new JSONObject();
         try {
             jsonObject.put("SecurityCode",pref.getSecurityCode());
@@ -205,7 +206,7 @@ public class WFHApplication extends Fragment {
 
                                 JSONObject approverObject = approverArray.optJSONObject(0);
                                 String ApproverName = approverObject.optString("ApproverName");
-
+                                binding.tvApproverName.setText("Approver name: "+ApproverName);
 
                                 String Table=jsonArray.optString("Table");
                                 JSONArray balanceArray = new JSONArray(Table);

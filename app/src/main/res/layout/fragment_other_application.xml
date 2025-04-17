@@ -21,6 +21,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvEmpName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                tools:text="Applicant name "
+                android:textColor="@color/appBlack"/>
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:id="@+id/tvApproverName"
+                tools:text="Approver name"
+                android:textColor="@color/color3"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -32,7 +48,8 @@
                     android:text="Adjustment Type:"
                     android:textColor="@color/black"
                     android:textSize="12sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
