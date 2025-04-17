@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="320dp"
+    android:layout_width="321dp"
     android:layout_height="320dp"
-    android:background="@drawable/lldesign9"
+    android:background="@color/appYellow"
     android:layout_gravity="center"
-    android:orientation="vertical"
-    android:backgroundTint="@color/white">
+    android:paddingHorizontal="1dp"
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="320dp"
         android:layout_height="50dp"
-        android:background="@drawable/lldesign9"
+        android:background="#e6e5ea"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
         android:layout_marginTop="1dp">
         <LinearLayout
             android:layout_width="0dp"
@@ -24,12 +22,11 @@
             <LinearLayout
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/lldesign2"
                 android:gravity="center"
                 android:layout_marginLeft="30dp">
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/imfa_logo"/>
             </LinearLayout>
         </LinearLayout>
@@ -37,7 +34,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="visible">
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
@@ -54,7 +52,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+
+            android:orientation="vertical"
+            android:background="@color/white">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,16 +65,18 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:textColor="@color/appYellow"
-                    android:text="Your Current Address :"></TextView>
-                <TextView
-                    android:id="@+id/tvAddress"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/appBlack"
-                    android:text="Your Current Address :"></TextView>
+                    android:text="Your Current Address :"/>
+
             </LinearLayout>
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_marginLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/appBlack"
+                android:layout_marginHorizontal="10dp"
+                android:text="Your Current Address :"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,15 +87,15 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:textColor="@color/appYellow"
-                    android:text="Current Time :"></TextView>
+                    android:text="Current Time :"/>
                 <TextView
                     android:id="@+id/tvTime"
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:textColor="@color/appBlack"
-                    android:text="Your Current Address :"></TextView>
+                    android:textColor="@color/red"
+                    android:text="Your Current Address :"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -109,15 +111,8 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/appBlack"
-                android:text="Mark Your Attendance"></TextView>
+                android:text="Mark Your Attendance"/>
         </LinearLayout>
 
     </LinearLayout>
-
-
-
-
-
-
-
 </LinearLayout>
