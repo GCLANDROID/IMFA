@@ -357,17 +357,18 @@
 
                             <TextView
                                 android:id="@+id/tvEmpName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="14sp"
-                                android:textColor="@color/appBlack"/>
+                                android:layout_width="6dp"
+                                android:layout_height="22dp"
+                                android:textColor="@color/appBlack"
+                                android:textSize="14sp" />
+
                             <TextView
                                 android:layout_marginTop="5dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="14sp"
                                 android:id="@+id/tvApproverName"
-                                android:textColor="@color/appBlack"/>
+                                android:textColor="@color/color3"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
