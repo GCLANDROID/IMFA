@@ -47,7 +47,8 @@ public class OtherApproverAdapter extends RecyclerView.Adapter<OtherApproverAdap
         holder.tvEmpName.setText(otherApproverList.get(position).Name);
         holder.tvType.setText("Adjustment Type:");
         holder.tvLeaveType.setText(otherApproverList.get(position).AdjustmentType);
-        if (otherApproverList.get(position).AdjustmentType.equals("Compensatory off")){
+        if (otherApproverList.get(position).AdjustmentType.equals("Compensatory off")
+                || otherApproverList.get(position).AdjustmentType.equals("Substitute Holiday")){
             holder.tvleaveStrtDate.setText("Off Date:");
             holder.tvLeaveEndDate.setText("Leave Date:");
         } else {
@@ -55,7 +56,8 @@ public class OtherApproverAdapter extends RecyclerView.Adapter<OtherApproverAdap
             holder.tvLeaveEndDate.setText("End Date:");
         }
         holder.tvStrtDate.setText(otherApproverList.get(position).StartDate);
-        if (otherApproverList.get(position).AdjustmentType.equals("Compensatory off")){
+        if (otherApproverList.get(position).AdjustmentType.equals("Compensatory off")
+                || otherApproverList.get(position).AdjustmentType.equals("Substitute Holiday")){
             holder.tvStrtDate.setText(otherApproverList.get(position).offdate);
         } else {
             holder.tvStrtDate.setText(otherApproverList.get(position).StartDate);

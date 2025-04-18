@@ -39,7 +39,8 @@ public class AdjustmentDetailsAdapter extends RecyclerView.Adapter<AdjustmentDet
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.tvAdjustmentType.setText(adjustmentList.get(position).AdjustmentType);
-        if (adjustmentList.get(position).AdjustmentType.equals("Compensatory off")){
+        if (adjustmentList.get(position).AdjustmentType.equals("Compensatory off")
+                || adjustmentList.get(position).AdjustmentType.equals("Substitute Holiday")){
             holder.tvLeaveStrtDate.setText("Off Date:");
             holder.tvLeaveEndDate.setText("Leave Date:");
         } else {
@@ -47,7 +48,8 @@ public class AdjustmentDetailsAdapter extends RecyclerView.Adapter<AdjustmentDet
             holder.tvLeaveEndDate.setText("End Date:");
         }
         holder.tvAppliedDate.setText(adjustmentList.get(position).AppliedDate);
-        if (adjustmentList.get(position).AdjustmentType.equals("Compensatory off")){
+        if (adjustmentList.get(position).AdjustmentType.equals("Compensatory off")
+                || adjustmentList.get(position).AdjustmentType.equals("Substitute Holiday")){
             holder.tvStrtDate.setText(adjustmentList.get(position).offdate);
         } else {
             holder.tvStrtDate.setText(adjustmentList.get(position).StartDate);
