@@ -152,7 +152,7 @@ public class OtherApplicationFragment extends Fragment {
     private Uri imageUri;
     String base64image;
     boolean isFileSelectedFlag = false;
-    String COMPENSATORY_OFF_ID = "13_2_1";
+    String COMPENSATORY_OFF_ID = "13_2_1",SUBSTITUTE_HOLIDAY_ID="14_2_1";
     AlertDialog alerDialog1;
     String imageName;
     File compressFile;
@@ -331,13 +331,13 @@ public class OtherApplicationFragment extends Fragment {
                 if (LeaveTypeID.equals("0")){
                     Toast.makeText(getActivity(), "Please select Adjustment Type", Toast.LENGTH_SHORT).show();
                 } else if (startDate.isEmpty()){
-                    if (LeaveTypeID.equals(COMPENSATORY_OFF_ID)){
+                    if (LeaveTypeID.equals(COMPENSATORY_OFF_ID) || LeaveTypeID.equals(SUBSTITUTE_HOLIDAY_ID)){
                         Toast.makeText(getActivity(), "Please select Off Date", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getActivity(), "Please select Start Date", Toast.LENGTH_SHORT).show();
                     }
                 } else if (endDate.isEmpty()){
-                    if (LeaveTypeID.equals(COMPENSATORY_OFF_ID)){
+                    if (LeaveTypeID.equals(COMPENSATORY_OFF_ID) || LeaveTypeID.equals(SUBSTITUTE_HOLIDAY_ID)){
                         Toast.makeText(getActivity(), "Please select Leave Date", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getActivity(), "Please select End Date", Toast.LENGTH_SHORT).show();
@@ -514,7 +514,7 @@ public class OtherApplicationFragment extends Fragment {
                                             LeaveTypeID = adjustmentModel.id;
                                             binding.tvStartDateName.setText("Start Date");
                                             binding.tvEndDateName.setText("End Date");
-                                        } else if (adjustmentModel.id.equals(COMPENSATORY_OFF_ID)){
+                                        } else if (adjustmentModel.id.equals(COMPENSATORY_OFF_ID) || adjustmentModel.id.equals(SUBSTITUTE_HOLIDAY_ID)){
                                             LeaveTypeID = adjustmentModel.id;
                                             binding.tvStartDateName.setText("Off Date");
                                             binding.tvEndDateName.setText("Leave Date");
@@ -814,8 +814,6 @@ public class OtherApplicationFragment extends Fragment {
         intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"application/pdf", "image/*"});
         mSelectDocumentImages.launch(intent);
     }
-
-
 
     public static Bitmap cropToSquare(Bitmap bitmap) {
         int width = bitmap.getWidth();
