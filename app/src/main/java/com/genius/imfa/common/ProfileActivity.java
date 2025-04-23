@@ -1,5 +1,8 @@
 package com.genius.imfa.common;
 
+import static com.genius.imfa.Utility.Util.SECRET_KEY;
+import static com.genius.imfa.Utility.Util.encrypt;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -16,6 +19,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.genius.imfa.R;
 import com.genius.imfa.Utility.Api;
 import com.genius.imfa.Utility.Pref;
+import com.genius.imfa.Utility.RefreshAccessToken;
 import com.genius.imfa.Utility.ValidUtils;
 import com.genius.imfa.databinding.ActivityProfileBinding;
 
@@ -133,8 +137,6 @@ public class ProfileActivity extends AppCompatActivity {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-
-
                         JSONObject job1 = response;
                         Log.e(TAG, "PROFILE_DETAILS: " + job1);
                         pd.dismiss();
@@ -406,23 +408,36 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onError(ANError error) {
                         pd.dismiss();
-                       /* if (error.getErrorCode()==401){
-                            JSONObject obj=new JSONObject();
-                            try {
-                                obj.put("MasterID",encrypt(pref.getMasterId(),SECRET_KEY));
-                                obj.put("Password",encrypt(pref.getPassword(),SECRET_KEY));
-                                obj.put("IMEI","0");
-                                obj.put("DeviceID","0");
-                                obj.put("DeviceType","A");
-                                obj.put("SecurityCode",pref.getSecurityCode());
-                                login(obj);
+                        if (error.getErrorCode()==401){
+                            RefreshAccessToken.apiCall(ProfileActivity.this, new RefreshAccessToken.OnResponse() {
+                                @Override
+                                public void onPostCall() {
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }*/
+                                }
 
+                                @Override
+                                public void onSuccess() {
+                                    JSONObject object=new JSONObject();
+                                    try {
+                                        object.put("AEMConsultantID",pref.getEmpConId());
+                                        object.put("AEMClientID",pref.getEmpClintId());
+                                        object.put("AEMClientOfficeID",pref.getEmpClintOffId());
+                                        object.put("AEMEmployeeID",pref.getEmpId());
+                                        object.put("WorkingStatus","1");
+                                        object.put("CurrentPage","1");
+                                        object.put("SecurityCode",pref.getSecurityCode());
+                                        profile(object);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
 
+                                @Override
+                                public void onFailure(String message) {
+                                    pd.dismiss();
+                                }
+                            });
+                        }
                     }
                 });
     }
