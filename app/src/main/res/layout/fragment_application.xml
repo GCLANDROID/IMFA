@@ -353,7 +353,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/tvEmpName"
@@ -390,7 +390,7 @@
                                     <Spinner
                                         android:id="@+id/spLeaveType"
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"></Spinner>
+                                        android:layout_height="match_parent"/>
                                 </LinearLayout>
                             </LinearLayout>
                             <LinearLayout
@@ -514,7 +514,7 @@
                                         android:layout_marginLeft="5dp"
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
-                                        android:src="@drawable/calendericon"></ImageView>
+                                        android:src="@drawable/calendericon"/>
                                     <TextView
                                         android:layout_marginLeft="5dp"
                                         android:layout_gravity="center"
@@ -523,7 +523,7 @@
                                         android:layout_height="wrap_content"
                                         android:textSize="12sp"
                                         android:paddingLeft="5dp"
-                                        android:textColor="@android:color/black"></TextView>
+                                        android:textColor="@android:color/black"/>
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -628,7 +628,7 @@
                                             android:layout_height="wrap_content"
                                             android:textSize="12sp"
                                             android:textColor="@android:color/black"
-                                            android:text="Choose file"></TextView>
+                                            android:text="Choose file"/>
                                     </LinearLayout>
                                     <ImageView
                                         android:id="@+id/imgPic"
@@ -674,7 +674,7 @@
                             android:id="@+id/llLeaveEncashment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:orientation="vertical">
 
                             <TextView
@@ -699,23 +699,52 @@
                                 android:layout_marginTop="10dp"
                                 android:orientation="horizontal">
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight=".8"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/appYellow"
-                                    android:text="Leave Type*"/>
+                                    android:layout_weight=".8">
 
-                                <TextView
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/black"
+                                        android:text="Leave Type"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/red"
+                                        android:text="*"/>
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1.2"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/appYellow"
-                                    android:text="No. of Leave*"/>
+                                    android:layout_weight="1.2">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+
+                                        android:textSize="12sp"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/black"
+                                        android:text="No. of Leave"/>
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/red"
+                                        android:text="*"/>
+                                </LinearLayout>
+
                                 
                             </LinearLayout>
                             <androidx.core.widget.NestedScrollView
@@ -765,7 +794,7 @@
                                     android:textColor="@color/black"
                                     android:hint="No. of Leave"
                                     android:paddingStart="5dp"
-                                    android:background="@drawable/lldesign4"/>
+                                    android:background="@drawable/lldesign10"/>
 
                             </LinearLayout>
 
@@ -829,7 +858,7 @@
                                     android:hint="No. of Leave"
                                     android:inputType="number"
                                     android:paddingStart="5dp"
-                                    android:background="@drawable/lldesign4"/>
+                                    android:background="@drawable/lldesign10"/>
 
                             </LinearLayout>
 
@@ -865,7 +894,7 @@
                                     android:hint="No. of Leave"
                                     android:inputType="number"
                                     android:paddingStart="5dp"
-                                    android:background="@drawable/lldesign4"/>
+                                    android:background="@drawable/lldesign10"/>
 
                             </LinearLayout>
 
@@ -928,7 +957,7 @@
                                     android:hint="No. of Leave"
                                     android:focusable="false"
                                     android:paddingStart="5dp"
-                                    android:background="@drawable/lldesign4"/>
+                                    android:background="@drawable/lldesign10"/>
 
                             </LinearLayout>
 
