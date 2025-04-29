@@ -919,14 +919,15 @@ public class ApplicationFragment extends Fragment {
                                         enCashPLLeaveId = LeaveTypeID;
                                         llPL.setVisibility(View.VISIBLE);
                                     }
-                                    if (!LeaveTypeID.equals("0")){
+                                    LeaveBalanceDetailsModel model = new LeaveBalanceDetailsModel(Code, Opening, LeaveAvailed,LeaveTypeName);
+                                    itemList.add(model);
+                                    /*if (!LeaveTypeID.equals("0")){
                                         LeaveBalanceDetailsModel model = new LeaveBalanceDetailsModel(Code, Opening, LeaveAvailed,LeaveTypeName);
                                         itemList.add(model);
-                                       /* EncashmentItemModel encashmentItemModel = new EncashmentItemModel(LeaveTypeID,Code,LeaveTypeName,Opening,LeaveAvailed,
+                                        EncashmentItemModel encashmentItemModel = new EncashmentItemModel(LeaveTypeID,Code,LeaveTypeName,Opening,LeaveAvailed,
                                                 Avaliable,AppCLS,appValue,iD);
-
-                                        encashItemList.add(encashmentItemModel);*/
-                                    }
+                                        encashItemList.add(encashmentItemModel);
+                                    }*/
                                 }
                                 Log.e(TAG, "onResponse: itemList: "+itemList.size());
                                 //LeaveEncashmentAdapter leaveEncashmentAdapter = new LeaveEncashmentAdapter(getContext(),ApplicationFragment.this,encashItemList);
