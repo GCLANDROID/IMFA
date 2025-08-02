@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:fitsSystemWindows="true">
 
     <ImageView
         android:layout_width="15dp"

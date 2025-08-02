@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".common.HolidayActivity">
+    tools:context=".common.HolidayActivity"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:id="@+id/linearLayout"

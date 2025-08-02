@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/lldesign7"
     android:layout_gravity="center"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="320dp"

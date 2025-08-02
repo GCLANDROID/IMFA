@@ -7,6 +7,7 @@
     tools:context=".common.UserDashboardActivity"
     android:background="@color/white"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:id="@+id/drawerMenu">
 
     <LinearLayout

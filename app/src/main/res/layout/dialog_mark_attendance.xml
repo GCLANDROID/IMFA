@@ -6,7 +6,8 @@
     android:background="@color/appYellow"
     android:layout_gravity="center"
     android:paddingHorizontal="1dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
     <LinearLayout
         android:layout_width="320dp"
         android:layout_height="50dp"
