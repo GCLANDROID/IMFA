@@ -53,6 +53,7 @@ import com.genius.imfa.customcalender.OnDateSelectedListener;
 import com.genius.imfa.customcalender.OnNavigationButtonClickedListener;
 import com.genius.imfa.customcalender.Property;
 import com.genius.imfa.databinding.ActivityUserDashboardBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -61,7 +62,7 @@ import com.google.android.play.core.install.InstallStateUpdatedListener;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
-import com.google.android.play.core.tasks.OnSuccessListener;
+
 import com.haohaohu.autoscrolltextview.IMarqueeListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
