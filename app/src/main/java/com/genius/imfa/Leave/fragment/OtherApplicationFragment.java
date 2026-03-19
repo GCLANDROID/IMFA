@@ -600,7 +600,7 @@ public class OtherApplicationFragment extends Fragment {
                                 base64image = ImageUtils.fileToBase64(compressedImageFile).replaceAll("\n","");
                                 //Log.e(TAG, "base64Image: ==================="+base64image );
                             } catch (IOException e) {
-                                throw new RuntimeException(e);
+                                e.printStackTrace();
                             }
                             Log.e(TAG, "mSelectDocumentImages: "+uri.getPath());
                             binding.imgPic.setImageURI(uri);
@@ -671,9 +671,9 @@ public class OtherApplicationFragment extends Fragment {
                                                     .setMaxWidth(1024)
                                                     .setMaxHeight(768)
                                                     .setCompressFormat(Bitmap.CompressFormat.JPEG)
-                                                    .compressToFile(file);
+                                                    .compressToFile(compressedImageFile);
                                         } catch (IOException e) {
-                                            throw new RuntimeException(e);
+                                            e.printStackTrace();
                                         }
                                         Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
                                     } else {
@@ -686,7 +686,7 @@ public class OtherApplicationFragment extends Fragment {
                                         base64image = ImageUtils.fileToBase64(compressedImageFile).replaceAll("\n","");
                                         Log.e(TAG, "base64Image: ==================="+base64image);
                                     } catch (IOException e) {
-                                        throw new RuntimeException(e);
+                                        e.printStackTrace();
                                     }
                                     Log.e(TAG, "FILE TYPE: "+fileType);
                                     //fileType = "png";
