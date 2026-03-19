@@ -40,6 +40,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     ActivityChangePasswordBinding binding;
     Pref pref;
     AlertDialog alerDialog1;
+    String from="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,14 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     private void initView() {
         pref = new Pref(getApplicationContext());
+        if ( getIntent() != null){
+            from = getIntent().getStringExtra("from");
+            if(from.equalsIgnoreCase("login")){
+                binding.imgHome.setVisibility(View.GONE);
+            } else {
+                binding.imgHome.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void onClick() {

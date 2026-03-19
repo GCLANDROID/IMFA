@@ -329,6 +329,7 @@ public class LoginActivity extends AppCompatActivity {
                                         intent.putExtra("empId", AEMEmployeeID);
                                         intent.putExtra("securityCode", SecurityCode );
                                         intent.putExtra("goingstatus","1");
+                                        intent.putExtra("from","login");
                                         startActivity(intent);
                                         finish();
                                     }

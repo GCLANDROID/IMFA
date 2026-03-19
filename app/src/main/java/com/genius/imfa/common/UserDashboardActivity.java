@@ -584,6 +584,7 @@ public class UserDashboardActivity extends AppCompatActivity implements OnNaviga
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UserDashboardActivity.this, ChangePasswordActivity.class);
+                intent.putExtra("from","dashboard");
                 startActivity(intent);
             }
         });
