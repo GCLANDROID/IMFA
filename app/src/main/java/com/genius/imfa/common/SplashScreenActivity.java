@@ -3,6 +3,7 @@ package com.genius.imfa.common;
 import static com.genius.imfa.Utility.Util.SECRET_KEY;
 import static com.genius.imfa.Utility.Util.encrypt;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -17,6 +18,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.genius.imfa.R;
 import com.genius.imfa.Utility.Api;
+import com.genius.imfa.Utility.CreativePermission;
 import com.genius.imfa.Utility.NetworkConnectionCheck;
 import com.genius.imfa.Utility.Pref;
 import com.genius.imfa.Utility.Util;
@@ -27,6 +29,7 @@ import org.json.JSONObject;
 
 
 public class SplashScreenActivity extends AppCompatActivity {
+    private static final int PERMISSION_ALL = 100;
     private static final String TAG = "SplashScreenActivity";
     Pref pref;
     String loginFlag="1";
@@ -34,12 +37,14 @@ public class SplashScreenActivity extends AppCompatActivity {
     String AEMEmployeeID;
     String UserType, SecurityCode, TutorialFlag,LoginFlag,IsModified;;
     private NetworkConnectionCheck connectionCheck;
+    private CreativePermission myPermission;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_splash_screen);
         initView();
+        CheckPermission();
     }
 
     private void initView() {
@@ -50,12 +55,31 @@ public class SplashScreenActivity extends AppCompatActivity {
                 Settings.Secure.ANDROID_ID);
 
         Log.e("log", "initView: "+pref.getLoginFlag());
+        myPermission = new CreativePermission(this,PERMISSION_ALL);
+    }
 
+    private void CheckPermission() {
+        if (!myPermission.hasPermissions()) {
+            myPermission.reqPermisions();
+        } else {
+            setup();
+        }
+    }
+
+    private void setup(){
         if (connectionCheck.isNetworkAvailable()) {
             showSplashScreen();
         } else {
             startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
             finish();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == PERMISSION_ALL) {
+            setup();
         }
     }
 
