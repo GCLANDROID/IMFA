@@ -58,7 +58,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
-import com.developers.imagezipper.ImageZipper;
+
 import com.genius.imfa.Model.SpinnerModel;
 import com.genius.imfa.R;
 import com.genius.imfa.Utility.Api;

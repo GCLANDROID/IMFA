@@ -62,8 +62,10 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.developers.imagezipper.ImageZipper;
+
 //import com.genius.imfa.Model.EncashmentItemModel;
+import com.developers.imagezipper.Compressor;
+import com.developers.imagezipper.ImageZipper;
 import com.genius.imfa.Utility.FileUtils;
 //import com.genius.imfa.adapter.LeaveEncashmentAdapter;
 import com.genius.imfa.Utility.RefreshAccessToken;
@@ -1841,15 +1843,15 @@ public class ApplicationFragment extends Fragment {
                 if (isImageTooLarge) {
                     Log.e(TAG, "isImageTooLarge: true");
                     // Image is larger than 2 MB
-                    /*compressedImageFile = new Compressor.Builder(getActivity())
-                            .setMaxWidth(1024)
-                            .setMaxHeight(768)
-                            .setQuality(70)
-                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
-                            .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
-                                    Environment.DIRECTORY_PICTURES).getAbsolutePath()
-                            ).build()
-                            .compressToFile(file);*/
+//                    compressedImageFile = new Compressor.Builder(getActivity())
+//                            .setMaxWidth(1024)
+//                            .setMaxHeight(768)
+//                            .setQuality(70)
+//                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
+//                            .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+//                                    Environment.DIRECTORY_PICTURES).getAbsolutePath()
+//                            ).build()
+//                            .compressToFile(file);
 
                     try {
                         compressedImageFile = new ImageZipper(getActivity())
@@ -1960,7 +1962,7 @@ public class ApplicationFragment extends Fragment {
                                         .setMaxWidth(1024)
                                         .setMaxHeight(768)
                                         .setCompressFormat(Bitmap.CompressFormat.JPEG)
-                                        .compressToFile(file);
+                                        .compressToFile(compressedImageFile);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -2650,26 +2652,28 @@ public class ApplicationFragment extends Fragment {
     }
 
     private void checkPermissionForFile() {
-        Dexter.withContext(getActivity())
-                .withPermissions(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ).withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()) {
-                            Log.e("onPermissionsGranted", "Called");
-                            showChooseFileDialog();
-                        } else {
-                            Toast.makeText(getActivity(), "Permissions are required to perform app functionality.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+//        Dexter.withContext(getActivity())
+//                .withPermissions(
+//                        Manifest.permission.READ_EXTERNAL_STORAGE,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                ).withListener(new MultiplePermissionsListener() {
+//                    @Override
+//                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+//                        if (report.areAllPermissionsGranted()) {
+//                            Log.e("onPermissionsGranted", "Called");
+//
+//                        } else {
+//                            Toast.makeText(getActivity(), "Permissions are required to perform app functionality.", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+//                        token.continuePermissionRequest();
+//                    }
+//                }).check();
 
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
+        showChooseFileDialog();
     }
 
     /*public void setEncashmentValue(int pos,String leaveNumber, String leaveCode){

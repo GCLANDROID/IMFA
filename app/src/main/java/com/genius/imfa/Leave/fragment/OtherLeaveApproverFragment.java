@@ -1,5 +1,6 @@
 package com.genius.imfa.Leave.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -7,8 +8,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -38,10 +41,7 @@ import com.genius.imfa.Utility.Api;
 import com.genius.imfa.Utility.Pref;
 import com.genius.imfa.adapter.ApproverAdapter;
 import com.genius.imfa.adapter.OtherApproverAdapter;
-import com.github.barteksc.pdfviewer.PDFView;
-import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
-import com.github.barteksc.pdfviewer.listener.OnRenderListener;
-import com.github.barteksc.pdfviewer.listener.OnTapListener;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -536,7 +536,7 @@ public class OtherLeaveApproverFragment extends Fragment {
 
         ImageView viewImage = dialogView.findViewById(R.id.viewImage);
         ImageView imgCancel = dialogView.findViewById(R.id.imgCancel);
-        PDFView pdfView = dialogView.findViewById(R.id.pdfView);
+
         LinearLayout llLoading = dialogView.findViewById(R.id.llLoading);
         TextView txtPdfPageCount = dialogView.findViewById(R.id.txtPdfPageCount);
 
@@ -553,42 +553,56 @@ public class OtherLeaveApproverFragment extends Fragment {
         if (type.equals("pdf") || type.equals("application/pdf")){
             Log.e(TAG, "showPdfView: pdf");
             //Log.e(TAG, "showPdfView: pdf: "+base64string);
-            llLoading.setVisibility(View.VISIBLE);
-            byte[] decodedString = Base64.decode(base64string, Base64.DEFAULT);
-            pdfView.fromBytes(decodedString).onPageChange(new OnPageChangeListener() {
-                        @Override
-                        public void onPageChanged(int page, int pageCount) {
-                            Log.e(TAG, "onPageChanged: Current Page: " + page + " Total number of page: " + pageCount);
-                            txtPdfPageCount.setText(page+1+" / "+pageCount);
-                        }
-                    }).onRender(new OnRenderListener() {
-                        @Override
-                        public void onInitiallyRendered(int nbPages) {
-                            Log.e(TAG, "onInitiallyRendered: nbPages: " + nbPages);
-                            llLoading.setVisibility(View.GONE);
-                            txtPdfPageCount.setVisibility(View.VISIBLE);
-                            //DocumentLoadingProgress.showDialog(ViewPdfActivity.this, false);
-                            //binding.pageNumber.setVisibility(View.VISIBLE);
-                        }
-                    }).onTap(new OnTapListener() {
-                        @Override
-                        public boolean onTap(MotionEvent e) {
-                            Log.e(TAG, "onTap: called.");
-                            if (txtPdfPageCount.getVisibility() == View.VISIBLE) {
-                                txtPdfPageCount.setVisibility(View.GONE);
-                            } else {
-                                txtPdfPageCount.setVisibility(View.VISIBLE);
-                            }
-                            return false;
-                        }
-                    })
-                    .spacing(15)
-                    .pageSnap(true)
-                    .autoSpacing(true)
-                    .pageFling(true)
-                    .load();
-            pdfView.setVisibility(View.VISIBLE);
-            viewImage.setVisibility(View.GONE);
+//            llLoading.setVisibility(View.VISIBLE);
+//            byte[] decodedString = Base64.decode(base64string, Base64.DEFAULT);
+//            pdfView.fromBytes(decodedString).onPageChange(new OnPageChangeListener() {
+//                        @Override
+//                        public void onPageChanged(int page, int pageCount) {
+//                            Log.e(TAG, "onPageChanged: Current Page: " + page + " Total number of page: " + pageCount);
+//                            txtPdfPageCount.setText(page+1+" / "+pageCount);
+//                        }
+//                    }).onRender(new OnRenderListener() {
+//                        @Override
+//                        public void onInitiallyRendered(int nbPages) {
+//                            Log.e(TAG, "onInitiallyRendered: nbPages: " + nbPages);
+//                            llLoading.setVisibility(View.GONE);
+//                            txtPdfPageCount.setVisibility(View.VISIBLE);
+//                            //DocumentLoadingProgress.showDialog(ViewPdfActivity.this, false);
+//                            //binding.pageNumber.setVisibility(View.VISIBLE);
+//                        }
+//                    }).onTap(new OnTapListener() {
+//                        @Override
+//                        public boolean onTap(MotionEvent e) {
+//                            Log.e(TAG, "onTap: called.");
+//                            if (txtPdfPageCount.getVisibility() == View.VISIBLE) {
+//                                txtPdfPageCount.setVisibility(View.GONE);
+//                            } else {
+//                                txtPdfPageCount.setVisibility(View.VISIBLE);
+//                            }
+//                            return false;
+//                        }
+//                    })
+//                    .spacing(15)
+//                    .pageSnap(true)
+//                    .autoSpacing(true)
+//                    .pageFling(true)
+//                    .load();
+//            pdfView.setVisibility(View.VISIBLE);
+//            viewImage.setVisibility(View.GONE);
+            viewImage.setVisibility(View.VISIBLE);
+            txtPdfPageCount.setVisibility(View.GONE);
+            new Thread(() -> {
+
+                File pdfFile = base64ToPdf(base64string, getContext());
+                Bitmap bitmap = renderPdfToBitmap(pdfFile);
+
+                ((Activity) getContext()).runOnUiThread(() -> {
+                    if (bitmap != null) {
+                        viewImage.setImageBitmap(bitmap);
+                    }
+                });
+
+            }).start();
         } else {
             Log.e(TAG, "showPdfView: png: "+base64string);
             byte[] decodedString = Base64.decode(base64string, Base64.DEFAULT);
@@ -600,6 +614,51 @@ public class OtherLeaveApproverFragment extends Fragment {
         }
 
         dialogView.show();
+    }
+
+    public File base64ToPdf(String base64, Context context) {
+        try {
+            byte[] bytes = Base64.decode(base64, Base64.DEFAULT);
+
+            File file = new File(context.getCacheDir(), "temp.pdf");
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(bytes);
+            fos.close();
+
+            return file;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Bitmap renderPdfToBitmap(File file) {
+        try {
+            ParcelFileDescriptor fd =
+                    ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
+
+            PdfRenderer renderer = new PdfRenderer(fd);
+            PdfRenderer.Page page = renderer.openPage(0);
+
+            Bitmap bitmap = Bitmap.createBitmap(
+                    page.getWidth(),
+                    page.getHeight(),
+                    Bitmap.Config.ARGB_8888
+            );
+
+            page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
+            page.close();
+            renderer.close();
+            fd.close();
+
+            return bitmap;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
