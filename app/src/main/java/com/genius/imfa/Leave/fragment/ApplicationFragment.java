@@ -66,9 +66,11 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 //import com.genius.imfa.Model.EncashmentItemModel;
 import com.developers.imagezipper.Compressor;
 import com.developers.imagezipper.ImageZipper;
+import com.genius.imfa.Model.EncashmentItemModel;
 import com.genius.imfa.Utility.FileUtils;
 //import com.genius.imfa.adapter.LeaveEncashmentAdapter;
 import com.genius.imfa.Utility.RefreshAccessToken;
+import com.genius.imfa.adapter.LeaveEncasementAdapter;
 import com.genius.imfa.common.AndroidXCameraActivity;
 import com.genius.imfa.Leave.LeaveApplicationActivity;
 import com.genius.imfa.Model.CompOffDetailsModel;
@@ -207,6 +209,7 @@ public class ApplicationFragment extends Fragment {
     LinearLayout llPLC,llPLA,llPL;
     String realPath,fileType;
     File compressedImageFile;
+    ArrayList<EncashmentItemModel> encashItemList = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -657,7 +660,24 @@ public class ApplicationFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (!etPlaNumber.getText().toString().trim().isEmpty() && !etPlcNumber.getText().toString().trim().isEmpty()){
+
+                JSONObject jsonObject=new JSONObject();
+                try {
+                    jsonObject.put("CompanyID",pref.getEmpClintId());
+                    jsonObject.put("EmployeeID",pref.getEmpId());
+                    jsonObject.put("LeaveTypeId_1",LeaveTypeId_1);
+                    jsonObject.put("LeaveTypeId_2",LeaveTypeId_2);
+                    jsonObject.put("EncashValue_1",EncashValue_1);
+                    jsonObject.put("EncashValue_2",EncashValue_2);
+                    jsonObject.put("TotalEncashValue",TotalEncashValue);
+                    jsonObject.put("ApprovedBy",pref.getEmpId());
+                    jsonObject.put("SecurityCode",pref.getSecurityCode());
+                    saveEncashment(jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                /*if (!etPlaNumber.getText().toString().trim().isEmpty() && !etPlcNumber.getText().toString().trim().isEmpty()){
                     Log.e(TAG, "onClick: called PLA + PLC");
                     LeaveTypeId_1 = enCashPLALeaveId;
                     LeaveTypeId_2 = enCashPLCLeaveId;
@@ -746,7 +766,7 @@ public class ApplicationFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
+                }*/
             }
         });
 
@@ -897,7 +917,7 @@ public class ApplicationFragment extends Fragment {
                                 //encashItemList.clear();
                                 JSONArray leaveBalanceArray = new JSONArray(Table1);
                                 Log.e(TAG, "leaveBalanceArray: "+leaveBalanceArray.length());
-                                Log.e(TAG, "leaveBalanceArray: "+itemList.size());
+                                Log.e(TAG, "EncashLeaveBalanceArray: "+itemList.size());
                                 for (int i = 0; i < leaveBalanceArray.length(); i++) {
                                     JSONObject balanceObject = leaveBalanceArray.optJSONObject(i);
                                     final String Code = balanceObject.optString("Code");
@@ -911,7 +931,7 @@ public class ApplicationFragment extends Fragment {
                                     String appValue = balanceObject.optString("appValue");
                                     String iD = balanceObject.optString("iD");
                                     typeAvaild.add(LeaveTypeID + "_" + Avaliable);
-                                    if (Code.equals("PLA")) {
+                                    /*if (Code.equals("PLA")) {
                                         enCashPLALeaveId = LeaveTypeID;
                                         llPLA.setVisibility(View.VISIBLE);
                                     } else if (Code.equals("PLC")) {
@@ -920,20 +940,36 @@ public class ApplicationFragment extends Fragment {
                                     } else if (Code.equals("PL")) {
                                         enCashPLLeaveId = LeaveTypeID;
                                         llPL.setVisibility(View.VISIBLE);
-                                    }
+                                    }*/
                                     LeaveBalanceDetailsModel model = new LeaveBalanceDetailsModel(Code, Opening, LeaveAvailed,LeaveTypeName);
                                     itemList.add(model);
-                                    /*if (!LeaveTypeID.equals("0")){
-                                        LeaveBalanceDetailsModel model = new LeaveBalanceDetailsModel(Code, Opening, LeaveAvailed,LeaveTypeName);
-                                        itemList.add(model);
-                                        EncashmentItemModel encashmentItemModel = new EncashmentItemModel(LeaveTypeID,Code,LeaveTypeName,Opening,LeaveAvailed,
-                                                Avaliable,AppCLS,appValue,iD);
+                                    if (!LeaveTypeID.equals("0")){
+                                        EncashmentItemModel encashmentItemModel = new EncashmentItemModel(Code,Opening,LeaveAvailed,Avaliable,LeaveTypeID,LeaveTypeName,AppCLS,appValue,iD);
                                         encashItemList.add(encashmentItemModel);
-                                    }*/
+                                    }
+
+                                    /*EncashmentItemModel encashmentItemModel = new EncashmentItemModel(Code,Opening,LeaveAvailed,Avaliable,LeaveTypeID,LeaveTypeName,AppCLS,appValue,iD);
+                                    encashItemList.add(encashmentItemModel);*/
+
                                 }
                                 Log.e(TAG, "onResponse: itemList: "+itemList.size());
-                                //LeaveEncashmentAdapter leaveEncashmentAdapter = new LeaveEncashmentAdapter(getContext(),ApplicationFragment.this,encashItemList);
-                                //rvEncashment.setAdapter(leaveEncashmentAdapter);
+                                LeaveEncasementAdapter leaveEncashmentAdapter = new LeaveEncasementAdapter(getContext(),ApplicationFragment.this,encashItemList);
+                                rvEncashment.setAdapter(leaveEncashmentAdapter);
+                                leaveEncashmentAdapter.setEncaseValueListener(new EncaseValueListener() {
+                                    @Override
+                                    public void onValueChange(String LeaveTypeId, String EncaseValue, int position) {
+                                        Log.e(TAG, "onValueChange: "+LeaveTypeId);
+                                        if (position == 0){
+                                            LeaveTypeId_1 = LeaveTypeId;
+                                            EncashValue_1 = (EncaseValue.isEmpty())?"0":EncaseValue;
+                                        } else if(position == 1){
+                                            LeaveTypeId_2 = LeaveTypeId;
+                                            EncashValue_2 = (EncaseValue.isEmpty())?"0":EncaseValue;
+                                        }
+                                        TotalEncashValue = String.valueOf((Integer.parseInt(EncashValue_1) + Integer.parseInt(EncashValue_2)));
+                                        etTotalNumberOfEncasement.setText(TotalEncashValue);
+                                    }
+                                });
 
                                 String Table=jsonArray.optString("Table");
                                 JSONArray leaveReqArray = new JSONArray(Table);
@@ -2565,6 +2601,7 @@ public class ApplicationFragment extends Fragment {
     }
 
 
+
     private void successAlertForEncashment(){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext(), R.style.CustomDialogNew);
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -2725,4 +2762,8 @@ public class ApplicationFragment extends Fragment {
             etTotalNumberOfEncasement.setText(String.valueOf(totalEncasementValue));
         }
     }*/
+
+    public interface EncaseValueListener{
+        void onValueChange(String LeaveTypeId,String EncaseValue,int position);
+    }
 }
