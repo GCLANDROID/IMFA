@@ -591,8 +591,8 @@ public class OtherApplicationFragment extends Fragment {
                                 Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
                             } else {
                                 // Image is 2 MB or smaller
-                                Log.e(TAG, "isImageTooLarge: false");
-                                Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
+                                //Log.e(TAG, "isImageTooLarge: false");
+                                //Log.e(TAG, FileUtils.checkFileSize(compressedImageFile.getPath()));
                             }
 
 
